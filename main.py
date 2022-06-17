@@ -18,6 +18,6 @@ while True:
 
     lightVal = light.read()
 
-    print('%.2f' % str(tempC)+" °C " + '%.2f' % str(pres_hPa)+" hPa " + '%.2f' % str(humRH)+" %RH " + '%.2f' % str(lightVal) + " lux")
+    print(str("{:.2f}".format(tempC))+" °C " + str("{:.2f}".format(pres_hPa))+" hPa " + str("{:.2f}".format(humRH))+" %RH " + str("{:.2f}".format(lightVal)) + " lux")
 
     sleep_ms(100)
