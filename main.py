@@ -13,16 +13,11 @@ light = PiicoDev_VEML6030()
 zeroAlt = sensor.altitude() # take an initial altitude reading
 
 while True:
-    # Print data
     tempC, presPa, humRH = sensor.values() # read all data from the sensor
     pres_hPa = presPa / 100 # convert air pressurr Pascals -> hPa (or mbar, if you prefer)
-    print(str(tempC)+" °C  " + str(pres_hPa)+" hPa  " + str(humRH)+" %RH")
-    
-    # Altitude demo
-    #print(sensor.altitude() - zeroAlt) # Print the pressure CHANGE since the script began
 
-    # Read and print light data
     lightVal = light.read()
-    print(str(lightVal) + " lux")
-    
-    sleep_ms(500)
+
+    print(str(tempC)+" °C " + str(pres_hPa)+" hPa " + str(humRH)+" %RH " + str(lightVal) + " lux")
+
+    sleep_ms(100)
