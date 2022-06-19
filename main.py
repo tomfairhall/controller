@@ -19,6 +19,6 @@ for i in range(100):
     pres_hPa = presPa / 100
 
     # print the sensor values
-    print(i +": "+ str("{:.2f}".format(tempC))+"°C" + str("{:.2f}".format(pres_hPa))+"hPa " + str("{:.2f}".format(humRH))+"%RH " + str("{:.2f}".format(lightLux)) + "lux")
+    print(str(i), str("{:.2f}".format(tempC))+"°C", str("{:.2f}".format(pres_hPa))+"hPa ", str("{:.2f}".format(humRH))+"%RH ", str("{:.2f}".format(lightLux)) + "lux")
 
     time.sleep(5)
