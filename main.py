@@ -1,23 +1,24 @@
-# PiicoDev Atmospheric Sensor BME280 minimal example code
-# This program reads Temperature, Pressure and Relative Humididty
-# from the PiicoDev Atmospheric Sensor. An altitude reading is also
-# available
+import time
 
 from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
-from PiicoDev_Unified import sleep_ms # cross-platform compatible sleep function
 
-sensor = PiicoDev_BME280() # initialise the sensor
+# initalise the sensors
+sensor = PiicoDev_BME280()
 light = PiicoDev_VEML6030()
 
-zeroAlt = sensor.altitude() # take an initial altitude reading
+# take an initial altitude reading
+zeroAlt = sensor.altitude()
 
-while True:
-    tempC, presPa, humRH = sensor.values() # read all data from the sensor
-    pres_hPa = presPa / 100 # convert air pressurr Pascals -> hPa (or mbar, if you prefer)
+for i in range(100):
+    # read and assign the sesnor values
+    tempC, presPa, humRH = sensor.values()
+    lightLux = light.read()
 
-    lightVal = light.read()
+    # convert air pressure Pascals -> hPa
+    pres_hPa = presPa / 100
 
-    print(str("{:.2f}".format(tempC))+"°C " + str("{:.2f}".format(pres_hPa))+"hPa " + str("{:.2f}".format(humRH))+"%RH " + str("{:.2f}".format(lightVal)) + "lux")
+    # print the sensor values
+    print(i +": "+ str("{:.2f}".format(tempC))+"°C" + str("{:.2f}".format(pres_hPa))+"hPa " + str("{:.2f}".format(humRH))+"%RH " + str("{:.2f}".format(lightLux)) + "lux")
 
-    sleep_ms(5000)
+    time.sleep(5)
