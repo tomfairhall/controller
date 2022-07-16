@@ -17,10 +17,13 @@ lightLx = veml6030.read()
 # convert air pressure Pascals -> hPa
 presHPa = presPa / 100
 
+dateTime = datetime.datetime.now()
+
 try:
     f = open("data.txt", "a")
 
-    f.write(datetime.datetime.now())
+    f.write(dateTime.strftime("%Y-%m-%d"))
+    f.write(dateTime.strftime("%H:%M:%S"))
     f.write(tempC)
     f.write(presHPa)
     f.write(humRH)
@@ -28,7 +31,7 @@ try:
 
 except FileNotFoundError:
     print("File not accessible")
-    
+
 finally:
     f.close()
 
