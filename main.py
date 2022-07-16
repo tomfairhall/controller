@@ -23,7 +23,7 @@ pres_HPa = pres_Pa / 100
 now = datetime.now()
 
 # open, or create a file in append mode and write the envrio varaibles
-with open('/home/admin/Documents/data.csv', 'a', newline='') as file:
+with open('/home/admin/Documents/controller/data.csv', 'a', newline='') as file:
     writer = csv.writer(file)
     writer.writerow([now.strftime("%Y-%m-%d"), now.strftime("%H:%M:%S"), str(temp_C), str(pres_HPa), str(hum_RH), str(light_Lx)])
 
