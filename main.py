@@ -22,12 +22,13 @@ dateTime = datetime.datetime.now()
 try:
     f = open("data.txt", "a")
 
-    f.write(dateTime.strftime("%Y-%m-%d"))
-    f.write(dateTime.strftime("%H:%M:%S"))
-    f.write(tempC)
-    f.write(presHPa)
-    f.write(humRH)
-    f.write(lightLx)
+    f.write(dateTime.strftime("%Y-%m-%d"), ",")
+    f.write(dateTime.strftime("%H:%M:%S"), ",")
+    f.write(str(tempC), ",")
+    f.write(str(presHPa), ",")
+    f.write(str(humRH), ",")
+    f.write(str(lightLx), ",")
+    f.write("\n")
 
 except FileNotFoundError:
     print("File not accessible")
