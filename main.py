@@ -1,3 +1,7 @@
+# Controller v0.1.1
+# CSV file order: date, time, temp, pressure, humidity, lux
+# Cron Job: */30 * * * * /usr/bin/python3 /home/admin/Documents/controller/main.py
+
 from datetime import datetime
 import csv
 from PiicoDev_BME280 import PiicoDev_BME280
