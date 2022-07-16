@@ -3,6 +3,8 @@ import datetime
 from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
 
+print("Starting...")
+
 # initalise the sensors
 bme280 = PiicoDev_BME280()
 veml6030 = PiicoDev_VEML6030()
@@ -22,12 +24,12 @@ dateTime = datetime.datetime.now()
 try:
     f = open("data.txt", "a")
 
-    f.write(dateTime.strftime("%Y-%m-%d"), ",")
-    f.write(dateTime.strftime("%H:%M:%S"), ",")
-    f.write(str(tempC), ",")
-    f.write(str(presHPa), ",")
-    f.write(str(humRH), ",")
-    f.write(str(lightLx), ",")
+    f.write(dateTime.strftime("%Y-%m-%d") + ",")
+    f.write(dateTime.strftime("%H:%M:%S") + ",")
+    f.write(str(tempC) + ",")
+    f.write(str(presHPa) + ",")
+    f.write(str(humRH) + ",")
+    f.write(str(lightLx) + ",")
     f.write("\n")
 
 except FileNotFoundError:
@@ -36,6 +38,6 @@ except FileNotFoundError:
 finally:
     f.close()
 
-
+print("Complete")
 # print the sensor values
 # print(str(i), str("{:.2f}".format(tempC))+"°C", str("{:.2f}".format(presHPa))+"hPa ", str("{:.2f}".format(humRH))+"%RH ", str("{:.2f}".format(lightLx)) + "lux")
