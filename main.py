@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+import csv
 
 from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
@@ -19,25 +20,11 @@ lightLx = veml6030.read()
 # convert air pressure Pascals -> hPa
 presHPa = presPa / 100
 
-dateTime = datetime.datetime.now()
+now = datetime.now()
 
-try:
-    f = open("data.txt", "a")
-
-    f.write(dateTime.strftime("%Y-%m-%d") + ",")
-    f.write(dateTime.strftime("%H:%M:%S") + ",")
-    f.write(str(tempC) + ",")
-    f.write(str(presHPa) + ",")
-    f.write(str(humRH) + ",")
-    f.write(str(lightLx) + ",")
-    f.write("\n")
-
-except FileNotFoundError:
-    print("File not accessible")
-
-finally:
-    f.close()
+with open('data.csv', 'a', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(["date", "time", "temp", "pressure", "humidity", "lux"])
+    writer.writerow([now.strftime("%Y-%M-%D"), now.strftime("%H:%M:%S"), str(tempC), str(presHPa), str(humRH), str(lightLx)])
 
 print("Complete")
-# print the sensor values
-# print(str(i), str("{:.2f}".format(tempC))+"°C", str("{:.2f}".format(presHPa))+"hPa ", str("{:.2f}".format(humRH))+"%RH ", str("{:.2f}".format(lightLx)) + "lux")
