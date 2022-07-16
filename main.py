@@ -1,24 +1,37 @@
-import time
+import datetime
 
 from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
 
 # initalise the sensors
-sensor = PiicoDev_BME280()
-light = PiicoDev_VEML6030()
+bme280 = PiicoDev_BME280()
+veml6030 = PiicoDev_VEML6030()
 
 # take an initial altitude reading
-zeroAlt = sensor.altitude()
+zeroAlt = bme280.altitude()
 
-for i in range(100):
-    # read and assign the sesnor values
-    tempC, presPa, humRH = sensor.values()
-    lightLux = light.read()
+# read and assign the sesnor values
+tempC, presPa, humRH = bme280.values()
+lightLx = veml6030.read()
 
-    # convert air pressure Pascals -> hPa
-    pres_hPa = presPa / 100
+# convert air pressure Pascals -> hPa
+presHPa = presPa / 100
 
-    # print the sensor values
-    print(str(i), str("{:.2f}".format(tempC))+"°C", str("{:.2f}".format(pres_hPa))+"hPa ", str("{:.2f}".format(humRH))+"%RH ", str("{:.2f}".format(lightLux)) + "lux")
+try:
+    f = open("data.txt", "a")
 
-    time.sleep(5)
+    f.write(datetime.datetime.now())
+    f.write(tempC)
+    f.write(presHPa)
+    f.write(humRH)
+    f.write(lightLx)
+
+except FileNotFoundError:
+    print("File not accessible")
+    
+finally:
+    f.close()
+
+
+# print the sensor values
+# print(str(i), str("{:.2f}".format(tempC))+"°C", str("{:.2f}".format(presHPa))+"hPa ", str("{:.2f}".format(humRH))+"%RH ", str("{:.2f}".format(lightLx)) + "lux")
