@@ -23,8 +23,7 @@ presHPa = presPa / 100
 now = datetime.now()
 
 with open('data.csv', 'a', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(["date", "time", "temp", "pressure", "humidity", "lux"])
+    writer = csv.writer(file)     
     writer.writerow([now.strftime("%Y-%m-%d"), now.strftime("%H:%M:%S"), str(tempC), str(presHPa), str(humRH), str(lightLx)])
 
 print("Complete")
