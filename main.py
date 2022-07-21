@@ -12,7 +12,7 @@ print("Starting...")
 
 input_argument = ""
 
-if(len(sys.argv) > 0):
+if(len(sys.argv) > 1):
     input_argument = sys.argv[1]
 
 # initalise the sensors
