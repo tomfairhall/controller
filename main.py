@@ -10,7 +10,8 @@ from PiicoDev_VEML6030 import PiicoDev_VEML6030
 
 print("Starting...")
 
-input_argument = sys.argv[1]
+if(len(sys.argv) > 0):
+    input_argument = sys.argv[1]
 
 # initalise the sensors
 bme280 = PiicoDev_BME280()
