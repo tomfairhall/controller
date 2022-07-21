@@ -10,11 +10,6 @@ from PiicoDev_VEML6030 import PiicoDev_VEML6030
 
 print("Starting...")
 
-input_argument = ""
-
-if(len(sys.argv) > 1):
-    input_argument = sys.argv[1]
-
 # initalise the sensors
 bme280 = PiicoDev_BME280()
 veml6030 = PiicoDev_VEML6030()
@@ -33,7 +28,7 @@ pres_HPa = pres_Pa / 100
 now = datetime.now()
 
 # manual or automatic output of environmnetal varaibles
-if(input_argument == "r" or "read"):
+if(sys.argv[1] in ("r", "read")):
     print(now.strftime("%Y-%m-%d"), now.strftime("%H:%M:%S"), str(temp_C), str(pres_HPa), str(hum_RH), str(light_Lx))
 else:
     # open, or create a file in append mode and write the environmental varaibles to a cvs file
