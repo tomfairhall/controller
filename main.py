@@ -2,12 +2,15 @@
 # CSV file order: date, time, temp, pressure, humidity, lux
 # Cron Job running every 30 mins: */30 * * * * /usr/bin/python3 /home/admin/Documents/controller/main.py
 
-from datetime import datetime
 import csv
+import sys
+from datetime import datetime
 from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
 
 print("Starting...")
+
+input_argument = sys.argv[1]
 
 # initalise the sensors
 bme280 = PiicoDev_BME280()
@@ -26,9 +29,13 @@ pres_HPa = pres_Pa / 100
 # get the current date and time
 now = datetime.now()
 
-# open, or create a file in append mode and write the envrio varaibles
-with open('/home/admin/Documents/controller/data.csv', 'a', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow([now.strftime("%Y-%m-%d"), now.strftime("%H:%M:%S"), str(temp_C), str(pres_HPa), str(hum_RH), str(light_Lx)])
+# manual or automatic output of environmnetal varaibles
+if(input_argument == "r" or "read"):
+    print(now.strftime("%Y-%m-%d"), now.strftime("%H:%M:%S"), str(temp_C), str(pres_HPa), str(hum_RH), str(light_Lx))
+else:
+    # open, or create a file in append mode and write the environmental varaibles to a cvs file
+    with open('/home/admin/Documents/controller/data.csv', 'a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([now.strftime("%Y-%m-%d"), now.strftime("%H:%M:%S"), str(temp_C), str(pres_HPa), str(hum_RH), str(light_Lx)])
 
 print("Complete")
