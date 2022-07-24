@@ -44,6 +44,8 @@ for x in range(3):
     hum_RH_values.append(hum_RH)
     light_Lx_values.append(light_Lx)
 
+    print(temp_C)
+
 temp_C_ave = mean(temp_C_values)
 pres_HPa_ave = mean(pres_HPa_values)
 hum_RH_ave = mean(hum_RH_values)
