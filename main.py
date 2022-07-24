@@ -1,4 +1,7 @@
-# Controller v0.1.1
+# Controller
+#* VERSION:
+# v0.1.1
+#* NOTES:
 # CSV file order: date-time, temp, pressure, humidity, lux
 # Cron Job running every 30 mins: */30 * * * * /usr/bin/python3 /home/admin/Documents/controller/main.py
 
@@ -34,14 +37,14 @@ pres_HPa_values = []
 hum_RH_values = []
 light_Lx_values = []
 
-#!! averaging e.g., temp data 3 times might make the board heat up to skew measurements higher...
+#! averaging e.g., temp data 3 times might make the board heat up to skew measurements higher...
 for x in range(3):
     # read and assign the sesnor values !! rem to div by 100
-    temp_C, pres_HPa, hum_RH = bme280.values()
+    temp_C, pres_Pa, hum_RH = bme280.values()
     light_Lx = veml6030.read()
 
     temp_C_values.append(temp_C)
-    pres_HPa_values.append(pres_HPa/100)
+    pres_HPa_values.append(pres_Pa/100)
     hum_RH_values.append(hum_RH)
     light_Lx_values.append(light_Lx)
 
