@@ -4,6 +4,7 @@
 
 import argparse
 import csv
+from statistics import mean
 from datetime import datetime
 from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
@@ -28,20 +29,25 @@ veml6030 = PiicoDev_VEML6030()
 # read and assign initial altitude reading
 zero_alt = bme280.altitude()
 
-temp_C = []
-pres_HPa = []
-hum_RH = []
-light_Lx = []
+temp_C_values = []
+pres_HPa_values = []
+hum_RH_values = []
+light_Lx_values = []
 
 for x in range(3):
-    # read and assign the sesnor values
-    temp_C[x], (pres_HPa/100)[x], hum_RH[x] = bme280.values()
-    light_Lx[x] = veml6030.read()
+    # read and assign the sesnor values !! rem to div by 100
+    temp_C, pres_HPa, hum_RH = bme280.values()
+    light_Lx = veml6030.read()
 
-temp_C_ave = sum(temp_C)/len(temp_C)
-pres_HPa_ave = sum(pres_HPa)/len(pres_HPa)
-hum_RH_ave = sum(hum_RH)/len(hum_RH)
-light_Lx_ave = sum(light_Lx)/len(light_Lx)
+    temp_C_values.append(temp_C)
+    pres_HPa_values.append(pres_HPa/100)
+    hum_RH_values.append(hum_RH)
+    light_Lx_values.append(light_Lx)
+
+temp_C_ave = mean(temp_C_values)
+pres_HPa_ave = mean(pres_HPa_values)
+hum_RH_ave = mean(hum_RH_values)
+light_Lx_ave = mean(light_Lx_values)
 
 # output handiling
 if(args.read):
