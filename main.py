@@ -34,6 +34,7 @@ pres_HPa_values = []
 hum_RH_values = []
 light_Lx_values = []
 
+#!! averaging e.g., temp data 3 times might make the board heat up to skew measurements higher...
 for x in range(3):
     # read and assign the sesnor values !! rem to div by 100
     temp_C, pres_HPa, hum_RH = bme280.values()
@@ -43,8 +44,6 @@ for x in range(3):
     pres_HPa_values.append(pres_HPa/100)
     hum_RH_values.append(hum_RH)
     light_Lx_values.append(light_Lx)
-
-    print(temp_C)
 
 temp_C_ave = mean(temp_C_values)
 pres_HPa_ave = mean(pres_HPa_values)
