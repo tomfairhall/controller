@@ -52,7 +52,11 @@ light_Lx_ave = mean(light_Lx_values)
 
 # output handiling
 if(args.read):
-    print(now, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave))
+    print("Time-date:", now)
+    print("Temp:", str(temp_C_ave))
+    print("Pressure:", str(pres_HPa_ave))
+    print("Humidity:", str(hum_RH_ave))
+    print("Lux:", str(light_Lx_ave))
 elif(args.write):
     # open, or create a file in append mode and write the environmental varaibles to a cvs file
     with open('/home/admin/Documents/controller/data.csv', 'a', newline='') as file:      
