@@ -5,6 +5,8 @@
 # CSV file order: date-time, temp, pressure, humidity, lux
 # Cron Job running every 30 mins: */30 * * * * /usr/bin/python3 /home/admin/Documents/controller/main.py
 
+#TODO: Integrate camera control (currently run seperatly)
+
 import argparse
 import csv
 from statistics import mean
@@ -12,12 +14,13 @@ from datetime import datetime
 from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
 
-# initalise the input argument parser
+
+# initialize the input argument parser
 parser = argparse.ArgumentParser()
 
 # add arguments
-parser.add_argument("-r", "--read", help="read measurments", action="store_true")
-parser.add_argument("-w", "--write", help="write measurments", action="store_true")
+parser.add_argument("-r", "--read", help="read measurements to terminal", action="store_true")
+parser.add_argument("-w", "--write", help="write measurements to file", action="store_true")
 
 # parse input arguments
 args = parser.parse_args()
@@ -25,13 +28,14 @@ args = parser.parse_args()
 # get the current date and time
 now = datetime.now()
 
-# initalise the sensors
+# initialise the sensors
 bme280 = PiicoDev_BME280()
 veml6030 = PiicoDev_VEML6030()
 
 # read and assign initial altitude reading
 zero_alt = bme280.altitude()
 
+# initialise sensor value lists
 temp_C_values = []
 pres_HPa_values = []
 hum_RH_values = []
@@ -39,7 +43,7 @@ light_Lx_values = []
 
 #! averaging e.g., temp data 3 times might make the board heat up to skew measurements higher...
 for x in range(3):
-    # read and assign the sesnor values !! rem to div by 100
+    # read and assign the sensor values !! rem to div by 100
     temp_C, pres_Pa, hum_RH = bme280.values()
     light_Lx = veml6030.read()
 
@@ -48,20 +52,21 @@ for x in range(3):
     hum_RH_values.append(hum_RH)
     light_Lx_values.append(light_Lx)
 
+# find average of measurement values
 temp_C_ave = mean(temp_C_values)
 pres_HPa_ave = mean(pres_HPa_values)
 hum_RH_ave = mean(hum_RH_values)
 light_Lx_ave = mean(light_Lx_values)
 
-# output handiling
+# output handling
 if(args.read):
     print("Time-date:", now)
-    print("Temp:", str(temp_C_ave))
-    print("Pressure:", str(pres_HPa_ave))
-    print("Humidity:", str(hum_RH_ave))
-    print("Lux:", str(light_Lx_ave))
+    print("Temp:", str(temp_C_ave) + "°C")
+    print("Pressure:", str(pres_HPa_ave) + "HPa")
+    print("Humidity:", str(hum_RH_ave) + "RH")
+    print("Lux:", str(light_Lx_ave) + "Lux")
 elif(args.write):
-    # open, or create a file in append mode and write the environmental varaibles to a cvs file
+    # open, or create a file in append mode and write the environmental variables to a cvs file
     with open('/home/admin/Documents/controller/data.csv', 'a', newline='') as file:      
         writer = csv.writer(file)
         writer.writerow([now, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
