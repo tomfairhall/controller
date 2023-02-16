@@ -1,6 +1,6 @@
 # Controller
 #* VERSION:
-# v0.1.1
+# v0.1.0
 #* NOTES:
 # CSV file order: date-time, temp, pressure, humidity, lux
 # Cron Job running every 30 mins: */30 * * * * /usr/bin/python3 /home/admin/Documents/controller/main.py
@@ -61,7 +61,7 @@ light_Lx_ave = round(mean(light_Lx_values), 2)
 # output handling
 if(args.read):
     print("Time-date:", now)
-    print("Temp:", str(temp_C_ave) + "°C")
+    print("Temperature:", str(temp_C_ave) + "°C")
     print("Pressure:", str(pres_HPa_ave) + "HPa")
     print("Humidity:", str(hum_RH_ave) + "RH")
     print("Lux:", str(light_Lx_ave) + "Lux")
