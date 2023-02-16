@@ -67,6 +67,6 @@ if(args.read):
     print("Lux:", str(light_Lx_ave) + "Lux")
 elif(args.write):
     # open, or create a file in append mode and write the environmental variables to a cvs file
-    with open('/home/admin/Documents/controller/data.csv', 'a', newline='') as file:      
+    with open('/home/pi/Documents/controller/data.csv', 'a', newline='') as file:      
         writer = csv.writer(file)
         writer.writerow([now, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
