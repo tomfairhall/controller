@@ -53,10 +53,10 @@ for x in range(3):
     light_Lx_values.append(light_Lx)
 
 # find average of measurement values
-temp_C_ave = mean(temp_C_values)
-pres_HPa_ave = mean(pres_HPa_values)
-hum_RH_ave = mean(hum_RH_values)
-light_Lx_ave = mean(light_Lx_values)
+temp_C_ave = round(mean(temp_C_values), 2)
+pres_HPa_ave = round(mean(pres_HPa_values), 2)
+hum_RH_ave = round(mean(hum_RH_values), 2)
+light_Lx_ave = round(mean(light_Lx_values), 2)
 
 # output handling
 if(args.read):
