@@ -18,7 +18,7 @@ def your_flask_route():
 
     print(temp_C_ave)
 
-    return render_template('index.html')
+    return render_template('index.html', temp = temp_C_ave)
 
 # 
 if __name__ == '__main__':
