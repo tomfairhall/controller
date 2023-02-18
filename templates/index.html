@@ -6,31 +6,34 @@
     <title>System Dashboard</title>
     <!-- <script type="text/javascript" src="script.js"></script> -->
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
-    <h1>System Dashboard</h1>
-    <h2>Current Data</h2>
-    <button onclick="window.location.href='request_data';">
-        Request Data
-      </button>
-    <table>
-        <tr>
-            <th>Time-date</th>
-            <th>Temperature</th>
-            <th>Pressure</th>
-            <th>Humidity</th>
-            <th>Lux</th>
-        </tr>
-        <tr>
-            <td id="time-date">0</td>
-            <td id="temperature">{{ temperature }}</td>
-            <td id="pressure"> {{ pressure }}</td>
-            <td id="humidity"> {{ humidity }}</td>
-            <td id="lux">{{ lux }}</td>
-        </tr>
-    </table>
+    <div class="center">
+        <h1>System Dashboard</h1>
+        <h2>Current Data</h2>
+        <button onclick="window.location.href='request_data';">
+            Request Data
+        </button>
+        <table class="center">
+            <tr>
+                <th>Time-date</th>
+                <th>Temperature</th>
+                <th>Pressure</th>
+                <th>Humidity</th>
+                <th>Lux</th>
+            </tr>
+            <tr>
+                <td id="time-date">0</td>
+                <td id="temperature">{{ temperature }}</td>
+                <td id="pressure"> {{ pressure }}</td>
+                <td id="humidity"> {{ humidity }}</td>
+                <td id="lux">{{ lux }}</td>
+            </tr>
+        </table>
+    </div>
+
 </body>
 
 </html>
