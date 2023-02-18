@@ -22,9 +22,10 @@ parser.add_argument("-w", "--write", help="write measurements to file", action="
 # parse input arguments
 args = parser.parse_args()
 
-def initilse_data():
-    # get the current date and time
-    now = datetime.now()
+# get the current date and time
+now = datetime.now()
+
+def measure_data(sample_size):
 
     # initialise the sensors
     bme280 = PiicoDev_BME280()
@@ -33,10 +34,6 @@ def initilse_data():
     # read and assign initial altitude reading
     zero_alt = bme280.altitude()
 
-    return now, bme280, veml6030
-
-def measure_data(sample_size, bme280:PiicoDev_BME280, veml6030:PiicoDev_VEML6030):
-        
     # initialise sensor value lists
     temp_C_values = []
     pres_HPa_values = []
@@ -61,9 +58,7 @@ def measure_data(sample_size, bme280:PiicoDev_BME280, veml6030:PiicoDev_VEML6030
 
     return temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave    
 
-now, bme280, veml6030 = initilse_data()
-
-temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data(3, bme280, veml6030)
+temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data(3)
 
 # output handling
 if(args.read):

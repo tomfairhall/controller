@@ -4,17 +4,18 @@
 
 <head>
     <title>System Dashboard</title>
-    <script type="text/javascript" src="script.js"></script>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link href="style.css" rel="stylesheet">
+    <!-- <script type="text/javascript" src="script.js"></script> -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" >
 </head>
 
 <body>
 
     <h1>System Dashboard</h1>
-
     <h2>Current Data</h2>
-    <button type="button" onclick="requestData()">Request Data</button>
+    <button onclick="window.location.href='request_data';">
+        Request Data
+      </button>
     <table>
         <tr>
             <th>Time-date</th>
