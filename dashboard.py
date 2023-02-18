@@ -18,7 +18,7 @@ def your_flask_route():
 
     print(temp_C_ave)
 
-    return render_template('index.html', temp = temp_C_ave)
+    return render_template('index.html', temperature = temp_C_ave, pressure = pres_HPa_ave, humidity = hum_RH_ave, lux = light_Lx_ave)
 
 # 
 if __name__ == '__main__':
