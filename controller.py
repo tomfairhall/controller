@@ -22,9 +22,6 @@ parser.add_argument("-w", "--write", help="write measurements to file", action="
 # parse input arguments
 args = parser.parse_args()
 
-# get the current date and time
-now = datetime.now()
-
 def measure_data(sample_size):
 
     # initialise the sensors
@@ -39,6 +36,9 @@ def measure_data(sample_size):
     pres_HPa_values = []
     hum_RH_values = []
     light_Lx_values = []
+
+    # get the current date and time
+    date_time = datetime.now()
 
     for x in range(sample_size):
         # read and assign the sensor values !! rem to div by 100
@@ -56,13 +56,13 @@ def measure_data(sample_size):
     hum_RH_ave = round(mean(hum_RH_values), 2)
     light_Lx_ave = round(mean(light_Lx_values), 2)
 
-    return temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave    
+    return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave    
 
-temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data(3)
+date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data(3)
 
 # output handling
 if(args.read):
-    print("Time-date:", now)
+    print("Time-date:", date_time)
     print("Temperature:", str(temp_C_ave) + "°C")
     print("Pressure:", str(pres_HPa_ave) + "HPa")
     print("Humidity:", str(hum_RH_ave) + "RH")
@@ -71,4 +71,4 @@ elif(args.write):
     # open, or create a file in append mode and write the environmental variables to a cvs file
     with open('/home/pi/Documents/controller/data.csv', 'a', newline='') as file:      
         writer = csv.writer(file)
-        writer.writerow([now, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
+        writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
