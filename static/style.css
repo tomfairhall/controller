@@ -10,13 +10,15 @@ h1 {
     font-size: 5vw;
 }
 
-#currentData {
+#currentData, #historicalData {
     border: 1px solid black;
     padding: 1%;
+    margin-bottom: 1%;
 }
 
 h2 {
     font-size: 4vw;
+    margin: 0;
 }
 
 button {
