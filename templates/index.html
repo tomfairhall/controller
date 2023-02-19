@@ -38,30 +38,10 @@
 
         <div id="historicalData">
             <h2>Historical Data</h2>
-            <button onclick="window.location.href='refresh_data';">Refresh Data</button>
             <button onclick="window.location.href='download_data';">Download Data</button>
-            <div style="overflow-x:auto;">
-                <table class="center">
-                    <tr>
-                        <th>Date-time</th>
-                        <th>Temperature</th>
-                        <th>Pressure</th>
-                        <th>Humidity</th>
-                        <th>Lux</th>
-                    </tr>
-                    <tr>
-                        <td id="date-time">{{ date_time }}</td>
-                        <td id="temperature">{{ temperature }}°C</td>
-                        <td id="pressure"> {{ pressure }}HPa</td>
-                        <td id="humidity"> {{ humidity }}RH</td>
-                        <td id="lux">{{ lux }}lx</td>
-                    </tr>
-                </table>      
-            </div>
         </div>
 
     </div>
-
 </body>
 
 </html>

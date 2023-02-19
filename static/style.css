@@ -10,13 +10,7 @@ h1 {
     font-size: 5vw;
 }
 
-#currentData {
-    border: 1px solid black;
-    padding: 1%;
-    margin-bottom: 1%;
-}
-
-#historicalData {
+#currentData, #historicalData {
     border: 1px solid black;
     padding: 1%;
     margin-bottom: 1%;
