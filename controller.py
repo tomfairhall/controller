@@ -22,7 +22,7 @@ parser.add_argument("-w", "--write", help="write measurements to file", action="
 # parse input arguments
 args = parser.parse_args()
 
-def measure_data(sample_size):
+def measure_data(sample_size = 3):
 
     # initialise the sensors
     bme280 = PiicoDev_BME280()
@@ -58,7 +58,7 @@ def measure_data(sample_size):
 
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave    
 
-date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data(3)
+date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
 # output handling
 if(args.read):
