@@ -42,6 +42,11 @@ def your_flask_route():
                            humidity = hum_RH_ave, 
                            lux = light_Lx_ave)
 
+@app.route('/download_data')
+def your_flask_route():
+
+    return render_template('index.html')
+
 # 
 if __name__ == '__main__':
   if (args.debug):
