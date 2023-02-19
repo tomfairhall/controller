@@ -66,7 +66,7 @@ if(args.read):
     print("Temperature:", str(temp_C_ave) + "°C")
     print("Pressure:", str(pres_HPa_ave) + "HPa")
     print("Humidity:", str(hum_RH_ave) + "RH")
-    print("Lux:", str(light_Lx_ave) + "Lux")
+    print("Lux:", str(light_Lx_ave) + "lx")
 elif(args.write):
     # open, or create a file in append mode and write the environmental variables to a cvs file
     with open('/home/pi/Documents/controller/data.csv', 'a', newline='') as file:      

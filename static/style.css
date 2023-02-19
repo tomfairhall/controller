@@ -23,6 +23,8 @@ table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
     font-size: 3vw;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .center {
