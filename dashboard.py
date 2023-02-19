@@ -31,7 +31,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/request_data')
-def your_flask_route():
+def request_data():
 
     date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
 
@@ -43,7 +43,7 @@ def your_flask_route():
                            lux = light_Lx_ave)
 
 @app.route('/download_data')
-def your_flask_route():
+def download_data():
 
     return render_template('index.html')
 
