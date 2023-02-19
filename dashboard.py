@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_file
 import argparse
 
 #incase running on a test machine that isn't a raspberry pi
@@ -35,17 +35,23 @@ def request_data():
 
     date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
 
-    return render_template('index.html', 
-                           date_time = date_time,
-                           temperature = temp_C_ave, 
-                           pressure = pres_HPa_ave, 
-                           humidity = hum_RH_ave, 
-                           lux = light_Lx_ave)
+    return render_template(
+        'index.html', 
+        date_time = date_time,
+        temperature = temp_C_ave, 
+        ressure = pres_HPa_ave, 
+        humidity = hum_RH_ave, 
+        lux = light_Lx_ave)
 
 @app.route('/download_data')
 def download_data():
 
-    return render_template('index.html')
+    path = "data.csv"
+
+    return send_file(
+       path,
+       as_attachment=True
+    )
 
 # 
 if __name__ == '__main__':
