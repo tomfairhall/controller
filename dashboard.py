@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 
+#incase running on a test machine that isn't a raspberry pi
 try:
     import controller
 except PermissionError:
@@ -21,8 +22,6 @@ def index():
 
 @app.route('/request_data')
 def your_flask_route():
-
-    print("here")
 
     date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
 
