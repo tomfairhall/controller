@@ -38,7 +38,7 @@ def measure_data(sample_size = 3):
     light_Lx_values = []
 
     # get the current date and time
-    date_time = datetime.now()
+    date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     for x in range(sample_size):
         # read and assign the sensor values !! rem to div by 100
