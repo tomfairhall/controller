@@ -12,28 +12,32 @@
 <body>
     <div class="center">
         <h1>System Dashboard</h1>
-        <h2>Current Data</h2>
-        <button onclick="window.location.href='request_data';">
-            Request Data
-        </button>
-        <div style="overflow-x:auto;">
-            <table class="center">
-                <tr>
-                    <th>Date-time</th>
-                    <th>Temperature</th>
-                    <th>Pressure</th>
-                    <th>Humidity</th>
-                    <th>Lux</th>
-                </tr>
-                <tr>
-                    <td id="date-time">{{ date_time }}</td>
-                    <td id="temperature">{{ temperature }}°C</td>
-                    <td id="pressure"> {{ pressure }}HPa</td>
-                    <td id="humidity"> {{ humidity }}RH</td>
-                    <td id="lux">{{ lux }}lx</td>
-                </tr>
-            </table>      
+        
+        <div id="currentData">
+            <h2>Current Data</h2>
+            <button onclick="window.location.href='request_data';">
+                Request Data
+            </button>
+            <div style="overflow-x:auto;">
+                <table>
+                    <tr>
+                        <th>Date-time</th>
+                        <th>Temperature</th>
+                        <th>Pressure</th>
+                        <th>Humidity</th>
+                        <th>Lux</th>
+                    </tr>
+                    <tr>
+                        <td id="date-time">{{ date_time }}</td>
+                        <td id="temperature">{{ temperature }}°C</td>
+                        <td id="pressure"> {{ pressure }}HPa</td>
+                        <td id="humidity"> {{ humidity }}RH</td>
+                        <td id="lux">{{ lux }}lx</td>
+                    </tr>
+                </table>      
+            </div>
         </div>
+
     </div>
 
 </body>
