@@ -24,12 +24,13 @@ light_Lx_ave = 0
 
 app = Flask(__name__)
 
-# route route directory
+# if the web server is connected to show the main page
 @app.route('/')
 def index():
 
     return render_template('index.html')
 
+# if the request data button is click, sensors will measure and upload data to screen
 @app.route('/request_data')
 def request_data():
 
@@ -43,6 +44,7 @@ def request_data():
         humidity = hum_RH_ave, 
         lux = light_Lx_ave)
 
+# if download button is clicked, the CSV file will download
 @app.route('/download_data')
 def download_data():
 
@@ -53,8 +55,10 @@ def download_data():
        as_attachment=True
     )
 
-# 
+# only run when directly called
 if __name__ == '__main__':
+  
+  # run webs server in specified mode
   if (args.debug):
     app.run(debug=True, host='0.0.0.0')
   else:
