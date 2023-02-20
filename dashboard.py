@@ -40,7 +40,7 @@ def request_data():
         'index.html', 
         date_time = date_time,
         temperature = temp_C_ave, 
-        ressure = pres_HPa_ave, 
+        pressure = pres_HPa_ave, 
         humidity = hum_RH_ave, 
         lux = light_Lx_ave)
 

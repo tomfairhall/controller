@@ -12,6 +12,8 @@ from datetime import datetime
 from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
 
+HEADER = ["Date-Time", "Temperature", "Pressure", "Humidity", "Lux"]
+
 # initialize the input argument parser
 parser = argparse.ArgumentParser()
 
@@ -62,7 +64,7 @@ date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
 # output handling
 if(args.read):
-    print("Time-date:", date_time)
+    print("Date-Time:", date_time)
     print("Temperature:", str(temp_C_ave) + "°C")
     print("Pressure:", str(pres_HPa_ave) + "HPa")
     print("Humidity:", str(hum_RH_ave) + "RH")
