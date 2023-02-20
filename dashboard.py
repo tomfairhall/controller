@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_file
+from flask import Flask, render_template, send_file, request
 import argparse
 
 #incase running on a test machine that isn't a raspberry pi
@@ -54,6 +54,11 @@ def download_data():
        path,
        as_attachment=True
     )
+
+@app.route('/shutdown_server', methods=['POST'])
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    return 'Server shutting down...'
 
 # only run when directly called
 if __name__ == '__main__':
