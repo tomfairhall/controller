@@ -57,7 +57,9 @@ def download_data():
 
 @app.route('/shutdown_server', methods=['POST'])
 def shutdown_server():
-    func = request.environ.get('werkzeug.server.shutdown')
+    
+    request.environ.get('werkzeug.server.shutdown')
+    
     return 'Server shutting down...'
 
 # only run when directly called
