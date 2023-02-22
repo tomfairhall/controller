@@ -23,7 +23,8 @@ app = Flask(__name__)
 @app.route('/request_data')
 def index():
 
-    job = find_logging_job()
+    (job, cron) = find_logging_job()
+    
     date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
 
     return render_template(
