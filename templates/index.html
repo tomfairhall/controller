@@ -4,7 +4,7 @@
 
 <head>
     <title>System Dashboard</title>
-    <!-- <script type="text/javascript" src="../static/script.js></script> -->
+    <script type="text/javascript" src="../static/script.js></script>
     <link rel="icon"        type="image/x-icon" href="../static/favicon.ico">
     <link rel="stylesheet"  type="text/css"     href="../static/style.css">
 </head>
@@ -41,7 +41,7 @@
             <h2>Logged Data</h2>
             <h3>Logging: {{ recorded_data }}</h3>
             <button onclick="window.location.href='download_data';">Download Data</button>
-            <button onclick="window.location.href='logging_status';">{{logging_status}} Logging</button>
+            <button onclick="window.location.href='logging_status';" id="logging_status_button">{{logging_status}} Logging</button>
         </div>
 
     </div>

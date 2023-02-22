@@ -10,20 +10,15 @@ except PermissionError:
 
 logging_status_dictionary = {True: 'Stop', False: 'Start'}
 
-date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
-
 app = Flask(__name__)
 
-# If the web server is connected to show the main page
+# If webserver connect or data is requested serve index page
 @app.route('/')
 @app.route('/request_data')
 def index():
 
     job, _ = find_logging_job()
-
-    global date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
-
-    print("1:", light_Lx_ave)
+    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
 
     return render_template(
         'index.html',
@@ -57,6 +52,7 @@ def find_logging_job():
 def change_logging_status():
 
     job, cron = find_logging_job()
+    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
 
     if job.is_enabled():
         print("disabiling")
@@ -66,8 +62,6 @@ def change_logging_status():
         job.enable()
 
     cron.write()
-
-    print(light_Lx_ave)
 
     return render_template(
         'index.html',
