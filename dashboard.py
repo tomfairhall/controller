@@ -61,7 +61,7 @@ def start_logging():
     return
 
 def stop_logging():
-    print("stop logging")
+    print("stop logging, setting flase")
     logging_status = False
 
     return
@@ -73,6 +73,8 @@ def logging_status():
         stop_logging()
     else:
         start_logging()
+
+    print(logging_status, + "here")
 
     return render_template(
         'index.html',
