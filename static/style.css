@@ -35,6 +35,11 @@ table, th, td {
     
 }
 
+th, td {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
 .center {
     text-align: center;
     margin-left: auto;
