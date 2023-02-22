@@ -1,10 +1,14 @@
-from flask import Flask, render_template, send_file, request
+from flask import Flask, render_template, send_file
+from crontab import CronTab
 
-# incase running on a test machine that isn't a raspberry pi
+# Incase running on a machine that isn't a raspberry pi.
 try:
     import controller
 except PermissionError:
     print("Not Running on correct device!")
+
+logging_status = False
+logging_status_dictionary = {True: 'Stop', False: 'Start'}
 
 date_time = 0
 temp_C_ave = 0
@@ -14,15 +18,13 @@ light_Lx_ave = 0
 
 app = Flask(__name__)
 
-# if the web server is connected to show the main page
+# If the web server is connected to show the main page
 @app.route('/')
 def index():
 
     return render_template('index.html')
 
-# if the request data button is click, sensors will measure and upload data to screen
-
-
+# If the request data button is click, sensors will measure and upload data to screen.
 @app.route('/request_data')
 def request_data():
 
@@ -37,8 +39,6 @@ def request_data():
         lux=light_Lx_ave)
 
 # if download button is clicked, the CSV file will download
-
-
 @app.route('/download_data')
 def download_data():
 
@@ -49,6 +49,34 @@ def download_data():
        as_attachment=True
     )
 
+def check_logging_status():
+    cron = CronTab(user="pi")
+    
+    iter = cron.find_command('controller.py')
+
+    print(iter)
+
+    return 
+
+def start_logging():
+    return
+
+def stop_logging():
+    return
+
+@app.route('/start_stop_logging')
+def start_recording():
+    
+    logging_status = check_logging_status()
+
+    return render_template(
+        'index.html',
+        logging_status = logging_status_dictionary[logging_status])
+
+
 # only run when directly called
 if __name__ == '__main__':
-  app.run(debug=True, host='0.0.0.0')
+  
+  check_logging_status()
+  
+  #app.run(host='0.0.0.0')

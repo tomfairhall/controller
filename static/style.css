@@ -7,29 +7,32 @@ body {
 }
 
 h1 {
-    font-size: 5vw;
+    
 }
 
-#currentData, #historicalData {
+#current-data, #recorded-data {
     border: 1px solid black;
     padding: 1%;
     margin-bottom: 1%;
 }
 
 h2 {
-    font-size: 4vw;
+    margin: 0;
+}
+
+h3 {
     margin: 0;
 }
 
 button {
-    font-size: 3vw;
+    
     margin: 1em;
 }
 
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
-    font-size: 3vw;
+    
 }
 
 .center {
