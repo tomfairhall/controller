@@ -9,7 +9,7 @@
     <link rel="stylesheet"  type="text/css"     href="../static/style.css">
 </head>
 
-<body>
+<body onload="change_status_button()">
     <div class="center">
         <h1>System Dashboard</h1>
 
@@ -41,7 +41,7 @@
             <h2>Logged Data</h2>
             <h3>Logging: {{ recorded_data }}</h3>
             <button onclick="window.location.href='download_data';">Download Data</button>
-            <button onclick="window.location.href='logging_status'; change_status_button()" onload="change_status_button()" id="logging_status_button">{{logging_status}} Logging</button>
+            <button onclick="window.location.href='logging_status';" id="logging_status_button">{{logging_status}} Logging</button>
         </div>
 
     </div>
