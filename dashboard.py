@@ -52,12 +52,12 @@ def find_logging_job():
     
     for job in cron.find_command('controller.py -w'):
         print(job.comment)
-        return job
+        return job, cron
 
 @app.route('/logging_status')
 def change_logging_status():
 
-    job = find_logging_job()
+    job, cron = find_logging_job()
 
     if job.is_enabled():
         print("disabiling")
@@ -65,6 +65,8 @@ def change_logging_status():
     else:
         print("enabiling")
         job.enable()
+
+    cron.write()
 
     return render_template(
         'index.html',
