@@ -18,14 +18,17 @@ light_Lx_ave = 0
 
 app = Flask(__name__)
 
+def measure_data():
+    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
+
 # If the web server is connected to show the main page
 @app.route('/')
 @app.route('/request_data')
 def index():
 
     (job, cron) = find_logging_job()
-    
-    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
+
+    measure_data()
 
     return render_template(
         'index.html',
@@ -36,7 +39,7 @@ def index():
         lux = light_Lx_ave,
         logging_status = logging_status_dictionary[job.is_enabled()])
 
-# if download button is clicked, the CSV file will download
+# If download button is clicked, the CSV file will download
 @app.route('/download_data')
 def download_data():
 
@@ -52,9 +55,9 @@ def find_logging_job():
     cron = CronTab(user=getlogin())
     
     for job in cron.find_command('controller.py -w'):
-        print(job.comment)
         return job, cron
 
+# If Start/Stop Logging button is clicked, the logging cron job will be enabled/disabled
 @app.route('/logging_status')
 def change_logging_status():
 
