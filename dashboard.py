@@ -23,6 +23,7 @@ app = Flask(__name__)
 @app.route('/request_data')
 def index():
 
+    job = find_logging_job()
     date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
 
     return render_template(
@@ -32,7 +33,7 @@ def index():
         pressure = pres_HPa_ave,
         humidity = hum_RH_ave,
         lux = light_Lx_ave,
-        logging_status = logging_status_dictionary[check_logging_status()])
+        logging_status = logging_status_dictionary[job.is_enabled()])
 
 # if download button is clicked, the CSV file will download
 @app.route('/download_data')
@@ -44,14 +45,6 @@ def download_data():
        path,
        as_attachment=True
     )
-
-def check_logging_status():
-    
-    cron = CronTab(user=getlogin())
-    
-    for job in cron.find_command('controller.py'):
-        print(job.is_enabled())
-        return job.is_enabled()
 
 def find_logging_job():
     
@@ -78,7 +71,7 @@ def change_logging_status():
         pressure = pres_HPa_ave,
         humidity = hum_RH_ave,
         lux = light_Lx_ave,
-        logging_status = logging_status_dictionary[check_logging_status()])
+        logging_status = logging_status_dictionary[job.is_enabled()])
 
 # only run when directly called
 if __name__ == '__main__':
