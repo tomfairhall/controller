@@ -51,6 +51,7 @@ def check_logging_status():
     cron = CronTab(user=getlogin())
     
     for job in cron.find_command('controller.py'):
+        print(job.is_enabled())
         return job.is_enabled()
 
 def start_logging():
