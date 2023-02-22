@@ -10,25 +10,16 @@ except PermissionError:
 
 logging_status_dictionary = {True: 'Stop', False: 'Start'}
 
-date_time = 0
-temp_C_ave = 0
-pres_HPa_ave = 0
-hum_RH_ave = 0
-light_Lx_ave = 0
-
 app = Flask(__name__)
-
-def measure_data():
-    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
 
 # If the web server is connected to show the main page
 @app.route('/')
 @app.route('/request_data')
 def index():
 
-    (job, cron) = find_logging_job()
+    job, cron = find_logging_job()
 
-    measure_data()
+    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
 
     return render_template(
         'index.html',
@@ -61,7 +52,7 @@ def find_logging_job():
 @app.route('/logging_status')
 def change_logging_status():
 
-    (job, cron) = find_logging_job()
+    job, cron = find_logging_job()
 
     if job.is_enabled():
         print("disabiling")
@@ -72,14 +63,15 @@ def change_logging_status():
 
     cron.write()
 
-    return render_template(
-        'index.html',
-        date_time = date_time,
-        temperature = temp_C_ave,
-        pressure = pres_HPa_ave,
-        humidity = hum_RH_ave,
-        lux = light_Lx_ave,
-        logging_status = logging_status_dictionary[job.is_enabled()])
+    return logging_status_dictionary[job.is_enabled()]
+    # return render_template(
+    #     'index.html',
+    #     date_time = date_time,
+    #     temperature = temp_C_ave,
+    #     pressure = pres_HPa_ave,
+    #     humidity = hum_RH_ave,
+    #     lux = light_Lx_ave,
+    #     logging_status = logging_status_dictionary[job.is_enabled()])
 
 # only run when directly called
 if __name__ == '__main__':
