@@ -60,7 +60,7 @@ def start_logging():
 
 def stop_logging():
     print("stop logging")
-    
+
     return
 
 @app.route('/logging_status')
@@ -68,7 +68,7 @@ def loggin_status():
 
     if check_logging_status():
         stop_logging()
-    else
+    else:
         stop_logging()
 
     return render_template(
