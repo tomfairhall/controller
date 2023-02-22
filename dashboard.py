@@ -58,7 +58,7 @@ def find_logging_job():
     cron = CronTab(user=getlogin())
     
     for job in cron.find_command('controller.py -w'):
-        print(job.comment())
+        print(job.comment)
         return job
 
 @app.route('/logging_status')
