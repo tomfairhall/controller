@@ -21,7 +21,8 @@ light_Lx_ave = 0
 app = Flask(__name__)
 
 # If the web server is connected to show the main page
-@app.route('/', '/request_data')
+@app.route('/')
+@app.route('/request_data')
 def index():
 
     date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
@@ -53,22 +54,31 @@ def check_logging_status():
         return job.is_enabled
 
 def start_logging():
-    cron = CronTab(user=getlogin())
+    print("start logging")
     
     return
 
 def stop_logging():
+    print("stop logging")
+    
     return
 
-@app.route('/start_stop_logging')
-def start_recording():
-    
-    logging_status = check_logging_status()
+@app.route('/logging_status')
+def loggin_status():
+
+    if check_logging_status():
+        stop_logging()
+    else
+        stop_logging()
 
     return render_template(
         'index.html',
-        logging_status = logging_status_dictionary[logging_status])
-
+        date_time = date_time,
+        temperature = temp_C_ave,
+        pressure = pres_HPa_ave,
+        humidity = hum_RH_ave,
+        lux = light_Lx_ave,
+        logging_status = logging_status_dictionary[check_logging_status()])
 
 # only run when directly called
 if __name__ == '__main__':
