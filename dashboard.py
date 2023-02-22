@@ -8,8 +8,6 @@ try:
 except PermissionError:
     print("Not Running on correct device!")
 
-
-logging_status = False
 logging_status_dictionary = {True: 'Stop', False: 'Start'}
 
 date_time = 0
@@ -48,6 +46,7 @@ def download_data():
     )
 
 def check_logging_status():
+    
     cron = CronTab(user=getlogin())
     
     for job in cron.find_command('controller.py'):
@@ -61,7 +60,7 @@ def start_logging():
     return
 
 def stop_logging():
-    print("stop logging, setting flase")
+    print("stop logging, setting false")
     logging_status = False
 
     return
@@ -73,8 +72,6 @@ def change_logging_status():
         stop_logging()
     else:
         start_logging()
-
-    print(logging_status, "here")
 
     return render_template(
         'index.html',
