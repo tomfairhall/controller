@@ -61,7 +61,7 @@ def change_logging_status():
 
     if job.is_enabled():
         print("disabiling")
-        job.enable()
+        job.enable(False)
     else:
         print("enabiling")
         job.enable()
