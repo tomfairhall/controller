@@ -1,5 +1,5 @@
 from flask import Flask, render_template, send_file
-from crontab import CronTab
+from crontab import CronTab, CronItem
 from os import getlogin
 
 # Incase running on a machine that isn't a raspberry pi.
@@ -53,17 +53,13 @@ def check_logging_status():
         print(job.is_enabled())
         return job.is_enabled()
 
-def start_logging():
-    print("start logging")
-    logging_status = True
+def start_logging(job):
+    print("start logging, enabiling...")
+    job = CronItem.enable()
 
-    return
-
-def stop_logging():
-    print("stop logging, setting false")
-    logging_status = False
-
-    return
+def stop_logging(job):
+    print("stop logging, disabiling...")
+    job = CronItem.enable(False)
 
 @app.route('/logging_status')
 def change_logging_status():
