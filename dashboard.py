@@ -60,8 +60,10 @@ def change_logging_status():
     job = find_logging_job()
 
     if job.is_enabled():
+        print("disabiling")
         job.enable(False)
     else:
+        print("enabiling")
         job.enable()
 
     return render_template(
