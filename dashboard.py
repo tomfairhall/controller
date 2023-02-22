@@ -1,11 +1,13 @@
 from flask import Flask, render_template, send_file
 from crontab import CronTab
+from os import getlogin
 
 # Incase running on a machine that isn't a raspberry pi.
 try:
     import controller
 except PermissionError:
     print("Not Running on correct device!")
+
 
 logging_status = False
 logging_status_dictionary = {True: 'Stop', False: 'Start'}
@@ -50,15 +52,14 @@ def download_data():
     )
 
 def check_logging_status():
-    cron = CronTab(user="pi")
+    cron = CronTab(user=getlogin())
     
-    iter = cron.find_command('controller.py')
-
-    print("here" + iter)
-
-    return 
+    for job in cron.find_command('controller.py'):
+        return job.is_enabled
 
 def start_logging():
+    cron = CronTab(user=getlogin())
+    
     return
 
 def stop_logging():
@@ -76,7 +77,4 @@ def start_recording():
 
 # only run when directly called
 if __name__ == '__main__':
-  
-  check_logging_status()
-  
-  #app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0')
