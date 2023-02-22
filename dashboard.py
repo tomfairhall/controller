@@ -23,6 +23,8 @@ def index():
 
     date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
 
+    print("1:", light_Lx_ave)
+
     return render_template(
         'index.html',
         date_time = date_time,
