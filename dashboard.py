@@ -21,7 +21,7 @@ def index():
 
     job, _ = find_logging_job()
 
-    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
+    global date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
 
     print("1:", light_Lx_ave)
 
