@@ -54,7 +54,7 @@ def check_logging_status():
     
     iter = cron.find_command('controller.py')
 
-    print(iter)
+    print("here" + iter)
 
     return 
 
