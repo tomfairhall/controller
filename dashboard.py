@@ -71,7 +71,7 @@ def logging_status():
     if check_logging_status():
         stop_logging()
     else:
-        stop_logging()
+        start_logging()
 
     return render_template(
         'index.html',
