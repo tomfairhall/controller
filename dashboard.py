@@ -74,7 +74,7 @@ def logging_status():
     else:
         start_logging()
 
-    print(logging_status, + "here")
+    print(logging_status, "here")
 
     return render_template(
         'index.html',
