@@ -53,21 +53,22 @@ def check_logging_status():
         print(job.is_enabled())
         return job.is_enabled()
 
-def start_logging(job):
-    print("start logging, enabiling...")
-    job = CronItem.enable()
-
-def stop_logging(job):
-    print("stop logging, disabiling...")
-    job = CronItem.enable(False)
+def find_logging_job():
+    
+    cron = CronTab(user=getlogin())
+    
+    for job in cron.find_command('controller.py'):
+        return job
 
 @app.route('/logging_status')
 def change_logging_status():
 
-    if check_logging_status():
-        stop_logging()
+    job = find_logging_job()
+
+    if job.is_enabled():
+        job.enable(False)
     else:
-        start_logging()
+        job.enable()
 
     return render_template(
         'index.html',
