@@ -1,4 +1,4 @@
-function change_status_button() {
+function change_logging_status_button() {
 
     var element = document.getElementById("logging_status_button");
 
