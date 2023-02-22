@@ -57,7 +57,7 @@ def find_logging_job():
 @app.route('/logging_status')
 def change_logging_status():
 
-    job, cron = find_logging_job()
+    (job, cron) = find_logging_job()
 
     if job.is_enabled():
         print("disabiling")
