@@ -55,16 +55,18 @@ def check_logging_status():
 
 def start_logging():
     print("start logging")
-    
+    logging_status = True
+
     return
 
 def stop_logging():
     print("stop logging")
+    logging_status = False
 
     return
 
 @app.route('/logging_status')
-def loggin_status():
+def logging_status():
 
     if check_logging_status():
         stop_logging()
