@@ -67,7 +67,7 @@ def stop_logging():
     return
 
 @app.route('/logging_status')
-def logging_status():
+def change_logging_status():
 
     if check_logging_status():
         stop_logging()
