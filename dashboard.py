@@ -8,8 +8,6 @@ try:
 except PermissionError:
     print("Not Running on correct device!")
 
-logging_ability_dictionary = {True: 'Stop', False: 'Start'}
-
 app = Flask(__name__)
 
 # If webserver connect or data is requested serve index page
@@ -27,7 +25,7 @@ def index():
         pressure = pres_HPa_ave,
         humidity = hum_RH_ave,
         lux = light_Lx_ave,
-        logging_ability = logging_ability_dictionary[job.is_enabled()])
+        logging_ability = job.is_enabled())
 
 # If download button is clicked, the CSV file will download
 @app.route('/download_data')
@@ -63,8 +61,6 @@ def change_logging_ability():
 
     cron.write()
 
-    print(logging_ability_dictionary[job.is_enabled()])
-
     return render_template(
         'index.html',
         date_time = date_time,
@@ -72,7 +68,7 @@ def change_logging_ability():
         pressure = pres_HPa_ave,
         humidity = hum_RH_ave,
         lux = light_Lx_ave,
-        logging_ability = logging_ability_dictionary[job.is_enabled()])
+        logging_ability = job.is_enabled())
 
 # only run when directly called
 if __name__ == '__main__':
