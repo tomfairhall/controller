@@ -26,6 +26,7 @@ def find_logged_data(number = 48):
             logged_data.update({measurement[0]: measurement[1:]})
 
     print(logged_data)
+    print("\n")
     return logged_data
 
 # If webserver connect or data is requested serve index page
