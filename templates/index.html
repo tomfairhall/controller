@@ -53,31 +53,31 @@
                 new Chart(ctx, {
                   type: 'line',
                   data: {
-                    labels: [ {{data_titles}} ],
+                    labels: [ {{ logged_data[0] }} ],
                     datasets: [
                     {
                       label: 'Temperature',
-                      data: [12, 19, 3, 5, 2, 3],
+                      data: [ {{ logged_data[1] }}],
                       borderWidth: 1
                     },
                     {
                       label: 'Pressure',
-                      data: [12, 3, 3, 5, 2, 5],
+                      data: [ {{ logged_data[2] }}],
                       borderWidth: 1
                     },                    
                     {
                       label: 'Temperature',
-                      data: [12, 19, 3, 5, 2, 3],
+                      data: [ {{ logged_data[3] }}],
                       borderWidth: 1
                     },                    
                     {
                       label: 'Humidity',
-                      data: [3, 19, 3, 5, 2, 3],
+                      data: [ {{ logged_data[4] }}],
                       borderWidth: 1
                     },                    
                     {
                       label: 'Lux',
-                      data: [12, 19, 3, 3, 2, 3],
+                      data: [ {{ logged_data[5] }}],
                       borderWidth: 1
                     }]
                   },
