@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_file
+from flask import Flask, render_template, send_file, redirect, url_for
 from crontab import CronTab, CronItem
 from os import getlogin
 
@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 # If webserver connect or data is requested serve index page
 @app.route('/')
-@app.route('/request_data')
+#@app.route('/request_data')
 def index():
 
     job, _ = find_logging_job()
@@ -61,14 +61,7 @@ def change_logging_ability():
 
     cron.write()
 
-    return render_template(
-        'index.html',
-        date_time = date_time,
-        temperature = temp_C_ave,
-        pressure = pres_HPa_ave,
-        humidity = hum_RH_ave,
-        lux = light_Lx_ave,
-        logging_ability = job.is_enabled())
+    return redirect(url_for('index'))
 
 # only run when directly called
 if __name__ == '__main__':
