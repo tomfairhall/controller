@@ -53,39 +53,37 @@
                 new Chart(ctx, {
                   type: 'line',
                   data: {
-                    labels: [ {{ logged_data[0] }} ],
+                    labels: [ {% for data in logged_data[0] %} {{ data }} {% endfor %}],
                     datasets: [
                     {
                       label: 'Temperature',
-                      data: [ {{ logged_data[1] }}],
+                      labels: [ {% for data in logged_data[1] %} {{ data }} {% endfor %}],
                       borderWidth: 1
                     },
                     {
                       label: 'Pressure',
-                      data: [ {{ logged_data[2] }}],
+                      data: [ {{ logged_data[2] }}] ,
                       borderWidth: 1
                     },                    
                     {
                       label: 'Temperature',
-                      data: [ {{ logged_data[3] }}],
+                      data: [ {{ logged_data[3] }} ],
                       borderWidth: 1
                     },                    
                     {
                       label: 'Humidity',
-                      data: [ {{ logged_data[4] }}],
+                      data: [ {{ logged_data[4] }} ],
                       borderWidth: 1
                     },                    
                     {
                       label: 'Lux',
-                      data: [ {{ logged_data[5] }}],
+                      data: [ {{ logged_data[5] }} ],
                       borderWidth: 1
                     }]
                   },
                   options: {
                     scales: {
-                      y: {
-                        beginAtZero: true
-                      }
+
                     }
                   }
                 });
