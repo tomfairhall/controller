@@ -56,8 +56,10 @@ def change_logging_ability():
 
     if job.is_enabled():
         job.enable(False)
+        print("Logging is disabled")
     else:
         job.enable()
+        print("Logging is enabled")
 
     cron.write()
 
