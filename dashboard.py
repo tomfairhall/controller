@@ -48,17 +48,15 @@ def find_logging_job():
         return job, cron
 
 # If Start/Stop Logging button is clicked, the logging cron job will be enabled/disabled
-@app.route('/logging_status')
-def change_logging_status():
+@app.route('/logging_ability')
+def change_logging_ability():
 
     job, cron = find_logging_job()
     date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
 
     if job.is_enabled():
-        print("disabiling")
         job.enable(False)
     else:
-        print("enabiling")
         job.enable()
 
     cron.write()
@@ -70,7 +68,7 @@ def change_logging_status():
         pressure = pres_HPa_ave,
         humidity = hum_RH_ave,
         lux = light_Lx_ave,
-        logging_status = logging_status_dictionary[job.is_enabled()])
+        logging_ability = logging_status_dictionary[job.is_enabled()])
 
 # only run when directly called
 if __name__ == '__main__':

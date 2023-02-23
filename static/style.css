@@ -10,10 +10,14 @@ h1 {
     
 }
 
-#current-data, #recorded-data {
+.border {
     border: 1px solid black;
     padding: 1%;
     margin-bottom: 1%;
+}
+
+.internal {
+    margin: 1em;
 }
 
 h2 {
@@ -22,6 +26,9 @@ h2 {
 
 h3 {
     margin: 0;
+    font-style: italic;
+    color: gray;
+    font-size: 0.9em;
 }
 
 button {

@@ -10,12 +10,13 @@
     <link rel="stylesheet"  type="text/css"     href="../static/style.css">
 </head>
 
-<body onload="change_logging_status_button()">
+<body onload="check()">
     <div class="center">
         <h1>System Dashboard</h1>
 
-        <div id="current-data">
+        <div class="border">
             <h2>Current Data</h2>
+            <h3>Request & View Current System Data</h3>
             <button onclick="window.location.href='request_data';">Request Data</button>
             <div style="overflow-x:auto;">
                 <table class="center">
@@ -37,10 +38,30 @@
             </div>
         </div>
 
-        <div id="recorded-data">
+        <div class="border">
             <h2>Logged Data</h2>
+            <h3>Download & Start/Stop System Data Logging</h3>
             <button onclick="window.location.href='download_data';">Download Data</button>
-            <button onclick="window.location.href='logging_status';" id="logging_status_button">{{logging_status}} Logging</button>
+            <input type="checkbox" id="checkbox-logging-ability" onclick="window.location.hrf='logging_ability'" {{ "checked" if loggin_status else "" }}>
+            <label for="checkbox-logging-ability">Enable Logging</label>
+
+        </div>
+
+        <div class="border">
+            <h2>System Control</h2>
+            <h3>Control System Acuators</h3>
+
+            <div class="internal">
+                <input type="checkbox" id="checkbox-light">
+                <label for="checkbox-light">Enable Light</label>
+
+                <input type="checkbox" id="checkbox-airpump" checked>
+                <label for="checkbox-airpump">Enable Airpump</label>
+
+                <input type="checkbox" id="checkbox-fan">
+                <label for="checkbox-fan">Enable Fan</label>
+            </div>
+
         </div>
 
     </div>
