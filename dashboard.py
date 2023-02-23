@@ -1,6 +1,7 @@
 from flask import Flask, render_template, send_file, redirect, url_for
 from crontab import CronTab, CronItem
 from os import getlogin
+import csv
 
 # Incase running on a machine that isn't a raspberry pi.
 try:
@@ -8,15 +9,34 @@ try:
 except PermissionError:
     print("Not Running on correct device!")
 
+DATA_PATH = "data.csv"
+
 app = Flask(__name__)
+
+def find_logged_data(number = 48):
+
+    logged_data = {}
+
+    with open(DATA_PATH, 'r', newline='') as file:
+        reader = csv.reader(file)
+        measurements = list(reader)
+
+        # In the CSV file iterate from the line number minus given number to end of the file
+        for measurement in measurements[-number:]:
+            logged_data.update({measurement[0]: measurement[1:]})
+
+    print(logged_data)
+    return logged_data
 
 # If webserver connect or data is requested serve index page
 @app.route('/')
-#@app.route('/request_data')
 def index():
 
     job, _ = find_logging_job()
     date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
+    logged_data = find_logged_data()
+
+    controller.HEADER
 
     return render_template(
         'index.html',
@@ -25,16 +45,18 @@ def index():
         pressure = pres_HPa_ave,
         humidity = hum_RH_ave,
         lux = light_Lx_ave,
+        data_titles = list(logged_data.keys()),
+        data_values = list(logged_data.values()),
         logging_ability = job.is_enabled())
 
 # If download button is clicked, the CSV file will download
 @app.route('/download_data')
 def download_data():
 
-    path = "data.csv"
+    DATA_PATH = "data.csv"
 
     return send_file(
-       path,
+       DATA_PATH,
        as_attachment=True
     )
 

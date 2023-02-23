@@ -1,10 +1,3 @@
-# Controller
-#* VERSION:
-# v0.1.0
-#* NOTES:
-# CSV file order: date-time, temp, pressure, humidity, lux
-# Cron Job running every 30 mins: */30 * * * * /usr/bin/python3 /home/admin/Documents/controller/main.py
-
 import argparse
 import csv
 from statistics import mean
@@ -14,14 +7,14 @@ from PiicoDev_VEML6030 import PiicoDev_VEML6030
 
 HEADER = ["Date-Time", "Temperature", "Pressure", "Humidity", "Lux"]
 
-# initialize the input argument parser
+# Initialize the input argument parser
 parser = argparse.ArgumentParser()
 
-# add arguments
+# Add arguments
 parser.add_argument("-r", "--read", help="read measurements to terminal", action="store_true")
 parser.add_argument("-w", "--write", help="write measurements to file", action="store_true")
 
-# parse input arguments
+# Parse input arguments
 args = parser.parse_args()
 
 def measure_data(sample_size = 3):
@@ -62,7 +55,7 @@ def measure_data(sample_size = 3):
 
 date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
-# output handling
+# Output handling
 if(args.read):
     print("Date-Time:", date_time)
     print("Temperature:", str(temp_C_ave) + "°C")
@@ -70,7 +63,7 @@ if(args.read):
     print("Humidity:", str(hum_RH_ave) + "RH")
     print("Lux:", str(light_Lx_ave) + "lx")
 elif(args.write):
-    # open, or create a file in append mode and write the environmental variables to a cvs file
+    # Open, or create a file in append mode and write the environmental variables to a cvs file
     with open('/home/pi/Documents/controller/data.csv', 'a', newline='') as file:      
         writer = csv.writer(file)
         writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])

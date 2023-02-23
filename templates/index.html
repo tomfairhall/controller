@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Dashboard</title>
     <script type="text/javascript" src="../static/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="icon"        type="image/x-icon" href="../static/favicon.ico">
     <link rel="stylesheet"  type="text/css"     href="../static/style.css">
 </head>
 
-<body onload="check()">
+<body>
     <div class="center">
         <h1>System Dashboard</h1>
 
@@ -41,6 +42,55 @@
         <div class="border">
             <h2>Logged Data</h2>
             <h3>Download & Start/Stop System Data Logging</h3>
+
+            <div>
+                <canvas id="logged-data-chart"></canvas>
+            </div>
+              
+            <script>
+                const ctx = document.getElementById('logged-data-chart');
+              
+                new Chart(ctx, {
+                  type: 'line',
+                  data: {
+                    labels: [ {{data_titles}} ],
+                    datasets: [
+                    {
+                      label: 'Temperature',
+                      data: [12, 19, 3, 5, 2, 3],
+                      borderWidth: 1
+                    },
+                    {
+                      label: 'Pressure',
+                      data: [12, 3, 3, 5, 2, 5],
+                      borderWidth: 1
+                    },                    
+                    {
+                      label: 'Temperature',
+                      data: [12, 19, 3, 5, 2, 3],
+                      borderWidth: 1
+                    },                    
+                    {
+                      label: 'Humidity',
+                      data: [3, 19, 3, 5, 2, 3],
+                      borderWidth: 1
+                    },                    
+                    {
+                      label: 'Lux',
+                      data: [12, 19, 3, 3, 2, 3],
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+            </script>
+
             <button onclick="window.location.href='download_data';">Download Data</button>
             <input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>
             <label for="checkbox-logging-ability">Enable Logging</label>
@@ -55,7 +105,7 @@
                 <input type="checkbox" id="checkbox-light">
                 <label for="checkbox-light">Enable Light</label>
 
-                <input type="checkbox" id="checkbox-airpump" checked>
+                <input type="checkbox" id="checkbox-airpump">
                 <label for="checkbox-airpump">Enable Airpump</label>
 
                 <input type="checkbox" id="checkbox-fan">
