@@ -8,7 +8,7 @@ try:
 except PermissionError:
     print("Not Running on correct device!")
 
-logging_status_dictionary = {True: 'Stop', False: 'Start'}
+logging_ability_dictionary = {True: 'Stop', False: 'Start'}
 
 app = Flask(__name__)
 
@@ -27,7 +27,7 @@ def index():
         pressure = pres_HPa_ave,
         humidity = hum_RH_ave,
         lux = light_Lx_ave,
-        logging_status = logging_status_dictionary[job.is_enabled()])
+        logging_ability = logging_ability_dictionary[job.is_enabled()])
 
 # If download button is clicked, the CSV file will download
 @app.route('/download_data')
@@ -70,7 +70,7 @@ def change_logging_ability():
         pressure = pres_HPa_ave,
         humidity = hum_RH_ave,
         lux = light_Lx_ave,
-        logging_ability = logging_status_dictionary[job.is_enabled()])
+        logging_ability = logging_ability_dictionary[job.is_enabled()])
 
 # only run when directly called
 if __name__ == '__main__':
