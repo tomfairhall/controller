@@ -15,18 +15,15 @@ app = Flask(__name__)
 
 def find_logged_data(number = 48):
 
-    logged_data = {}
+    logged_data = []
 
+    # Open data csv file
     with open(DATA_PATH, 'r', newline='') as file:
         reader = csv.reader(file)
-        measurements = list(reader)
 
-        # In the CSV file iterate from the line number minus given number to end of the file
-        for measurement in measurements[-number:]:
-            logged_data.update({measurement[0]: measurement[1:]})
+        logged_data = zip(*[map(int, row) for row in reader])
 
     print(logged_data)
-    print("\n")
     return logged_data
 
 # If webserver connect or data is requested serve index page
