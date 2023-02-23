@@ -63,6 +63,8 @@ def change_logging_ability():
 
     cron.write()
 
+    print(logging_ability_dictionary[job.is_enabled()])
+
     return render_template(
         'index.html',
         date_time = date_time,
