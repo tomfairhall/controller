@@ -43,52 +43,6 @@
             <h2>Logged Data</h2>
             <h3>Download & Start/Stop System Data Logging</h3>
 
-            <div>
-                <canvas id="logged-data-chart"></canvas>
-            </div>
-              
-            <script>
-                const ctx = document.getElementById('logged-data-chart');
-              
-                new Chart(ctx, {
-                  type: 'line',
-                  data: {
-                    labels: [ {% for data in logged_data[0] %} {{ data }} {% endfor %}],
-                    datasets: [
-                    {
-                      label: 'Temperature',
-                      labels: [ {% for data in logged_data[1] %} {{ data }} {% endfor %}],
-                      borderWidth: 1
-                    },
-                    {
-                      label: 'Pressure',
-                      data: [ {{ logged_data[2] }}] ,
-                      borderWidth: 1
-                    },                    
-                    {
-                      label: 'Temperature',
-                      data: [ {{ logged_data[3] }} ],
-                      borderWidth: 1
-                    },                    
-                    {
-                      label: 'Humidity',
-                      data: [ {{ logged_data[4] }} ],
-                      borderWidth: 1
-                    },                    
-                    {
-                      label: 'Lux',
-                      data: [ {{ logged_data[5] }} ],
-                      borderWidth: 1
-                    }]
-                  },
-                  options: {
-                    scales: {
-
-                    }
-                  }
-                });
-            </script>
-
             <button onclick="window.location.href='download_data';">Download Data</button>
             <input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>
             <label for="checkbox-logging-ability">Enable Logging</label>

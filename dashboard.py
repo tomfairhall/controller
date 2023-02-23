@@ -13,23 +13,12 @@ DATA_PATH = "data.csv"
 
 app = Flask(__name__)
 
-def find_logged_data(number = 48):
-
-    # Open data csv file
-    with open(DATA_PATH, 'r', newline='') as file:
-
-        reader = csv.reader(file)
-        logged_data = zip(*[map(int, row) for row in reader])
-
-    return logged_data
-
 # If webserver connect or data is requested serve index page
 @app.route('/')
 def index():
 
     job, _ = find_logging_job()
     date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
-    logged_data = find_logged_data()
 
     controller.HEADER
 
@@ -40,7 +29,6 @@ def index():
         pressure = pres_HPa_ave,
         humidity = hum_RH_ave,
         lux = light_Lx_ave,
-        logged_data = logged_data,
         logging_ability = job.is_enabled())
 
 # If download button is clicked, the CSV file will download
