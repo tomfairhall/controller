@@ -12,7 +12,6 @@ DATA_FILE_PATH = '/home/pi/Documents/controller/data.csv'
 parser = argparse.ArgumentParser()
 
 # Add arguments
-parser.add_argument("-r", "--read", help="read measurements to terminal", action="store_true")
 parser.add_argument("-w", "--write", help="write measurements to file", action="store_true")
 
 # Parse input arguments.
@@ -57,17 +56,15 @@ def measure_data(sample_size = 3):
 
 date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
-# Print measurement to terminal or save to data file.
-if(args.read):
-    print("Date-Time:", date_time)
-    print("Temperature:", str(temp_C_ave) + "°C")
-    print("Pressure:", str(pres_HPa_ave) + "HPa")
-    print("Humidity:", str(hum_RH_ave) + "RH")
-    print("Lux:", str(light_Lx_ave) + "lx")
-elif(args.write):
+if(args.write):
     # Open, or create a file in append mode and write the environmental variables to a cvs file.
     with open(DATA_FILE_PATH, 'a', newline='') as file:      
         writer = csv.writer(file)
         writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
 else:
-    print("Please enter correct input argument")
+    # Print measurement to terminal or save to data file.
+    print("Date-Time:\t", date_time)
+    print("Temperature\t:", str(temp_C_ave) + "°C")
+    print("Pressure:\t", str(pres_HPa_ave) + "HPa")
+    print("Humidity:\t", str(hum_RH_ave) + "RH")
+    print("Lux:\t", str(light_Lx_ave) + "lx")
