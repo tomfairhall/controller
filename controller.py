@@ -4,8 +4,9 @@ from statistics import mean
 from datetime import datetime
 from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
+from os import path
 
-HEADER = ["Date-Time", "Temperature", "Pressure", "Humidity", "Lux"]
+HEADER = ["Date-Time", "Temperature (°C)", "Pressure (HPa)", "Humidity (RH)", "Lux (lx)"]
 DATA_FILE_PATH = '/home/pi/Documents/controller/data.csv'
 
 # Initialize the input argument parser.
@@ -57,6 +58,12 @@ def measure_data(sample_size = 3):
 date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
 if(args.write):
+
+    if (not path.exists(DATA_FILE_PATH)):
+        with open(DATA_FILE_PATH, 'a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(HEADER)
+
     # Open, or create a file in append mode and write the environmental variables to a cvs file.
     with open(DATA_FILE_PATH, 'a', newline='') as file:      
         writer = csv.writer(file)
