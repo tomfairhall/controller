@@ -62,7 +62,7 @@ if(args.write):
         writer = csv.writer(file)
         writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
 else:
-    # Print measurement to terminal or save to data file.
+    # Print measurement
     print("Date-Time:\t", date_time)
     print("Temperature:\t", str(temp_C_ave) + "°C")
     print("Pressure:\t", str(pres_HPa_ave) + "HPa")
