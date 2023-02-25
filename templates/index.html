@@ -44,13 +44,13 @@
 
             <button onclick="checkData()">Download Data</button>
             <script>
-                const name = {{file_exists}};
+                const exists = {{file_exists}};
 
                 function checkData() {
-                    if (name) {
-                        window.location.href='download_data'
+                    if (exists) {
+                        window.location.href='download_data';
                     } else {
-                        alert('File does not exist!')
+                        alert('File does not exist!');
                     }
                 }
             </script>
