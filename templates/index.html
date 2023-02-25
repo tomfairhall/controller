@@ -43,25 +43,7 @@
             <h3>Download & Start/Stop System Data Logging</h3>
 
             <button onclick="checkData()">Download Data</button>
-            <script>
-                function checkData() {
-                    const exists = {{file_exists|int}};
-
-                    if (exists) {
-                        window.location.href='download_data';
-                    } else {
-                        alert('File does not exist!');
-                    }
-                }
-            </script>
             <button onclick="deleteData()">Delete Data</button>
-            <script>
-                function deleteData() {
-                    if (confirm('Are you sure you want to delete saved data?')) {
-                        window.location.href='delete_data';
-                    }
-                }
-            </script>
             <input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>
             <label for="checkbox-logging-ability">Enable Logging</label>
 
