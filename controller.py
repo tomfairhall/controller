@@ -64,7 +64,7 @@ if(args.write):
 else:
     # Print measurement to terminal or save to data file.
     print("Date-Time:\t", date_time)
-    print("Temperature\t:", str(temp_C_ave) + "°C")
+    print("Temperature:\t", str(temp_C_ave) + "°C")
     print("Pressure:\t", str(pres_HPa_ave) + "HPa")
     print("Humidity:\t", str(hum_RH_ave) + "RH")
-    print("Lux:\t", str(light_Lx_ave) + "lx")
+    print("Lux:\t\t", str(light_Lx_ave) + "lx")
