@@ -44,9 +44,9 @@
 
             <button onclick="checkData()">Download Data</button>
             <script>
-                const exists = {{file_exists}};
-
                 function checkData() {
+                    const exists = {{file_exists}};
+                    
                     if (exists) {
                         window.location.href='download_data';
                     } else {
