@@ -59,12 +59,13 @@ date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
 if(args.write):
 
+    # If data file does not exist, create it and add header row.
     if (not path.exists(DATA_FILE_PATH)):
         with open(DATA_FILE_PATH, 'a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(HEADER)
 
-    # Open, or create a file in append mode and write the environmental variables to a cvs file.
+    # Open data file in append mode and write the environmental variables.
     with open(DATA_FILE_PATH, 'a', newline='') as file:      
         writer = csv.writer(file)
         writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])

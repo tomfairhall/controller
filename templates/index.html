@@ -8,19 +8,19 @@
     <title>System Dashboard</title>
     <script  src={{ url_for('static', filename='script.js') }}></script>
     <script> const exists = {{ file_exists|int }}; </script>
-    <link rel="icon"        type="image/x-icon" href="../static/favicon.ico">
-    <link rel="stylesheet"  type="text/css"     href="../static/style.css">
+    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
 </head>
 
 <body>
     <div class="center">
-        <h1>System Dashboard</h1>
+        <h1>System Dashboard 🌱</h1>
 
-        <label for="system-drop-down">Choose a system</label>
+        <label for="system-drop-down">Display System:</label>
         <select id="system-drop-down">
-            <option>System X</option>
-            <option>System Y</option>
-            <option>System Z</option>
+            <option>X</option>
+            <option>Y</option>
+            <option>Z</option>
         </select>
         <button>Submit</button>
 
