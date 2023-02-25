@@ -16,9 +16,17 @@
     <div class="center">
         <h1>System Dashboard</h1>
 
-        <div class="border">
+        <label for="system-drop-down">Choose a system</label>
+        <select id="system-drop-down">
+            <option>System X</option>
+            <option>System Y</option>
+            <option>System Z</option>
+        </select>
+        <button>Submit</button>
+
+        <div class="content">
             <h2>Current Data</h2>
-            <h3>Request & View Current System Data</h3>
+            <p>Request & View Current System Data</p>
             <button onclick="window.location.href='';">Request Data</button>
             <div style="overflow-x:auto;">
                 <table class="center">
@@ -40,9 +48,9 @@
             </div>
         </div>
 
-        <div class="border">
+        <div class="content">
             <h2>Logged Data</h2>
-            <h3>Download & Start/Stop System Data Logging</h3>
+            <p>Download & Start/Stop System Data Logging</p>
 
             <button onclick="checkData()">Download Data</button>
             <button onclick="deleteData()">Delete Data</button>
@@ -51,9 +59,9 @@
 
         </div>
 
-        <div class="border">
+        <div class="content">
             <h2>System Control</h2>
-            <h3>Control System Acuators</h3>
+            <p>Control System Acuators</p>
 
             <div class="internal">
                 <input type="checkbox" id="checkbox-light">
@@ -65,6 +73,8 @@
                 <input type="checkbox" id="checkbox-fan">
                 <label for="checkbox-fan">Enable Fan</label>
             </div>
+
+            <button>Take Picture</button>
 
         </div>
 

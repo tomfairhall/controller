@@ -7,8 +7,6 @@ try:
 except PermissionError:
     print("Not Running on correct device!")
 
-DATA_PATH = "data.csv"
-
 app = Flask(__name__)
 
 # Main page.
@@ -28,6 +26,7 @@ def index():
         logging_ability = job.is_enabled(),
         file_exists = find_data_file())
 
+# Check that data file exists
 def find_data_file():
     return path.exists(DATA_FILE_PATH)
 
@@ -39,8 +38,6 @@ def download_data():
     DATA_FILE_PATH,
     as_attachment=True)
 
-
-
 # If delete data button is clicked, the CSV file will be deleted.
 @app.route('/delete_data')
 def delete_data():
@@ -49,6 +46,7 @@ def delete_data():
 
     return redirect(url_for('index'))
 
+# Find the data logging function
 def find_logging_job():
     
     cron = CronTab(user=getlogin())
