@@ -1,5 +1,4 @@
 function checkData() {
-    const exists = {{ file_exists|int }};
 
     if (exists) {
         window.location.href='download_data';
@@ -9,8 +8,7 @@ function checkData() {
 }
 
 function deleteData() {
-    const exists = {{ file_exists|int} };
-    
+   
     if (exists && confirm('Are you sure you want to delete saved data?')) {
         window.location.href='delete_data'
     } else {
