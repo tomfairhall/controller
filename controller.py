@@ -2,8 +2,10 @@ import argparse
 import csv
 from statistics import mean
 from datetime import datetime
+from PiicoDev_RGB import PiicoDev_RGB
 from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
+from PiicoDev_TMP117 import PiicoDev_TMP117
 from os import path
 
 HEADER = ["Date-Time", "Temperature (°C)", "Pressure (HPa)", "Humidity (RH)", "Lux (lx)"]
@@ -24,6 +26,7 @@ def measure_data(sample_size = 3):
     # Initialise the sensors.
     bme280 = PiicoDev_BME280()
     veml6030 = PiicoDev_VEML6030()
+    tmp117 = PiicoDev_TMP117(asw=[1,0,0,0])
 
     # Read and assign initial altitude reading.
     zero_alt = bme280.altitude()
@@ -39,8 +42,9 @@ def measure_data(sample_size = 3):
 
     for x in range(sample_size):
         # Read and assign the sensor values.
-        temp_C, pres_Pa, hum_RH = bme280.values()
+        _, pres_Pa, hum_RH = bme280.values()
         light_Lx = veml6030.read()
+        temp_C = tmp117.readTempC()
 
         temp_C_values.append(temp_C)
         pres_HPa_values.append(pres_Pa/100)
