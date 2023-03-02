@@ -26,7 +26,7 @@ def measure_data(sample_size = 3):
     # Initialise the sensors.
     bme280 = PiicoDev_BME280()
     veml6030 = PiicoDev_VEML6030()
-    tmp117 = PiicoDev_TMP117(asw=[1,0,0,0])
+    tmp117 = PiicoDev_TMP117()
 
     # Read and assign initial altitude reading.
     zero_alt = bme280.altitude()
