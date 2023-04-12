@@ -33,7 +33,7 @@ def find_data_file():
 # If download button is clicked, the CSV file will be download.
 @app.route('/download_data')
 def download_data():
-    
+
     return send_file(
     DATA_FILE_PATH,
     as_attachment=True)
@@ -46,13 +46,14 @@ def delete_data():
 
     return redirect(url_for('index'))
 
-# Find the data logging function
+# Find the data logging function.
 def find_logging_job():
-    
+
     cron = CronTab(user=getlogin())
-    
+
     for job in cron.find_command('controller.py -w'):
         return job, cron
+
 
 # If Start/Stop Logging button is clicked, the logging cron job will be enabled/disabled.
 @app.route('/logging_ability')
@@ -62,15 +63,13 @@ def change_logging_ability():
 
     if job.is_enabled():
         job.enable(False)
-        print("Logging is disabled")
     else:
         job.enable()
-        print("Logging is enabled")
 
     cron.write()
 
     return redirect(url_for('index'))
 
-# only run when directly called
+# Only run when directly called.
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

@@ -9,12 +9,12 @@ from PiicoDev_TMP117 import PiicoDev_TMP117
 from os import path
 
 HEADER = ["Date-Time", "Temperature (°C)", "Pressure (HPa)", "Humidity (RH)", "Lux (lx)"]
-DATA_FILE_PATH = '/home/pi/Documents/controller/data.csv'
+DATA_FILE_PATH = '/home/controller/data.csv'
 
 # Initialize the input argument parser.
 parser = argparse.ArgumentParser()
 
-# Add arguments
+# Add argument(s).
 parser.add_argument("-w", "--write", help="write measurements to file", action="store_true")
 
 # Parse input arguments.
@@ -50,14 +50,14 @@ def measure_data(sample_size = 3):
         pres_HPa_values.append(pres_Pa/100)
         hum_RH_values.append(hum_RH)
         light_Lx_values.append(light_Lx)
-    
+
     # Find average of measurement values.
     temp_C_ave = round(mean(temp_C_values), 2)
     pres_HPa_ave = round(mean(pres_HPa_values), 2)
     hum_RH_ave = round(mean(hum_RH_values), 2)
     light_Lx_ave = round(mean(light_Lx_values), 2)
 
-    return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave    
+    return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
 date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
@@ -70,7 +70,7 @@ if(args.write):
             writer.writerow(HEADER)
 
     # Open data file in append mode and write the environmental variables.
-    with open(DATA_FILE_PATH, 'a', newline='') as file:      
+    with open(DATA_FILE_PATH, 'a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
 else:
