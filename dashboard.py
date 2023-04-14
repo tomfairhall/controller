@@ -44,9 +44,9 @@ def find_connection_strength():
     result = run(["iwconfig","wlan0"], text=True, capture_output=True)
 
     link_index_start = result.stdout.find(link_start)
-    link_index_end = result.stdout.find(link_end, link_index_end)
+    link_index_end = result.stdout.find(link_end, link_index_start)
     signal_index_start = result.stdout.find(signal_start)
-    signal_index_end = result.stdout.find(signal_end, signal_index_end)
+    signal_index_end = result.stdout.find(signal_end, signal_index_start)
 
     index_link_start = link_index_start+len(link_start)
     index_link_end = link_index_end
