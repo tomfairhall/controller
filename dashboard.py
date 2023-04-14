@@ -1,7 +1,7 @@
 from flask import Flask, render_template, send_file, redirect, url_for
 from crontab import CronTab, CronItem
 from os import getlogin, remove, path
-import subprocess
+from subprocess import run
 
 try:
     from controller import measure_data, DATA_FILE_PATH
@@ -9,7 +9,6 @@ except PermissionError:
     print("Not Running on correct device!")
 
 app = Flask(__name__)
-
 
 # Main page.
 @app.route('/')
@@ -39,7 +38,7 @@ def find_connection_strength():
     signal_level_start = "Signal level="
     signal_level_end   = " dBm"
 
-    result = subprocess.run(["iwconfig","wlan0"], text=True, capture_output=True)
+    result = run(["iwconfig","wlan0"], text=True, capture_output=True)
 
     signal_level_index_start = result.stdout.find(signal_level_start)
     signal_level_index_end  = result.stdout.find(signal_level_end, signal_level_index_start)
@@ -48,7 +47,6 @@ def find_connection_strength():
     index_end   = signal_level_index_end
 
     return(int(result.stdout[index_start:index_end]))
-
 
 # If download button is clicked, the CSV file will be download.
 @app.route('/download_data')

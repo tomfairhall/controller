@@ -62,7 +62,6 @@ def measure_data(sample_size = 3):
 date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
 if(args.write):
-
     # If data file does not exist, create it and add header row.
     if (not path.exists(DATA_FILE_PATH)):
         with open(DATA_FILE_PATH, 'a', newline='') as file:
