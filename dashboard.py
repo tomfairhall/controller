@@ -16,7 +16,6 @@ def index():
 
     job, _ = find_logging_job()
     date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
-    wifi_strength = find_connection_strength()
 
     return render_template(
         'index.html',
@@ -27,7 +26,7 @@ def index():
         lux = light_Lx_ave,
         logging_ability = job.is_enabled(),
         file_exists = find_data_file(),
-        wifi_strength = wifi_strength)
+        wifi_strength = find_connection_strength())
 
 # Check that data file exists.
 def find_data_file():
