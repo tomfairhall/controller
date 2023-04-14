@@ -24,6 +24,7 @@
         </select>
         <button>Submit</button>
 
+        <!-- Current Data -->
         <div class="content">
             <h2>Current Data</h2>
             <p>Request & View Current System Data</p>
@@ -48,6 +49,7 @@
             </div>
         </div>
 
+        <!-- Logged Data -->
         <div class="content">
             <h2>Logged Data</h2>
             <p>Download & Start/Stop System Data Logging</p>
@@ -59,6 +61,7 @@
 
         </div>
 
+        <!-- System Control -->
         <div class="content">
             <h2>System Control</h2>
             <p>Control System Acuators</p>
@@ -75,6 +78,23 @@
             </div>
 
             <button>View System</button>
+
+        </div>
+
+        <!-- Controll Infomation -->
+        <div class="content">
+            <h2>Controller Infomation</h2>
+            <p>View Controller Infomation</p>
+
+            <div style="overflow-x:auto;">
+                <table class="center">
+                    <tr>
+                        <th>WiFi Strength</th>
+                    </tr>
+                    <tr>
+                        <td id="wifi-strength">{{ wifi_strength }}</td>
+                    </tr>
+                </table>   
 
         </div>
 
