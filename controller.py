@@ -10,6 +10,9 @@ from os import path
 
 HEADER = ["Date-Time", "Temperature (°C)", "Pressure (HPa)", "Humidity (RH)", "Lux (lx)"]
 DATA_FILE_PATH = '/home/controller/data.csv'
+RED = [255, 0, 0]
+AMBER = [255, 165, 0]
+GREEN = [0, 255, 0]
 
 # Initialize the input argument parser.
 parser = argparse.ArgumentParser()
@@ -79,7 +82,16 @@ date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
 # Controller logic handeler.
 def controller():
+
+    # Always turn LEDs off so that state can be assumed.
+    leds = PiicoDev_RGB()
+    leds.clear()
+
     if(args.write):
+
+        leds.setPixel(0, RED)
+        leds.show()
+
         # If data file does not exist, create it and add header row.
         if (not path.exists(DATA_FILE_PATH)):
             with open(DATA_FILE_PATH, 'a', newline='') as file:
@@ -91,6 +103,10 @@ def controller():
             writer = csv.writer(file)
             writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
     elif(args.read):
+
+        leds.setPixel(0, RED)
+        leds.show()
+
         # Print measurement
         print("Date-Time:\t", date_time)
         print("Temperature:\t", str(temp_C_ave) + "°C")
@@ -98,8 +114,6 @@ def controller():
         print("Humidity:\t", str(hum_RH_ave) + "RH")
         print("Lux:\t\t", str(light_Lx_ave) + "lx")
 
-    # Always turn LEDs off so that state can be assumed.
-    leds = PiicoDev_RGB()
     leds.clear()
 
 controller()

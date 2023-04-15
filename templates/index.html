@@ -49,7 +49,9 @@
                 <button onclick="checkData()">Download Data</button>
                 <button onclick="deleteData()">Delete Data</button>
             </div>
-            <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Enable Logging</label>
+            <div class="internal">
+                <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Enable Logging</label>
+            </div>
         </div>
 
         <!-- System Control -->
