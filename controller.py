@@ -21,6 +21,21 @@ parser.add_argument("-r", "--read", help="read measurements to terminal", action
 # Parse input arguments.
 args = parser.parse_args()
 
+# Turn on all LEDs.
+def light_on():
+
+    leds = PiicoDev_RGB()
+
+    leds.clear()
+    leds.fill([255, 255, 255])
+
+# Turn off all LEDs.
+def light_off():
+
+    leds = PiicoDev_RGB()
+
+    leds.clear()
+
 # Measure data and average 3 times to limit any outliers in measurement.
 def measure_data(sample_size = 3):
 
@@ -62,21 +77,29 @@ def measure_data(sample_size = 3):
 
 date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
-if(args.write):
-    # If data file does not exist, create it and add header row.
-    if (not path.exists(DATA_FILE_PATH)):
+# Controller logic handeler.
+def controller():
+    if(args.write):
+        # If data file does not exist, create it and add header row.
+        if (not path.exists(DATA_FILE_PATH)):
+            with open(DATA_FILE_PATH, 'a', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(HEADER)
+
+        # Open data file in append mode and write the environmental variables.
         with open(DATA_FILE_PATH, 'a', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(HEADER)
+            writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
+    elif(args.read):
+        # Print measurement
+        print("Date-Time:\t", date_time)
+        print("Temperature:\t", str(temp_C_ave) + "°C")
+        print("Pressure:\t", str(pres_HPa_ave) + "HPa")
+        print("Humidity:\t", str(hum_RH_ave) + "RH")
+        print("Lux:\t\t", str(light_Lx_ave) + "lx")
 
-    # Open data file in append mode and write the environmental variables.
-    with open(DATA_FILE_PATH, 'a', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
-elif(args.read):
-    # Print measurement
-    print("Date-Time:\t", date_time)
-    print("Temperature:\t", str(temp_C_ave) + "°C")
-    print("Pressure:\t", str(pres_HPa_ave) + "HPa")
-    print("Humidity:\t", str(hum_RH_ave) + "RH")
-    print("Lux:\t\t", str(light_Lx_ave) + "lx")
+    # Always turn LEDs off so that state can be assumed.
+    leds = PiicoDev_RGB()
+    leds.clear()
+
+controller()

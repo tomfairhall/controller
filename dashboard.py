@@ -5,11 +5,13 @@ from subprocess import run
 from socket import gethostname
 
 try:
-    from controller import measure_data, DATA_FILE_PATH
+    from controller import measure_data, DATA_FILE_PATH, light_on, light_off
 except PermissionError:
     print("Not Running on correct device!")
 
 app = Flask(__name__)
+
+light_state = False
 
 # Main page.
 @app.route('/')
@@ -27,6 +29,7 @@ def index():
         humidity = hum_RH_ave,
         lux = light_Lx_ave,
         logging_ability = job.is_enabled(),
+        lighting_ability = light_state,
         file_exists = find_data_file(),
         wifi_quality = wifi_quality,
         wifi_strength = wifi_strength,
@@ -57,6 +60,14 @@ def find_connection_strength():
 
     return(int(result.stdout[index_link_start:index_link_end]), int(result.stdout[index_signal_start:index_signal_end]))
 
+# Find the data logging function.
+def find_logging_job():
+
+    cron = CronTab(user=getlogin())
+
+    for job in cron.find_command('controller.py -w'):
+        return job, cron
+
 # If download button is clicked, the CSV file will be download.
 @app.route('/download_data')
 def download_data():
@@ -71,15 +82,7 @@ def delete_data():
 
     return redirect(url_for('index'))
 
-# Find the data logging function.
-def find_logging_job():
-
-    cron = CronTab(user=getlogin())
-
-    for job in cron.find_command('controller.py -w'):
-        return job, cron
-
-# If Start/Stop Logging button is clicked, the logging cron job will be enabled/disabled.
+# If enable logging checkbox is clicked, the logging cron job will be enabled/disabled.
 @app.route('/logging_ability')
 def change_logging_ability():
 
@@ -91,6 +94,19 @@ def change_logging_ability():
         job.enable()
 
     cron.write()
+
+    return redirect(url_for('index'))
+
+# If enable light checkbox is clicked, the lights will be enabled/disabled.
+@app.route('/light_ability')
+def change_light_ability():
+
+    if(light_state):
+        light_off()
+        light_state = False
+    else:
+        light_on()
+        light_state = True
 
     return redirect(url_for('index'))
 
