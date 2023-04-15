@@ -11,13 +11,14 @@ except PermissionError:
 
 app = Flask(__name__)
 
+date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
+
 # Main page.
 @app.route('/')
 def index():
 
     job, _ = find_logging_job()
     wifi_quality, wifi_strength = find_connection_strength()
-    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = update_data()
 
     return render_template(
         'index.html',
@@ -65,20 +66,17 @@ def find_logging_job():
     for job in cron.find_command('controller.py -w'):
         return job, cron
 
-def update_data(update = False):
-    date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
-
-    if(update):
-        date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
-
-    return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
-
-
 # If request data button is clicked, the data will be measured and displayed.
 @app.route('/request_data')
 def request_data():
 
-    update_data(True)
+    global date_time
+    global temp_C_ave
+    global pres_HPa_ave
+    global hum_RH_ave
+    global light_Lx_ave
+
+    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
     return redirect(url_for('index'))
 
