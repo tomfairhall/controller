@@ -57,13 +57,14 @@
             <h2>System Control</h2>
             <p>Control System Acuators</p>
             <div class="internal">
-                <label for="checkbox-light"><input type="checkbox" id="checkbox-light" onclick="window.location.href='lighting_ability'" {{ "checked" if lighting_ability else "" }}>Enable Light</label>
                 <label for="checkbox-grow-light"><input type="checkbox" id="checkbox-grow-light">Enable Grow Light</label>
                 <label for="checkbox-airpump"><input type="checkbox" id="checkbox-airpump">Enable Airpump</label>
                 <label for="checkbox-fan"><input type="checkbox" id="checkbox-fan">Enable Fan</label>
             </div>
             <div class="internal">
                 <button>View System</button>
+                <button onclick="window.location.href='light_on'">Light On</button>
+                <button onclick="window.location.href='light_off'">Light Off</button>
             </div>
         </div>
 

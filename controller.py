@@ -22,7 +22,7 @@ parser.add_argument("-r", "--read", help="read measurements to terminal", action
 args = parser.parse_args()
 
 # Turn on all LEDs.
-def light_on():
+def leds_on():
 
     leds = PiicoDev_RGB()
 
@@ -30,7 +30,7 @@ def light_on():
     leds.fill([255, 255, 255])
 
 # Turn off all LEDs.
-def light_off():
+def leds_off():
 
     leds = PiicoDev_RGB()
 

@@ -5,13 +5,11 @@ from subprocess import run
 from socket import gethostname
 
 try:
-    from controller import measure_data, DATA_FILE_PATH, light_on, light_off
+    from controller import measure_data, DATA_FILE_PATH, leds_on, leds_off
 except PermissionError:
     print("Not Running on correct device!")
 
 app = Flask(__name__)
-
-light_state = False
 
 # Main page.
 @app.route('/')
@@ -29,7 +27,6 @@ def index():
         humidity = hum_RH_ave,
         lux = light_Lx_ave,
         logging_ability = job.is_enabled(),
-        lighting_ability = light_state,
         file_exists = find_data_file(),
         wifi_quality = wifi_quality,
         wifi_strength = wifi_strength,
@@ -98,17 +95,18 @@ def change_logging_ability():
     return redirect(url_for('index'))
 
 # If enable light checkbox is clicked, the lights will be enabled/disabled.
-@app.route('/lighting_ability')
-def change_lighting_ability():
+@app.route('/light_on')
+def light_on():
 
-    global light_state
+    leds_on()
 
-    if(light_state):
-        light_off()
-        light_state = False
-    else:
-        light_on()
-        light_state = True
+    return redirect(url_for('index'))
+
+# If enable light checkbox is clicked, the lights will be enabled/disabled.
+@app.route('/light_off')
+def light_off():
+
+    leds_off()
 
     return redirect(url_for('index'))
 
