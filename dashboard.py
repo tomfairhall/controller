@@ -66,7 +66,7 @@ def find_logging_job():
         return job, cron
 
 def update_data(update = False):
-    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = 0
+    date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
 
     if(update):
         date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
