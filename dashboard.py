@@ -101,6 +101,8 @@ def change_logging_ability():
 @app.route('/lighting_ability')
 def change_lighting_ability():
 
+    global light_state
+
     if(light_state):
         light_off()
         light_state = False
