@@ -2,7 +2,7 @@ from flask import Flask, render_template, send_file, redirect, url_for
 from crontab import CronTab, CronItem
 from os import getlogin, remove, path
 from subprocess import run
-from getpass import getuser
+from socket import gethostname
 
 try:
     from controller import measure_data, DATA_FILE_PATH
@@ -30,7 +30,7 @@ def index():
         file_exists = find_data_file(),
         wifi_quality = wifi_quality,
         wifi_strength = wifi_strength,
-        user_name = getuser())
+        hostname = gethostname())
 
 # Check that data file exists.
 def find_data_file():

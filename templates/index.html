@@ -7,7 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must revalidate" />
     <title>System Dashboard</title>
     <script  src={{ url_for('static', filename='script.js') }}></script>
-    <script> const exists = {{ file_exists|int }}; </script>
+    <script> const exists = {{ file_exists|int }} </script>
     <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
     <link rel="stylesheet" type="text/css" href="../static/style.css">
 </head>
@@ -20,78 +20,68 @@
         <div class="content">
             <h2>Current Data</h2>
             <p>Request & View Current System Data</p>
-            <button onclick="window.location.href='';">Request Data</button>
-            <div style="overflow-x:auto;">
-                <table class="center">
-                    <tr>
-                        <th>Date-time</th>
-                        <th>Temperature</th>
-                        <th>Pressure</th>
-                        <th>Humidity</th>
-                        <th>Lux</th>
-                    </tr>
-                    <tr>
-                        <td id="date-time">{{ date_time }}</td>
-                        <td id="temperature">{{ temperature }}°C</td>
-                        <td id="pressure"> {{ pressure }}HPa</td>
-                        <td id="humidity"> {{ humidity }}RH</td>
-                        <td id="lux">{{ lux }}lx</td>
-                    </tr>
-                </table>
+            <div class="internal">
+                <button onclick="window.location.href='';">Request Data</button>
             </div>
+            <table>
+                <tr>
+                    <th>Date-time</th>
+                    <th>Temperature</th>
+                    <th>Pressure</th>
+                    <th>Humidity</th>
+                    <th>Lux</th>
+                </tr>
+                <tr>
+                    <td id="date-time">{{ date_time }}</td>
+                    <td id="temperature">{{ temperature }}°C</td>
+                    <td id="pressure"> {{ pressure }}HPa</td>
+                    <td id="humidity"> {{ humidity }}RH</td>
+                    <td id="lux">{{ lux }}lx</td>
+                </tr>
+            </table>
         </div>
 
         <!-- Logged Data -->
         <div class="content">
             <h2>Logged Data</h2>
             <p>Download & Start/Stop System Data Logging</p>
-
-            <button onclick="checkData()">Download Data</button>
-            <button onclick="deleteData()">Delete Data</button>
-            <input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>
-            <label for="checkbox-logging-ability">Enable Logging</label>
-
+            <div class="internal">
+                <button onclick="checkData()">Download Data</button>
+                <button onclick="deleteData()">Delete Data</button>
+            </div>
+            <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Enable Logging</label>
         </div>
 
         <!-- System Control -->
         <div class="content">
             <h2>System Control</h2>
             <p>Control System Acuators</p>
-
             <div class="internal">
-                <input type="checkbox" id="checkbox-light">
-                <label for="checkbox-light">Enable Light</label>
-
-                <input type="checkbox" id="checkbox-airpump">
-                <label for="checkbox-airpump">Enable Airpump</label>
-
-                <input type="checkbox" id="checkbox-fan">
-                <label for="checkbox-fan">Enable Fan</label>
+                <label for="checkbox-light"><input type="checkbox" id="checkbox-light">Enable Light</label>
+                <label for="checkbox-airpump"><input type="checkbox" id="checkbox-airpump">Enable Airpump</label>
+                <label for="checkbox-fan"><input type="checkbox" id="checkbox-fan">Enable Fan</label>
             </div>
-
-            <button>View System</button>
-
+            <div class="internal">
+                <button>View System</button>
+            </div>
         </div>
 
         <!-- Controll Infomation -->
         <div class="content">
             <h2>Controller Infomation</h2>
             <p>View Controller Infomation</p>
-
-            <div style="overflow-x:auto;">
-                <table class="center">
-                    <tr>
-                        <th>WiFi Quality</th>
-                        <th>WiFi Strength</th>
-                        <th>Controller Name</th>
-                    </tr>
-                    <tr>
-                        <td id="wifi-quality">{{ wifi_quality }}/70</td>
-                        <td id="wifi-strength">{{ wifi_strength }}dBm</td>
-                        <td id="user-name">{{ user_name }}</td>
-                    </tr>
-                </table>
-
+            <table>
+                <tr>
+                    <th>WiFi Quality</th>
+                    <th>WiFi Strength</th>
+                    <th>Hostname</th>
+                </tr>
+                <tr>
+                    <td id="wifi-quality">{{ wifi_quality }}/70</td>
+                    <td id="wifi-strength">{{ wifi_strength }}dBm</td>
+                    <td id="hostname">{{ hostname }}</td>
+                </tr>
+            </table>
         </div>
 
     </div>
