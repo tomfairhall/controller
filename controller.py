@@ -13,6 +13,8 @@ DATA_FILE_PATH = '/home/controller/data.csv'
 RED = [255, 0, 0]
 GREEN = [0, 255, 0]
 BLUE = [0, 0, 255]
+READ_LED = 0
+WRITE_LED = 1
 
 # Initialize the input argument parser.
 parser = argparse.ArgumentParser()
@@ -43,7 +45,7 @@ def measure_data(sample_size = 3):
     veml6030 = PiicoDev_VEML6030()
     tmp117 = PiicoDev_TMP117()
 
-    leds.setPixel(0, GREEN)
+    leds.setPixel(READ_LED, GREEN)
     leds.show()
 
     # Read and assign initial altitude reading.
@@ -85,7 +87,7 @@ date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 def controller():
     if(args.write):
 
-        leds.setPixel(0, BLUE)
+        leds.setPixel(WRITE_LED, BLUE)
         leds.show()
 
         # If data file does not exist, create it and add header row.
