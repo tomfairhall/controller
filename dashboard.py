@@ -98,8 +98,8 @@ def change_logging_ability():
     return redirect(url_for('index'))
 
 # If enable light checkbox is clicked, the lights will be enabled/disabled.
-@app.route('/light_ability')
-def change_light_ability():
+@app.route('/lighting_ability')
+def change_lighting_ability():
 
     if(light_state):
         light_off()
