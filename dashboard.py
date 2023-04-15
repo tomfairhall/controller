@@ -71,7 +71,7 @@ def update_data(update = False):
     if(update):
         date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
-    return (date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave)
+    return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
 
 # If request data button is clicked, the data will be measured and displayed.
