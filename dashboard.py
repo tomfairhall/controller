@@ -59,9 +59,7 @@ def find_connection_strength():
 @app.route('/download_data')
 def download_data():
 
-    return send_file(
-    DATA_FILE_PATH,
-    as_attachment=True)
+    return send_file(DATA_FILE_PATH, as_attachment=True)
 
 # If delete data button is clicked, the CSV file will be deleted.
 @app.route('/delete_data')

@@ -3,26 +3,29 @@
 }
 
 body {
-    margin: 1%;
+    margin: 0;
 }
 
 h1 {
-    margin: 0.5em;
+    margin: .5em;
 }
 
 .content {
     border: 1px solid;
-    margin: 1%;
-    padding-left: 1%;
-    padding-right: 1%;
+    border-radius: .5em;
+    margin: .5em;
+    padding-left: .5em;
+    padding-right: .5em;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .internal {
-    margin: 0.5em;
+    margin: .5em;
 }
 
 h2 {
-    margin: 0.5em;
+    margin: .5em;
 }
 
 h3 {

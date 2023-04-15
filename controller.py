@@ -16,6 +16,7 @@ parser = argparse.ArgumentParser()
 
 # Add argument(s).
 parser.add_argument("-w", "--write", help="write measurements to file", action="store_true")
+parser.add_argument("-r", "--read", help="read measurements to terminal", action="store_true")
 
 # Parse input arguments.
 args = parser.parse_args()
@@ -72,7 +73,7 @@ if(args.write):
     with open(DATA_FILE_PATH, 'a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
-else:
+elif(args.read):
     # Print measurement
     print("Date-Time:\t", date_time)
     print("Temperature:\t", str(temp_C_ave) + "°C")

@@ -16,14 +16,6 @@
     <div class="center">
         <h1>System Dashboard 🌱</h1>
 
-        <label for="system-drop-down">Display System:</label>
-        <select id="system-drop-down">
-            <option>X</option>
-            <option>Y</option>
-            <option>Z</option>
-        </select>
-        <button>Submit</button>
-
         <!-- Current Data -->
         <div class="content">
             <h2>Current Data</h2>
@@ -91,11 +83,12 @@
                     <tr>
                         <th>WiFi Quality</th>
                         <th>WiFi Strength</th>
-
+                        <th>Controller Name</th>
                     </tr>
                     <tr>
-                        <td id="wifi-quality">{{ wifi_quality }}/70</td>
-                        <td id="wifi-strength">{{ wifi_strength }} dBm</td>
+                        <td id="wifi-quality">{{ wifi_quality }}%</td>
+                        <td id="wifi-strength">{{ wifi_strength }}%</td>
+                        <td id="controller-name">{{ controller_name }}</td>
                     </tr>
                 </table>
 
