@@ -75,6 +75,8 @@ def measure_data(sample_size = 3):
     hum_RH_ave = round(mean(hum_RH_values), 2)
     light_Lx_ave = round(mean(light_Lx_values), 2)
 
+    leds.clear()
+
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
 date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
