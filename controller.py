@@ -43,7 +43,7 @@ def measure_data(sample_size = 3):
     veml6030 = PiicoDev_VEML6030()
     tmp117 = PiicoDev_TMP117()
 
-    leds.setPixel(0, RED)
+    leds.setPixel(0, AMBER)
     leds.show()
 
     # Read and assign initial altitude reading.
@@ -84,6 +84,10 @@ date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 # Controller logic handeler.
 def controller():
     if(args.write):
+
+        leds.setPixel(0, GREEN)
+        leds.show()
+
         # If data file does not exist, create it and add header row.
         if (not path.exists(DATA_FILE_PATH)):
             with open(DATA_FILE_PATH, 'a', newline='') as file:
@@ -93,6 +97,9 @@ def controller():
         with open(DATA_FILE_PATH, 'a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
+
+        leds.clear()
+
     elif(args.read):
         # Print measurement
         print("Date-Time:\t", date_time)
@@ -100,7 +107,5 @@ def controller():
         print("Pressure:\t", str(pres_HPa_ave) + "HPa")
         print("Humidity:\t", str(hum_RH_ave) + "RH")
         print("Lux:\t\t", str(light_Lx_ave) + "lx")
-
-    leds.clear()
 
 controller()
