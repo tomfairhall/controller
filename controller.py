@@ -81,33 +81,33 @@ def measure_data(sample_size = 3):
 
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
-date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
-
 # Controller logic handeler.
 def controller():
-    if(args.write):
+    if(args.read or args.write):
+        date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
 
-        leds.setPixel(WRITE_LED, BLUE)
-        leds.show()
+        if(args.write):
+            leds.setPixel(WRITE_LED, BLUE)
+            leds.show()
 
-        # If data file does not exist, create it and add header row.
-        if (not path.exists(DATA_FILE_PATH)):
+            # If data file does not exist, create it and add header row.
+            if (not path.exists(DATA_FILE_PATH)):
+                with open(DATA_FILE_PATH, 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(HEADER)
+            # Open data file in append mode and write the environmental variables.
             with open(DATA_FILE_PATH, 'a', newline='') as file:
                 writer = csv.writer(file)
-                writer.writerow(HEADER)
-        # Open data file in append mode and write the environmental variables.
-        with open(DATA_FILE_PATH, 'a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
+                writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
 
-        leds.clear()
+            leds.clear()
 
-    elif(args.read):
-        # Print measurement
-        print("Date-Time:\t", date_time)
-        print("Temperature:\t", str(temp_C_ave) + "°C")
-        print("Pressure:\t", str(pres_HPa_ave) + "HPa")
-        print("Humidity:\t", str(hum_RH_ave) + "RH")
-        print("Lux:\t\t", str(light_Lx_ave) + "lx")
+        elif(args.read):
+            # Print measurement
+            print("Date-Time:\t", date_time)
+            print("Temperature:\t", str(temp_C_ave) + "°C")
+            print("Pressure:\t", str(pres_HPa_ave) + "HPa")
+            print("Humidity:\t", str(hum_RH_ave) + "RH")
+            print("Lux:\t\t", str(light_Lx_ave) + "lx")
 
 controller()

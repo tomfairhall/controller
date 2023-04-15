@@ -16,8 +16,8 @@ app = Flask(__name__)
 def index():
 
     job, _ = find_logging_job()
-    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
     wifi_quality, wifi_strength = find_connection_strength()
+    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = update_data()
 
     return render_template(
         'index.html',
@@ -64,6 +64,23 @@ def find_logging_job():
 
     for job in cron.find_command('controller.py -w'):
         return job, cron
+
+def update_data(update = False):
+    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = 0
+
+    if(update):
+        date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
+
+    return (date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave)
+
+
+# If request data button is clicked, the data will be measured and displayed.
+@app.route('/request_data')
+def request_data():
+
+    update_data(True)
+
+    return redirect(url_for('index'))
 
 # If download button is clicked, the CSV file will be download.
 @app.route('/download_data')
