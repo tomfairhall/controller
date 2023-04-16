@@ -13,10 +13,10 @@ h1 {
 }
 
 .content {
-    border-radius: .25em;
-    margin: .25em;
+    border-radius: .5em;
     display: inline-grid;
     vertical-align: middle;
+    margin: .5em;
     background-color: rgba(255, 255, 255, 0.16);
 }
 
@@ -38,11 +38,11 @@ table {
     overflow-x: auto;
     white-space: nowrap;
     border-collapse: collapse;
+    border-radius: .25em;
 }
 
 th, td {
-    padding-left: .25em;
-    padding-right: .25em;
+    padding: .25em .5em;
     border: 1px solid;
     border-color: slategrey;
 }
@@ -56,4 +56,19 @@ th, td {
 label {
     white-space: nowrap;
     margin: .25em;
+}
+
+button {
+    margin: .25em;
+    background-color: lightgrey;
+    border: none;
+    font-size: 1em;
+    color: darkslategrey;
+    border-radius: .25em;
+    padding: .25em .5em;
+}
+
+input {
+    color: lightgrey;
+    border: none;
 }
