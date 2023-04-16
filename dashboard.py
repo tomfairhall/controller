@@ -125,11 +125,6 @@ def light_off():
 
     return redirect(url_for('index'))
 
-# If reboot button is clicked, the Server will reboot.
-@app.route('/reboot_server')
-def reboot_server():
-    run(["fuser", "-k", "5000/tcp"])
-
 # If reboot button is clicked, the Controller will reboot.
 @app.route('/reboot_controller')
 def reboot_controller():
