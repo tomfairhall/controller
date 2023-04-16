@@ -137,7 +137,7 @@ def reboot_controller():
 # if update button is clicked, the Controller will update to the latest version.
 @app.route('/update_controller')
 def update_controller():
-    run(["cd", "controller/"])
+    #run(["cd", "/home/controller/controller"])
     run(["git", "pull"])
 
     return redirect(url_for('index'))
