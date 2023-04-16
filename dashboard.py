@@ -125,10 +125,12 @@ def light_off():
 
     return redirect(url_for('index'))
 
-# If reboot button is clicked, the Controller will reboot.
+# If reboot button is clicked, the Controller will reboot in 1 minute.
 @app.route('/reboot_controller')
 def reboot_controller():
-    run(["sudo", "reboot"])
+    run(["sudo", "shutdown", "-r", "1"])
+
+    return redirect(url_for('index'))
 
 # Only run when directly called.
 if __name__ == '__main__':
