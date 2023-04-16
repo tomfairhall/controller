@@ -19,7 +19,6 @@
         <!-- Current Data -->
         <div class="content">
             <h2>Current Data</h2>
-            <p>Request & View Current System Data</p>
             <div class="internal">
                 <button onclick="window.location.href='request_data'">Request Data</button>
             </div>
@@ -44,7 +43,6 @@
         <!-- Logged Data -->
         <div class="content">
             <h2>Logged Data</h2>
-            <p>Download & Start/Stop System Data Logging</p>
             <div class="internal">
                 <button onclick="checkData()">Download Data</button>
                 <button onclick="deleteData()">Delete Data</button>
@@ -57,23 +55,21 @@
         <!-- System Control -->
         <div class="content">
             <h2>System Control</h2>
-            <p>Control System Acuators</p>
-            <div class="internal">
-                <label for="checkbox-grow-light"><input type="checkbox" id="checkbox-grow-light">Enable Grow Light</label>
-                <label for="checkbox-airpump"><input type="checkbox" id="checkbox-airpump">Enable Airpump</label>
-                <label for="checkbox-fan"><input type="checkbox" id="checkbox-fan">Enable Fan</label>
-            </div>
             <div class="internal">
                 <button>View System</button>
                 <button onclick="window.location.href='light_on'">Light On</button>
                 <button onclick="window.location.href='light_off'">Light Off</button>
+            </div>
+            <div class="internal">
+                <label for="checkbox-grow-light"><input type="checkbox" id="checkbox-grow-light">Enable Grow Light</label>
+                <label for="checkbox-airpump"><input type="checkbox" id="checkbox-airpump">Enable Airpump</label>
+                <label for="checkbox-fan"><input type="checkbox" id="checkbox-fan">Enable Fan</label>
             </div>
         </div>
 
         <!-- Controller Operation -->
         <div class="content">
             <h2>Controller Operation</h2>
-            <p>...</p>
             <div class="internal">
                 <button onclick="window.location.href='reboot_controller'">Reboot Controller</button>
                 <button onclick="window.location.href='update_controller'">Update Controller</button>

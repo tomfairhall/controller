@@ -4,44 +4,36 @@
 
 body {
     margin: 0;
+    background-color: darkslategrey;
+    color: lightgrey;
 }
 
 h1 {
-    margin: .5em;
+    margin: .25em;
 }
 
 .content {
-    border: 1px solid;
-    border-radius: .5em;
-    margin: .5em;
+    border-radius: .25em;
+    margin: .25em;
     display: inline-grid;
     vertical-align: middle;
+    background-color: rgba(255, 255, 255, 0.16);
 }
 
 .internal {
-    margin: .5em;
+    margin: .25em;
 }
 
 h2 {
-    margin: .5em;
-}
-
-h3 {
-    margin: 0;
-    font-style: italic;
+    margin: .25em;
 }
 
 p {
-    margin: .5em;
-    font-style: italic;
-}
-
-button {
-    margin: 0 .5em;
+    margin: .25em;
 }
 
 table {
-    margin: .5em;
+    margin: .25em;
     display: block;
     overflow-x: auto;
     white-space: nowrap;
@@ -49,9 +41,10 @@ table {
 }
 
 th, td {
-    padding-left: .5em;
-    padding-right: .5em;
+    padding-left: .25em;
+    padding-right: .25em;
     border: 1px solid;
+    border-color: slategrey;
 }
 
 .center {
@@ -62,5 +55,5 @@ th, td {
 
 label {
     white-space: nowrap;
-    margin: .5em;
+    margin: .25em;
 }
