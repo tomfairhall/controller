@@ -70,22 +70,26 @@
             </div>
         </div>
 
-        <!-- Controller Infomation -->
+        <!-- Controller Operation -->
         <div class="content">
-            <h2>Controller Infomation</h2>
-            <p>View Controller Infomation</p>
+            <h2>Controller Operation</h2>
+            <p>...</p>
+            <div class="internal">
+                <button onclick="window.location.href='reboot_server'">Reboot Server</button>
+                <button onclick="window.location.href='reboot_controller'">Reboot Controller</button>
+            </div>
             <table>
-                <tr>
-                    <th>WiFi Quality</th>
-                    <th>WiFi Strength</th>
-                    <th>Hostname</th>
-                </tr>
-                <tr>
-                    <td id="wifi-quality">{{ wifi_quality }}/70</td>
-                    <td id="wifi-strength">{{ wifi_strength }}dBm</td>
-                    <td id="hostname">{{ hostname }}</td>
-                </tr>
-            </table>
+            <tr>
+                <th>WiFi Quality</th>
+                <th>WiFi Strength</th>
+                <th>Hostname</th>
+            </tr>
+            <tr>
+                <td id="wifi-quality">{{ wifi_quality }}/70</td>
+                <td id="wifi-strength">{{ wifi_strength }}dBm</td>
+                <td id="hostname">{{ hostname }}</td>
+            </tr>
+        </table>
         </div>
 
     </div>
