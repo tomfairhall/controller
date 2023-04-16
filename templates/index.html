@@ -76,17 +76,20 @@
             <p>...</p>
             <div class="internal">
                 <button onclick="window.location.href='reboot_controller'">Reboot Controller</button>
+                <button onclick="window.location.href='update_controller'">Update Controller</button>
             </div>
             <table>
             <tr>
                 <th>WiFi Quality</th>
                 <th>WiFi Strength</th>
                 <th>Hostname</th>
+                <th>Version</th>
             </tr>
             <tr>
                 <td id="wifi-quality">{{ wifi_quality }}/70</td>
                 <td id="wifi-strength">{{ wifi_strength }}dBm</td>
                 <td id="hostname">{{ hostname }}</td>
+                <td id="version">{{ version }}</td>
             </tr>
         </table>
         </div>

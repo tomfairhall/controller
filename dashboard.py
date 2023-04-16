@@ -11,6 +11,7 @@ except PermissionError:
 
 app = Flask(__name__)
 
+VERSION = "test"
 date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
 
 # Main page.
@@ -31,7 +32,8 @@ def index():
         file_exists = find_data_file(),
         wifi_quality = wifi_quality,
         wifi_strength = wifi_strength,
-        hostname = gethostname())
+        hostname = gethostname(),
+        version = VERSION)
 
 # Check that data file exists.
 def find_data_file():
@@ -129,6 +131,14 @@ def light_off():
 @app.route('/reboot_controller')
 def reboot_controller():
     run(["sudo", "shutdown", "-r", "1"])
+
+    return redirect(url_for('index'))
+
+# if update button is clicked, the Controller will update to the latest version.
+@app.route('/update_controller')
+def update_controller():
+    run(["cd", "controller/"])
+    run(["git", "pull"])
 
     return redirect(url_for('index'))
 
