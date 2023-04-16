@@ -44,7 +44,7 @@ table {
 th, td {
     padding: .25em .5em;
     border: 1px solid;
-    border-color: slategrey;
+    border-color: lightslategrey;
 }
 
 .center {
@@ -60,15 +60,10 @@ label {
 
 button {
     margin: .25em;
+    color: darkslategrey;
     background-color: lightgrey;
     border: none;
     font-size: 1em;
-    color: darkslategrey;
     border-radius: .25em;
     padding: .25em .5em;
-}
-
-input {
-    color: lightgrey;
-    border: none;
 }
