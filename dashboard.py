@@ -11,9 +11,9 @@ except PermissionError:
 
 app = Flask(__name__)
 
-VERSION = "abcd"
+VERSION = "1"
+
 date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
-debug_output = debug_error = ""
 
 # Main page.
 @app.route('/')
@@ -34,9 +34,7 @@ def index():
         wifi_quality = wifi_quality,
         wifi_strength = wifi_strength,
         hostname = gethostname(),
-        version = VERSION,
-        debug_output = debug_output,
-        debug_error = debug_error)
+        version = VERSION)
 
 # Check that data file exists.
 def find_data_file():
@@ -137,15 +135,10 @@ def reboot_controller():
 
     return redirect(url_for('index'))
 
-# if update button is clicked, the Controller will update to the latest version.
+# If update button is clicked, the Controller will update to the latest version.
 @app.route('/update_controller')
 def update_controller():
-    result = run(["git", "pull"], cwd="/home/controller/controller", text=True, capture_output=True)
-
-    global debug_error
-    global debug_output
-    debug_output = result.stdout
-    debug_error = result.stderr
+    run(["git", "pull"], cwd="/home/controller/controller")
 
     return redirect(url_for('index'))
 
