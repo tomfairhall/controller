@@ -56,7 +56,6 @@
         <div class="content">
             <h2>System Control</h2>
             <div class="internal">
-                <button>View System</button>
                 <button onclick="window.location.href='light_on'">Light On</button>
                 <button onclick="window.location.href='light_off'">Light Off</button>
             </div>
@@ -64,6 +63,18 @@
                 <label for="checkbox-grow-light"><input type="checkbox" id="checkbox-grow-light">Enable Grow Light</label>
                 <label for="checkbox-airpump"><input type="checkbox" id="checkbox-airpump">Enable Airpump</label>
                 <label for="checkbox-fan"><input type="checkbox" id="checkbox-fan">Enable Fan</label>
+            </div>
+        </div>
+
+        <!-- System Preview -->
+        <div class="content">
+            <h2>System Preview</h2>
+            <div class="internal">
+                <button>Take Image</button>
+                <button>Download Image</button>
+            </div>
+            <div class="internal-image">
+                <img src="https://cdn.wikifarmer.com/wp-content/uploads/2022/12/What-is-hydroponic-farming.jpg">
             </div>
         </div>
 
@@ -76,8 +87,8 @@
             </div>
             <table>
                 <tr>
-                    <th>WiFi Quality</th>
-                    <th>WiFi Strength</th>
+                    <th title="0 to 70">WiFi Quality</th>
+                    <th title="-90 to -30">WiFi Strength</th>
                     <th>Hostname</th>
                     <th>Version</th>
                 </tr>
