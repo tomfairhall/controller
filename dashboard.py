@@ -142,7 +142,7 @@ def update_controller():
     result = run(["git", "pull"], text=True, capture_output=True)
 
     global debug
-    debug = result.stdout
+    debug = result.stderr
 
     return redirect(url_for('index'))
 
