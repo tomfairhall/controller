@@ -20,7 +20,7 @@
         <div class="content">
             <h2>Current Data</h2>
             <div class="internal">
-                <button onclick="window.location.href='request_data'">Request Data</button>
+                <button onclick="window.location.href='request_data'" title="read data from sensors">Request Data</button>
             </div>
             <table>
                 <tr>
@@ -44,8 +44,8 @@
         <div class="content">
             <h2>Logged Data</h2>
             <div class="internal">
-                <button onclick="checkData()">Download Data</button>
-                <button onclick="deleteData()">Delete Data</button>
+                <button onclick="checkData()" title="download all logged data">Download Data</button>
+                <button onclick="deleteData()" title="delete all logged data">Delete Data</button>
             </div>
             <div class="internal">
                 <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Enable Logging</label>
@@ -71,8 +71,8 @@
         <div class="content">
             <h2>Controller Operation</h2>
             <div class="internal">
-                <button onclick="window.location.href='reboot_controller'">Reboot Controller</button>
-                <button onclick="window.location.href='update_controller'">Update Controller</button>
+                <button onclick="window.location.href='reboot_controller'" title="reboot controller in 1 minute">Reboot Controller</button>
+                <button onclick="window.location.href='update_controller'" title="update controller (after reboot)">Update Controller</button>
             </div>
             <table>
             <tr>
@@ -89,9 +89,6 @@
             </tr>
         </table>
         </div>
-
-        <p>Debug Ouput: {{ debug_ouput }}</p>
-        <p>Debug Error: {{ debug_ouput }}</p>
 
     </div>
 </body>
