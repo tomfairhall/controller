@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 VERSION = "test"
 date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
-debug = ""
+debug_output = debug_error = ""
 
 # Main page.
 @app.route('/')
@@ -139,9 +139,10 @@ def reboot_controller():
 # if update button is clicked, the Controller will update to the latest version.
 @app.route('/update_controller')
 def update_controller():
-    result = run(["git", "pull"], text=True, capture_output=True)
+    result = run(["git", "pull"], cwd="/home/controller/controller", text=True, capture_output=True)
 
-    global debug
+    global debug_error
+    global debug_output
     debug = result.stderr
 
     return redirect(url_for('index'))
