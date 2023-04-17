@@ -54,6 +54,7 @@ th, td {
 }
 
 label {
+    display: inline-block;
     white-space: nowrap;
     margin: .25em;
 }
