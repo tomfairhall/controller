@@ -6,6 +6,7 @@ body {
     margin: 0;
     background-color: darkslategrey;
     color: lightgrey;
+    padding: .5em
 }
 
 h1 {
@@ -16,12 +17,9 @@ h1 {
     border-radius: .5em;
     display: inline-grid;
     vertical-align: middle;
+    padding: .25em;
     margin: .5em;
     background-color: rgba(255, 255, 255, 0.16);
-}
-
-.internal {
-    margin: .25em;
 }
 
 h2 {

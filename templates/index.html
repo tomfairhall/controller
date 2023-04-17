@@ -22,24 +22,22 @@
             <div class="internal">
                 <button onclick="window.location.href='request_data'" title="read data from sensors">Request Data</button>
             </div>
-            <div class="internal">
-                <table>
-                    <tr>
-                        <th>Date-time</th>
-                        <th>Temperature</th>
-                        <th>Pressure</th>
-                        <th>Humidity</th>
-                        <th>Lux</th>
-                    </tr>
-                    <tr>
-                        <td id="date-time">{{ date_time }}</td>
-                        <td id="temperature">{{ temperature }}°C</td>
-                        <td id="pressure"> {{ pressure }}HPa</td>
-                        <td id="humidity"> {{ humidity }}RH</td>
-                        <td id="lux">{{ lux }}lx</td>
-                    </tr>
-            </table>
-            </div>
+            <table>
+                <tr>
+                    <th>Date-time</th>
+                    <th>Temperature</th>
+                    <th>Pressure</th>
+                    <th>Humidity</th>
+                    <th>Lux</th>
+                </tr>
+                <tr>
+                    <td id="date-time">{{ date_time }}</td>
+                    <td id="temperature">{{ temperature }}°C</td>
+                    <td id="pressure"> {{ pressure }}HPa</td>
+                    <td id="humidity"> {{ humidity }}RH</td>
+                    <td id="lux">{{ lux }}lx</td>
+                </tr>
+        </table>
         </div>
 
         <!-- Logged Data -->
@@ -76,22 +74,20 @@
                 <button onclick="window.location.href='reboot_controller'" title="reboot controller in 1 minute">Reboot Controller</button>
                 <button onclick="window.location.href='update_controller'" title="update controller (after reboot)">Update Controller</button>
             </div>
-            <div class="internal">
-                <table>
-                    <tr>
-                        <th>WiFi Quality</th>
-                        <th>WiFi Strength</th>
-                        <th>Hostname</th>
-                        <th>Version</th>
-                    </tr>
-                    <tr>
-                        <td id="wifi-quality">{{ wifi_quality }}/70</td>
-                        <td id="wifi-strength">{{ wifi_strength }}dBm</td>
-                        <td id="hostname">{{ hostname }}</td>
-                        <td id="version">{{ version }}</td>
-                    </tr>
-                </table>
-            </div>
+            <table>
+                <tr>
+                    <th>WiFi Quality</th>
+                    <th>WiFi Strength</th>
+                    <th>Hostname</th>
+                    <th>Version</th>
+                </tr>
+                <tr>
+                    <td id="wifi-quality">{{ wifi_quality }}/70</td>
+                    <td id="wifi-strength">{{ wifi_strength }}dBm</td>
+                    <td id="hostname">{{ hostname }}</td>
+                    <td id="version">{{ version }}</td>
+                </tr>
+            </table>
         </div>
 
     </div>
