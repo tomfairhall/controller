@@ -13,6 +13,7 @@ app = Flask(__name__)
 
 VERSION = "test"
 date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
+debug = ""
 
 # Main page.
 @app.route('/')
@@ -33,7 +34,8 @@ def index():
         wifi_quality = wifi_quality,
         wifi_strength = wifi_strength,
         hostname = gethostname(),
-        version = VERSION)
+        version = VERSION,
+        debug = debug)
 
 # Check that data file exists.
 def find_data_file():
@@ -137,8 +139,10 @@ def reboot_controller():
 # if update button is clicked, the Controller will update to the latest version.
 @app.route('/update_controller')
 def update_controller():
-    #run(["cd", "/home/controller/controller"])
-    run(["git", "pull"])
+    result = run(["git", "pull"], text=True, capture_output=True)
+
+    global debug
+    debug = result.stdout
 
     return redirect(url_for('index'))
 
