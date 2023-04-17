@@ -35,7 +35,8 @@ def index():
         wifi_strength = wifi_strength,
         hostname = gethostname(),
         version = VERSION,
-        debug = debug)
+        debug_output = debug_output,
+        debug_error = debug_error)
 
 # Check that data file exists.
 def find_data_file():
