@@ -11,7 +11,7 @@ except PermissionError:
 
 app = Flask(__name__)
 
-VERSION = "abc"
+VERSION = "abcd"
 date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
 debug_output = debug_error = ""
 
@@ -144,7 +144,8 @@ def update_controller():
 
     global debug_error
     global debug_output
-    debug = result.stderr
+    debug_output = result.stdout
+    debug_error = result.stderr
 
     return redirect(url_for('index'))
 
