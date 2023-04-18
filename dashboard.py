@@ -3,7 +3,7 @@ from crontab import CronTab, CronItem
 from os import getlogin, remove, path
 from subprocess import run
 from socket import gethostname
-import sys
+from datetime import datetime
 
 try:
     from controller import measure_data, DATA_FILE_PATH, leds_on, leds_off
@@ -41,7 +41,9 @@ def index():
 
 def debug(message):
     global debug_output
-    debug_output = message
+    date_time = datetime.now().strftime("%H:%M:%S")
+
+    debug_output = date_time + " " + message
 
 # Check that data file exists.
 def find_data_file():
@@ -90,6 +92,8 @@ def request_data():
         date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
     except:
         debug("Could not request data!")
+    finally:
+        debug("Requested data sucessfully")
 
     return redirect(url_for('index'))
 
@@ -125,30 +129,48 @@ def change_logging_ability():
 # If enable light checkbox is clicked, the lights will be enabled/disabled.
 @app.route('/light_on')
 def light_on():
-
-    leds_on()
+    try:
+        leds_on()
+    except:
+        debug("Could not turn light on!")
+    finally:
+        debug("Turned light on")
 
     return redirect(url_for('index'))
 
 # If enable light checkbox is clicked, the lights will be enabled/disabled.
 @app.route('/light_off')
 def light_off():
-
-    leds_off()
+    try:
+        leds_off()
+    except:
+        debug("Could not turn light off!")
+    finally:
+        debug("Turned light off")
 
     return redirect(url_for('index'))
 
 # If reboot button is clicked, the Controller will reboot in 1 minute.
 @app.route('/reboot_controller')
 def reboot_controller():
-    run(["sudo", "shutdown", "-r", "1"])
+    try:
+        run(["sudo", "shutdown", "-r", "1"])
+    except:
+        debug("Could not reboot controller!")
+    else:
+        debug("Reboting in 1 minute")
 
     return redirect(url_for('index'))
 
 # If update button is clicked, the Controller will update to the latest version.
 @app.route('/update_controller')
 def update_controller():
-    run(["git", "pull"], cwd="/home/controller/controller")
+    try:
+        result = run(["git", "pull"], cwd="/home/controller/controller")
+    except:
+        debug("Could not update controller!")
+    else:
+        debug("")
 
     return redirect(url_for('index'))
 
