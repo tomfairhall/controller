@@ -15,6 +15,7 @@ app = Flask(__name__)
 VERSION = "error"
 
 date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
+debug_output = ""
 
 # Main page.
 @app.route('/')
@@ -36,7 +37,11 @@ def index():
         wifi_strength = wifi_strength,
         hostname = gethostname(),
         version = VERSION,
-        debug_output = sys.stderr)
+        debug_output = debug_output)
+
+def debug(message):
+    global debug_output
+    debug_output = message
 
 # Check that data file exists.
 def find_data_file():
@@ -83,8 +88,8 @@ def request_data():
 
     try:
         date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
-    except Exception as error:
-        print("Could not request data!", file=sys.stderr)
+    except:
+        debug_output = "Could not request data!"
 
     return redirect(url_for('index'))
 
