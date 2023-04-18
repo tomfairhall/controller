@@ -92,7 +92,7 @@ def request_data():
         date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
     except:
         debug("Could not request data!")
-    finally:
+    else:
         debug("Requested data sucessfully")
 
     return redirect(url_for('index'))
@@ -100,21 +100,23 @@ def request_data():
 # If download button is clicked, the CSV file will be download.
 @app.route('/download_data')
 def download_data():
-
     return send_file(DATA_FILE_PATH, as_attachment=True)
 
 # If delete data button is clicked, the CSV file will be deleted.
 @app.route('/delete_data')
 def delete_data():
-
-    remove(DATA_FILE_PATH)
+    try:
+        remove(DATA_FILE_PATH)
+    except:
+        debug("Could not delete data file!")
+    else:
+        debug("Deleted data file sucessfully")
 
     return redirect(url_for('index'))
 
 # If enable logging checkbox is clicked, the logging cron job will be enabled/disabled.
 @app.route('/logging_ability')
 def change_logging_ability():
-
     job, cron = find_logging_job()
 
     if job.is_enabled():
@@ -133,7 +135,7 @@ def light_on():
         leds_on()
     except:
         debug("Could not turn light on!")
-    finally:
+    else:
         debug("Turned light on")
 
     return redirect(url_for('index'))
@@ -145,7 +147,7 @@ def light_off():
         leds_off()
     except:
         debug("Could not turn light off!")
-    finally:
+    else:
         debug("Turned light off")
 
     return redirect(url_for('index'))
