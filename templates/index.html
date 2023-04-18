@@ -13,97 +13,98 @@
 </head>
 
 <body>
-    <div class="center">
-        <h1>System Dashboard 🌱</h1>
 
-        <!-- Current Data -->
-        <div class="content">
-            <h2>Current Data</h2>
-            <div class="internal">
-                <button onclick="window.location.href='request_data'" title="read data from sensors">Request Data</button>
-            </div>
-            <table>
-                <tr>
-                    <th>Date-time</th>
-                    <th>Temperature</th>
-                    <th>Pressure</th>
-                    <th>Humidity</th>
-                    <th>Lux</th>
-                </tr>
-                <tr>
-                    <td id="date-time">{{ date_time }}</td>
-                    <td id="temperature">{{ temperature }}°C</td>
-                    <td id="pressure"> {{ pressure }}HPa</td>
-                    <td id="humidity"> {{ humidity }}RH</td>
-                    <td id="lux">{{ lux }}lx</td>
-                </tr>
-        </table>
+    <h1>System Dashboard 🌱</h1>
+
+    <!-- Current Data -->
+    <div class="content">
+        <h2>Current Data</h2>
+        <div class="internal">
+            <button onclick="window.location.href='request_data'" title="read data from sensors">Request Data</button>
         </div>
-
-        <!-- Logged Data -->
-        <div class="content">
-            <h2>Logged Data</h2>
-            <div class="internal">
-                <button onclick="checkData()" title="download all logged data">Download Data</button>
-                <button onclick="deleteData()" title="delete all logged data">Delete Data</button>
-            </div>
-            <div class="internal">
-                <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Enable Logging</label>
-            </div>
-        </div>
-
-        <!-- System Control -->
-        <div class="content">
-            <h2>System Control</h2>
-            <div class="internal">
-                <button onclick="window.location.href='light_on'">Light On</button>
-                <button onclick="window.location.href='light_off'">Light Off</button>
-            </div>
-            <div class="internal">
-                <label for="checkbox-grow-light"><input type="checkbox" id="checkbox-grow-light">Enable Grow Light</label>
-                <label for="checkbox-airpump"><input type="checkbox" id="checkbox-airpump">Enable Airpump</label>
-                <label for="checkbox-fan"><input type="checkbox" id="checkbox-fan">Enable Fan</label>
-            </div>
-        </div>
-
-        <!-- System Preview -->
-        <div class="content">
-            <h2>System Preview</h2>
-            <div class="internal">
-                <button>Capture</button>
-                <button>Download</button>
-                <button>Delete</button>
-                <button>Delete All</button>
-            </div>
-            <div class="internal-image">
-                <img src="https://cdn.wikifarmer.com/wp-content/uploads/2022/12/What-is-hydroponic-farming.jpg">
-            </div>
-        </div>
-
-        <!-- Controller Operation -->
-        <div class="content">
-            <h2>Controller Operation</h2>
-            <div class="internal">
-                <button onclick="window.location.href='reboot_controller'" title="reboot controller in 1 minute">Reboot Controller</button>
-                <button onclick="window.location.href='update_controller'" title="update controller (after reboot)">Update Controller</button>
-            </div>
-            <table>
-                <tr>
-                    <th title="0 to 70">WiFi Quality</th>
-                    <th title="-90 to -30">WiFi Strength</th>
-                    <th>Hostname</th>
-                    <th>Version</th>
-                </tr>
-                <tr>
-                    <td id="wifi-quality">{{ wifi_quality }}/70</td>
-                    <td id="wifi-strength">{{ wifi_strength }}dBm</td>
-                    <td id="hostname">{{ hostname }}</td>
-                    <td id="version">{{ version }}</td>
-                </tr>
-            </table>
-        </div>
-
+        <table>
+            <tr>
+                <th>Date-time</th>
+                <th>Temperature</th>
+                <th>Pressure</th>
+                <th>Humidity</th>
+                <th>Lux</th>
+            </tr>
+            <tr>
+                <td id="date-time">{{ date_time }}</td>
+                <td id="temperature">{{ temperature }}°C</td>
+                <td id="pressure"> {{ pressure }}HPa</td>
+                <td id="humidity"> {{ humidity }}RH</td>
+                <td id="lux">{{ lux }}lx</td>
+            </tr>
+    </table>
     </div>
+
+    <!-- Logged Data -->
+    <div class="content">
+        <h2>Logged Data</h2>
+        <div class="internal">
+            <button onclick="checkData()" title="download all logged data">Download Data</button>
+            <button onclick="deleteData()" title="delete all logged data">Delete Data</button>
+        </div>
+        <div class="internal">
+            <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Enable Logging</label>
+        </div>
+    </div>
+
+    <!-- System Control -->
+    <div class="content">
+        <h2>System Control</h2>
+        <div class="internal">
+            <button onclick="window.location.href='light_on'">Light On</button>
+            <button onclick="window.location.href='light_off'">Light Off</button>
+        </div>
+        <div class="internal">
+            <label for="checkbox-grow-light"><input type="checkbox" id="checkbox-grow-light">Enable Grow Light</label>
+            <label for="checkbox-airpump"><input type="checkbox" id="checkbox-airpump">Enable Airpump</label>
+            <label for="checkbox-fan"><input type="checkbox" id="checkbox-fan">Enable Fan</label>
+        </div>
+    </div>
+
+    <!-- System Preview -->
+    <div class="content">
+        <h2>System Preview</h2>
+        <div class="internal">
+            <button>Capture</button>
+            <button>Download</button>
+            <button>Delete</button>
+            <button>Delete All</button>
+        </div>
+        <div class="internal-image">
+            <img src="https://cdn.wikifarmer.com/wp-content/uploads/2022/12/What-is-hydroponic-farming.jpg">
+        </div>
+    </div>
+
+    <!-- Controller Operation -->
+    <div class="content">
+        <h2>Controller Operation</h2>
+        <div class="internal">
+            <button onclick="window.location.href='reboot_controller'" title="reboot controller in 1 minute">Reboot Controller</button>
+            <button onclick="window.location.href='update_controller'" title="update controller (after reboot)">Update Controller</button>
+        </div>
+        <table>
+            <tr>
+                <th title="0 to 70">WiFi Quality</th>
+                <th title="-90 to -30">WiFi Strength</th>
+                <th>Hostname</th>
+                <th>Version</th>
+            </tr>
+            <tr>
+                <td id="wifi-quality">{{ wifi_quality }}/70</td>
+                <td id="wifi-strength">{{ wifi_strength }}dBm</td>
+                <td id="hostname">{{ hostname }}</td>
+                <td id="version">{{ version }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <p id="debug-output">Debug: {{ debug_output }}</p>
+
 </body>
 
 </html>

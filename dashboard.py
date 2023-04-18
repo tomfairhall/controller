@@ -3,6 +3,7 @@ from crontab import CronTab, CronItem
 from os import getlogin, remove, path
 from subprocess import run
 from socket import gethostname
+import sys
 
 try:
     from controller import measure_data, DATA_FILE_PATH, leds_on, leds_off
@@ -11,7 +12,7 @@ except PermissionError:
 
 app = Flask(__name__)
 
-VERSION = "a"
+VERSION = "error"
 
 date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
 
@@ -34,7 +35,8 @@ def index():
         wifi_quality = wifi_quality,
         wifi_strength = wifi_strength,
         hostname = gethostname(),
-        version = VERSION)
+        version = VERSION,
+        debug_output = sys.stderr)
 
 # Check that data file exists.
 def find_data_file():
@@ -79,7 +81,10 @@ def request_data():
     global hum_RH_ave
     global light_Lx_ave
 
-    date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
+    try:
+        date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
+    except Exception as error:
+        print("Could not request data!", file=sys.stderr)
 
     return redirect(url_for('index'))
 
