@@ -175,7 +175,7 @@ def reboot_controller():
 @app.route('/update_controller')
 def update_controller():
     try:
-        result = run(["git", "pull"], cwd="/home/controller/controller")
+        result = run(["git", "pull"], cwd="/home/controller/controller", text=True, capture_output=True)
     except:
         debug("Could not update controller!")
     else:
