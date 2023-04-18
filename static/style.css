@@ -75,3 +75,9 @@ img {
 .internal-image {
     margin: .25em;
 }
+
+@media only screen and (max-width: 375px) {
+    .content {
+        display: block;
+    }
+}
