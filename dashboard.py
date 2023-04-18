@@ -12,7 +12,7 @@ except PermissionError:
 
 app = Flask(__name__)
 
-VERSION = "error"
+VERSION = "1"
 
 date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
 debug_output = ""
@@ -179,7 +179,10 @@ def update_controller():
     except:
         debug("Could not update controller!")
     else:
-        debug("")
+        if result.stdout.find("Already up to date."):
+            debug("Controller upto date!")
+        else:
+            debug("Updating controller at next reboot")
 
     return redirect(url_for('index'))
 
