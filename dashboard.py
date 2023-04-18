@@ -39,6 +39,7 @@ def index():
         version = VERSION,
         debug_output = debug_output)
 
+# Debug message handler #TODO Make this encasulated with classes?
 def debug(message):
     global debug_output
     date_time = datetime.now().strftime("%H:%M:%S")
@@ -100,6 +101,7 @@ def request_data():
 # If download button is clicked, the CSV file will be download.
 @app.route('/download_data')
 def download_data():
+    #TODO: Handle exceptions
     return send_file(DATA_FILE_PATH, as_attachment=True)
 
 # If delete data button is clicked, the CSV file will be deleted.
@@ -117,14 +119,19 @@ def delete_data():
 # If enable logging checkbox is clicked, the logging cron job will be enabled/disabled.
 @app.route('/logging_ability')
 def change_logging_ability():
-    job, cron = find_logging_job()
+    try:
+        job, cron = find_logging_job()
 
-    if job.is_enabled():
-        job.enable(False)
+        if job.is_enabled():
+            job.enable(False)
+        else:
+            job.enable()
+
+        cron.write()
+    except:
+        debug("Could not change logging ability!")
     else:
-        job.enable()
-
-    cron.write()
+        debug("Changed logging ability")
 
     return redirect(url_for('index'))
 
