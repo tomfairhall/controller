@@ -179,7 +179,7 @@ def update_controller():
     except:
         debug("Could not update controller!")
     else:
-        if result.stdout.find("Already up to date."):
+        if result.stdout.find("Already up to date.") > -1:
             debug("Controller upto date!")
         else:
             debug("Updating controller at next reboot")
