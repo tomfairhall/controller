@@ -89,7 +89,7 @@ def request_data():
     try:
         date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
     except:
-        debug_output = "Could not request data!"
+        debug("Could not request data!")
 
     return redirect(url_for('index'))
 
