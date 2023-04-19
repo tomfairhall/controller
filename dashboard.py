@@ -12,7 +12,7 @@ except PermissionError:
 
 app = Flask(__name__)
 
-VERSION = "test"
+VERSION = "123"
 
 date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
 debug_output = ""
