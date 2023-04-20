@@ -4,15 +4,11 @@ from os import getlogin, remove, path
 from subprocess import run
 from socket import gethostname
 from datetime import datetime
-
-try:
-    from controller import measure_data, DATA_FILE_PATH, leds_on, leds_off
-except PermissionError:
-    print("Not Running on correct device!")
+from controller import measure_data, DATA_FILE_PATH, leds_on, leds_off
 
 app = Flask(__name__)
 
-VERSION = "123"
+VERSION = "0.1.0"
 
 date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
 debug_output = ""
@@ -39,7 +35,7 @@ def index():
         version = VERSION,
         debug_output = debug_output)
 
-# Debug message handler #TODO Make this encasulated with classes?
+# Debug message handler #TODO Make this encapsulated with classes to avoid global varables?
 def debug(message):
     global debug_output
     date_time = datetime.now().strftime("%H:%M:%S")
@@ -73,8 +69,7 @@ def find_connection_strength():
 
 # Find the data logging function.
 def find_logging_job():
-
-    cron = CronTab(user=getlogin())
+    cron = CronTab(user = getlogin())
 
     for job in cron.find_command('controller.py -w'):
         return job, cron

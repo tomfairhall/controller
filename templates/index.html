@@ -4,12 +4,12 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must revalidate" />
     <title>System Dashboard</title>
-    <script  src={{ url_for('static', filename='script.js') }}></script>
     <script> const exists = {{ file_exists|int }} </script>
     <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
     <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <script src={{ url_for('static', filename='script.js') }}></script>
+
 </head>
 
 <body>
@@ -40,18 +40,6 @@
     </table>
     </div>
 
-    <!-- Logged Data -->
-    <div class="content">
-        <h2>Logged Data</h2>
-        <div class="internal">
-            <button onclick="checkData()" title="download all logged data">Download Data</button>
-            <button onclick="deleteData()" title="delete all logged data">Delete Data</button>
-        </div>
-        <div class="internal">
-            <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Enable Logging</label>
-        </div>
-    </div>
-
     <!-- System Control -->
     <div class="content">
         <h2>System Control</h2>
@@ -66,6 +54,27 @@
         </div>
     </div>
 
+    <!-- Logged Data -->
+    <div class="content">
+        <h2>Logged Data</h2>
+        <div class="internal">
+            <button onclick="checkData()" title="download all logged data">Download Data</button>
+            <button onclick="deleteData()" title="delete all logged data">Delete Data</button>
+        </div>
+        <div class="internal">
+            <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Enable Logging</label>
+        </div>
+        <div class="internal">
+            <label for="select-measurement">Graph:</label>
+            <select name="measurement" id="select-measurement">
+                <option value="Temperature">Temperature</option>
+            </select>
+        </div>
+        <div class="internal-content">
+            <canvas id="logged-data" class="sub-content"></canvas>
+        </div>
+    </div>
+
     <!-- System Preview -->
     <div class="content">
         <h2>System Preview</h2>
@@ -74,8 +83,8 @@
             <button>Delete</button>
             <button>Delete All</button>
         </div>
-        <div class="internal-image">
-            <img src="https://cdn.wikifarmer.com/wp-content/uploads/2022/12/What-is-hydroponic-farming.jpg">
+        <div class="internal-content">
+            <img class="sub-content" src="https://cdn.wikifarmer.com/wp-content/uploads/2022/12/What-is-hydroponic-farming.jpg">
         </div>
     </div>
 
@@ -103,6 +112,9 @@
     </div>
 
     <p id="debug-output">Debug: {{ debug_output }}</p>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+    <script type="text/javascript" src="../static/script.js"></script>
 
 </body>
 
