@@ -65,7 +65,7 @@ def find_data_measurements(num = 12):
 
         with open(DATA_FILE_PATH, newline='') as file:
             reader = DictReader(file)
-            for row in reader[-1:(-1*num)]:
+            for row in list(reader)[-1:(-1*num)]:
                 date_times.append(row['Date-Time'])
                 temp_Cs.append(row['Temperature (°C)'])
                 pres_HPas.append(row['Pressure (HPa)'])
