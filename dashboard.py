@@ -47,7 +47,7 @@ def debug(message):
     global debug_output
     date_time = datetime.now().strftime("%H:%M:%S")
 
-    debug_output = date_time + " " + message
+    debug_output = message + " @ " + date_time
 
 # Check that data file exists.
 def find_data_file(file_path = DATA_FILE_PATH):
@@ -117,9 +117,15 @@ def request_data():
 
     try:
         date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
+    except:
+        debug("Could not request current data!")
+    else:
+        debug("Requested data sucessfully")
+
+    try:
         date_times = temp_Cs = pres_HPas = hum_RHs = light_LXs = find_data_measurements()
     except:
-        debug("Could not request data!")
+        debug("Could not request logged data!")
     else:
         debug("Requested data sucessfully")
 

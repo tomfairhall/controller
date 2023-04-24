@@ -1,9 +1,3 @@
-times       = {{ times|tojson }};
-temp_Cs     = {{ temp_Cs|tojson }};
-pres_HPas   = {{ pres_HPas|tojson }};
-hum_RHs     = {{ hum_RHs|tojson }};
-light_LXs   = {{ light_LXs|tojson }};
-
 const TEMP_MIN = 0;
 const TEMP_MAX = 30;
 

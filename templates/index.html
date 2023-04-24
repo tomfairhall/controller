@@ -154,6 +154,14 @@
 
     </div>
 
+    <script>
+        times       = {{ times|tojson }};
+        temp_Cs     = {{ temp_Cs|tojson }};
+        pres_HPas   = {{ pres_HPas|tojson }};
+        hum_RHs     = {{ hum_RHs|tojson }};
+        light_LXs   = {{ light_LXs|tojson }};
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
     <script type="text/javascript" src="../static/script.js"></script>
     <script type="text/javascript" src="../static/graph.js"></script>
