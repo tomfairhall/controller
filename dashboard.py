@@ -122,12 +122,7 @@ def request_data():
     else:
         debug("Requested data sucessfully")
 
-    try:
-        date_times = temp_Cs = pres_HPas = hum_RHs = light_LXs = find_data_measurements()
-    except:
-        debug("Could not request logged data!")
-    else:
-        debug("Requested data sucessfully")
+    date_times = temp_Cs = pres_HPas = hum_RHs = light_LXs = find_data_measurements()
 
     return redirect(url_for('index'))
 
