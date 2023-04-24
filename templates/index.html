@@ -5,116 +5,158 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Dashboard</title>
-    <script> const exists = {{ file_exists|int }} </script>
+    <script> const exists = {{ file_exists| int }} </script>
     <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
     <link rel="stylesheet" type="text/css" href="../static/style.css">
-    <script src={{ url_for('static', filename='script.js') }}></script>
-
+    <script src={{ url_for('static', filename='script.js' ) }}></script>
 </head>
 
 <body>
 
     <h1>System Dashboard 🌱</h1>
 
-    <!-- Current Data -->
-    <div class="content">
-        <h2>Current Data</h2>
-        <div class="internal">
-            <button onclick="window.location.href='request_data'" title="read data from sensors">Request Data</button>
-        </div>
-        <table>
-            <tr>
-                <th>Date-time</th>
-                <th>Temperature</th>
-                <th>Pressure</th>
-                <th>Humidity</th>
-                <th>Lux</th>
-            </tr>
-            <tr>
-                <td id="date-time">{{ date_time }}</td>
-                <td id="temperature">{{ temperature }}°C</td>
-                <td id="pressure"> {{ pressure }}HPa</td>
-                <td id="humidity"> {{ humidity }}RH</td>
-                <td id="lux">{{ lux }}lx</td>
-            </tr>
-    </table>
-    </div>
+    <div class="wrapper">
 
-    <!-- System Control -->
-    <div class="content">
-        <h2>System Control</h2>
-        <div class="internal">
-            <button onclick="window.location.href='light_on'">Light On</button>
-            <button onclick="window.location.href='light_off'">Light Off</button>
+        <!-- Data -->
+        <div class="pannel">
+            <div class="pannel-heading">
+                <h2>Data</h2>
+            </div>
+            <div class="pannel-content">
+                <button onclick="window.location.href='request_data'" title="read data from sensors">Request</button>
+                <button onclick="checkData()" title="download all logged data">Download</button>
+                <button onclick="deleteData()" title="delete all logged data">Delete</button>
+                <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Logging</label>
+            </div>
         </div>
-        <div class="internal">
-            <label for="checkbox-grow-light"><input type="checkbox" id="checkbox-grow-light">Enable Grow Light</label>
-            <label for="checkbox-airpump"><input type="checkbox" id="checkbox-airpump">Enable Airpump</label>
-            <label for="checkbox-fan"><input type="checkbox" id="checkbox-fan">Enable Fan</label>
-        </div>
-    </div>
 
-    <!-- Logged Data -->
-    <div class="content">
-        <h2>Logged Data</h2>
-        <div class="internal">
-            <button onclick="checkData()" title="download all logged data">Download Data</button>
-            <button onclick="deleteData()" title="delete all logged data">Delete Data</button>
+        <!-- Temperature -->
+        <div class="pannel-tall">
+            <div class="pannel-heading">
+                <h2>Temperature</h2>
+            </div>
+            <div class="pannel-content">
+                <p id="date-time">Currently: {{ date_time }}°C</p>
+            </div>
+            <div class="pannel-content">
+                <canvas id="temperature-chart"></canvas>
+            </div>
         </div>
-        <div class="internal">
-            <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Enable Logging</label>
-        </div>
-        <div class="internal">
-            <label for="select-measurement">Graph:</label>
-            <select name="measurement" id="select-measurement">
-                <option value="Temperature">Temperature</option>
-            </select>
-        </div>
-        <div class="internal-content">
-            <canvas id="logged-data" class="sub-content"></canvas>
-        </div>
-    </div>
 
-    <!-- System Preview -->
-    <div class="content">
-        <h2>System Preview</h2>
-        <div class="internal">
-            <button>Capture</button>
-            <button>Delete</button>
-            <button>Delete All</button>
+        <!-- Pressure -->
+        <div class="pannel-tall">
+            <div class="pannel-heading">
+                <h2>Pressure</h2>
+            </div>
+            <div class="pannel-content">
+                <p id="pressure"> Currently: {{ pressure }}HPa</p>
+            </div>
+            <div class="pannel-content">
+                <canvas id="pressure-chart"></canvas>
+            </div>
         </div>
-        <div class="internal-content">
-            <img class="sub-content" src="https://cdn.wikifarmer.com/wp-content/uploads/2022/12/What-is-hydroponic-farming.jpg">
-        </div>
-    </div>
 
-    <!-- Controller Operation -->
-    <div class="content">
-        <h2>Controller Operation</h2>
-        <div class="internal">
-            <button onclick="window.location.href='reboot_controller'" title="reboot controller in 1 minute">Reboot Controller</button>
-            <button onclick="window.location.href='update_controller'" title="update controller (after reboot)">Update Controller</button>
+        <!-- Humidity -->
+        <div class="pannel-tall">
+            <div class="pannel-heading">
+                <h2>Humidity</h2>
+            </div>
+            <div class="pannel-content">
+                    <p id="humidity">Currently: {{ humidity }}RH</p>
+            </div>
+            <div class="pannel-content">
+                <canvas id="humidity-chart"></canvas>
+            </div>
         </div>
-        <table>
-            <tr>
-                <th title="0 to 70">WiFi Quality</th>
-                <th title="-90 to -30">WiFi Strength</th>
-                <th>Hostname</th>
-                <th>Version</th>
-            </tr>
-            <tr>
-                <td id="wifi-quality">{{ wifi_quality }}/70</td>
-                <td id="wifi-strength">{{ wifi_strength }}dBm</td>
-                <td id="hostname">{{ hostname }}</td>
-                <td id="version">{{ version }}</td>
-            </tr>
-        </table>
-    </div>
 
-    <p id="debug-output">Debug: {{ debug_output }}</p>
+        <!-- Lux -->
+        <div class="pannel-tall">
+            <div class="pannel-heading">
+                <h2>Lux</h2>
+            </div>
+            <div class="pannel-content">
+                <p id="lux">Currently: {{ lux }}lx</p>
+            </div>
+            <div class="pannel-content">
+                <canvas id="lux-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- System Control -->
+        <div class="pannel">
+            <div class="pannel-heading">
+                <h2>System Control</h2>
+            </div>
+            <div class="pannel-content">
+                <label for="checkbox-grow-light"><input type="checkbox" id="checkbox-grow-light">Grow Light</label>
+                <label for="checkbox-airpump"><input type="checkbox" id="checkbox-airpump">Airpump</label>
+                <label for="checkbox-fan"><input type="checkbox" id="checkbox-fan">Fan</label>
+            </div>
+        </div>
+
+        <!-- System View -->
+        <div class="pannel-tall">
+            <div class="pannel-heading">
+                <h2>System View </h2>
+            </div>
+            <div class="pannel-content">
+                <button>Capture</button>
+                <button>Delete</button>
+                <button>Delete All</button>
+            </div>
+            <div class="pannel-content">
+                <img src="https://cdn.wikifarmer.com/wp-content/uploads/2022/12/What-is-hydroponic-farming.jpg">
+            </div>
+        </div>
+
+        <!-- Controller -->
+        <div class="pannel">
+            <div class="pannel-heading">
+                <h2>Controller </h2>
+            </div>
+            <div class="pannel-content">
+                <button onclick="window.location.href='reboot_controller'"
+                    title="reboot controller in 1 minute">Reboot</button>
+                <button onclick="window.location.href='update_controller'"
+                    title="update controller (after reboot)">Update</button>
+            </div>
+            <div class="pannel-content">
+                <table>
+                    <tr>
+                        <th title="0 to 70">WiFi Quality</th>
+                        <td id="wifi-quality">{{ wifi_quality }}/70</td>
+                    </tr>
+                    <tr>
+                        <th title="-90 to -30">WiFi Strength</th>
+                        <td id="wifi-strength">{{ wifi_strength }}dBm</td>
+                    </tr>
+                    <tr>
+                        <th>Hostname</th>
+                        <td id="hostname">{{ hostname }}</td>
+                    </tr>
+                    <tr>
+                        <th>Version</th>
+                        <td id="version">{{ version }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Debug -->
+        <div class="pannel">
+            <div class="pannel-heading">
+                <h2>Debug </h2>
+            </div>
+            <div class="pannel-content">
+                <p id="debug-output">Debug: {{ debug_output }}</p>
+            </div>
+        </div>
+
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
     <script type="text/javascript" src="../static/script.js"></script>
+    <script type="text/javascript" src="../static/graph.js"></script>
 
 </body>
 
