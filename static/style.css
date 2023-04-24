@@ -32,6 +32,10 @@ table, th, td {
     border-collapse: collapse;
 }
 
+th, td {
+    padding: 0 .25em;
+}
+
 .wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));

@@ -6,3 +6,4 @@ v0.1.0
 1.1. Connect CSV file to display
 2. Add timing parameters to acuators
 3. Camera control
+4. De-couple measurements and add error handling

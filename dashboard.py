@@ -5,12 +5,14 @@ from subprocess import run
 from socket import gethostname
 from datetime import datetime
 from controller import measure_data, DATA_FILE_PATH, leds_on, leds_off
+from csv import DictReader
 
 app = Flask(__name__)
 
 VERSION = "0.1.0"
 
-date_time = temp_C_ave = pres_HPa_ave = hum_RH_ave = light_Lx_ave = 0
+date_time = temp_C = pres_HPa = hum_RH = light_Lx = 0
+date_times = temp_Cs = pres_HPas = hum_RHs = light_LXs = []
 debug_output = ""
 
 # Main page.
@@ -23,10 +25,15 @@ def index():
     return render_template(
         'index.html',
         date_time = date_time,
-        temperature = temp_C_ave,
-        pressure = pres_HPa_ave,
-        humidity = hum_RH_ave,
-        lux = light_Lx_ave,
+        temperature = temp_C,
+        pressure = pres_HPa,
+        humidity = hum_RH,
+        lux = light_Lx,
+        times = date_times,
+        temp_Cs = temp_Cs,
+        pres_HPas = pres_HPas,
+        hum_RHs = hum_RHs,
+        light_LXs = light_LXs,
         logging_ability = job.is_enabled(),
         file_exists = find_data_file(),
         wifi_quality = wifi_quality,
@@ -43,8 +50,27 @@ def debug(message):
     debug_output = date_time + " " + message
 
 # Check that data file exists.
-def find_data_file():
-    return path.exists(DATA_FILE_PATH)
+def find_data_file(file_path = DATA_FILE_PATH):
+    return path.exists(file_path)
+
+def find_data_measurements(num = 12):
+    if find_data_file():
+        global date_times
+        global temp_Cs
+        global pres_HPas
+        global hum_RHs
+        global light_LXs
+
+        date_times = temp_Cs = pres_HPas = hum_RHs = light_LXs = []
+
+        with open(DATA_FILE_PATH, newline='') as file:
+            reader = DictReader(file)
+            for row in reader[-1:(-1*num)]:
+                date_times.append(row['Date-Time'])
+                temp_Cs.append(row['Temperature (°C)'])
+                pres_HPas.append(row['Pressure (HPa)'])
+                hum_RHs.append(row['Humidity (RH)'])
+                light_LXs.append(row['Lux (lx)'])
 
 # Check current WiFi connection strength.
 def find_connection_strength():
@@ -83,9 +109,15 @@ def request_data():
     global pres_HPa_ave
     global hum_RH_ave
     global light_Lx_ave
+    global date_times
+    global temp_Cs
+    global pres_HPas
+    global hum_RHs
+    global light_LXs
 
     try:
         date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
+        date_times = temp_Cs = pres_HPas = hum_RHs = light_LXs = find_data_measurements()
     except:
         debug("Could not request data!")
     else:

@@ -81,6 +81,8 @@ def measure_data(sample_size = 3):
 
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
+#TODO def write_data():
+
 # Controller logic handeler.
 def controller():
     if(args.read or args.write):

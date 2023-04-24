@@ -1,52 +1,35 @@
-var temperature = [14, 13, 12, 12, 11, 10, 10, 11];
-var time = ['-3.5', '-3.0', '-2.5', '-2.0', '-1.5', '-1.0', '-0.5', '0'];
+times       = {{ times|tojson }};
+temp_Cs     = {{ temp_Cs|tojson }};
+pres_HPas   = {{ pres_HPas|tojson }};
+hum_RHs     = {{ hum_RHs|tojson }};
+light_LXs   = {{ light_LXs|tojson }};
+
+const TEMP_MIN = 0;
+const TEMP_MAX = 30;
 
 const temperatureChart = document.getElementById('temperature-chart');
 const pressureChart = document.getElementById('pressure-chart');
 const humidityChart = document.getElementById('humidity-chart');
 const luxChart = document.getElementById('lux-chart');
 
-Chart.defaults.color = 'lightgrey'
+Chart.defaults.color = 'lightgrey';
+Chart.defaults.borderColor = 'lightslategrey';
+Chart.defaults.elements.point.pointStyle = false;
+Chart.defaults.plugins.legend.display = false;
 
 var loggedDataChart = new Chart(temperatureChart, {
     type: 'line',
     data: {
-        labels: time,
+        labels: times,
         datasets: [{
-            data: temperature
+            data: temp_Cs
         }]
     },
     options: {
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        elements: {
-            line: {
-                borderColor: 'lightgrey'
-            },
-            point: {
-                pointStyle: false
-            }
-        },
         scales: {
-            x: {
-                grid: {
-                    color: 'lightslategrey',
-                    tickLength: 0
-                },
-                ticks: {
-                    display: false
-                }
-            },
             y: {
-                grid: {
-                    color: 'lightslategrey',
-                    tickLength: 0
-                },
-                max: 30,
-                min: 0
+                max: TEMP_MAX,
+                min: TEMP_MIN
             }
         }
     }
@@ -55,131 +38,29 @@ var loggedDataChart = new Chart(temperatureChart, {
 var loggedDataChart = new Chart(pressureChart, {
     type: 'line',
     data: {
-        labels: time,
+        labels: times,
         datasets: [{
-            data: temperature
+            data: pres_HPas
         }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        elements: {
-            line: {
-                borderColor: 'lightgrey'
-            },
-            point: {
-                pointStyle: false
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color: 'lightslategrey',
-                    tickLength: 0
-                },
-                ticks: {
-                    display: false
-                }
-            },
-            y: {
-                grid: {
-                    color: 'lightslategrey',
-                    tickLength: 0
-                },
-                max: 30,
-                min: 0
-            }
-        }
     }
 });
 
 var loggedDataChart = new Chart(humidityChart, {
     type: 'line',
     data: {
-        labels: time,
+        labels: times,
         datasets: [{
-            data: temperature
+            data: hum_RHs
         }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        elements: {
-            line: {
-                borderColor: 'lightgrey'
-            },
-            point: {
-                pointStyle: false
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color: 'lightslategrey',
-                    tickLength: 0
-                },
-                ticks: {
-                    display: false
-                }
-            },
-            y: {
-                grid: {
-                    color: 'lightslategrey',
-                    tickLength: 0
-                },
-                max: 30,
-                min: 0
-            }
-        }
     }
 });
 
 var loggedDataChart = new Chart(luxChart, {
     type: 'line',
     data: {
-        labels: time,
+        labels: times,
         datasets: [{
-            data: temperature
+            data: luxChart
         }]
-    },
-    options: {
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        elements: {
-            line: {
-                borderColor: 'lightgrey'
-            },
-            point: {
-                pointStyle: false
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color: 'lightslategrey',
-                    tickLength: 0
-                },
-                ticks: {
-                    display: false
-                }
-            },
-            y: {
-                grid: {
-                    color: 'lightslategrey',
-                    tickLength: 0
-                },
-                max: 30,
-                min: 0
-            }
-        }
     }
 });
