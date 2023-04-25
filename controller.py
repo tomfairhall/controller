@@ -114,7 +114,7 @@ def write_data(data: tuple):
                     pressure    REAL             NOT NULL,
                     humidity    REAL             NOT NULL,
                     light       REAL             NOT NULL);''')
-    conn.execute('INSERT INTO TABLE MEASURMENTS VALUES({}, {}, {}, {}, {});', data[0], data[1], data[2], data[3], data[4])
+    conn.execute('INSERT INTO TABLE MEASURMENTS VALUES(?, ?, ?, ?, ?);', (data[0], data[1], data[2], data[3], data[4]))
     conn.commit()
     conn.close()
 
