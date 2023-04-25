@@ -1,5 +1,5 @@
 import argparse
-import csv
+import sqlite3
 from statistics import mean
 from datetime import datetime
 from PiicoDev_RGB import PiicoDev_RGB
@@ -8,45 +8,70 @@ from PiicoDev_VEML6030 import PiicoDev_VEML6030
 from PiicoDev_TMP117 import PiicoDev_TMP117
 from os import path
 
-HEADER = ["Date-Time", "Temperature (°C)", "Pressure (HPa)", "Humidity (RH)", "Lux (lx)"]
-DATA_FILE_PATH = '/home/controller/data.csv'
+DATABASE = 'Data.db'
 RED = [255, 0, 0]
 GREEN = [0, 255, 0]
 BLUE = [0, 0, 255]
 READ_LED = 0
 WRITE_LED = 1
 
-# Initialize the input argument parser.
+# Initialize the input argument parser, add and parse input arguments.
 parser = argparse.ArgumentParser()
-
-# Add argument(s).
-parser.add_argument("-w", "--write", help="write measurements to file", action="store_true")
-parser.add_argument("-r", "--read", help="read measurements to terminal", action="store_true")
-
-# Parse input arguments.
+parser.add_argument(
+    "-w", "--write", help="write measurements to file", action="store_true")
+parser.add_argument(
+    "-r", "--read", help="read measurements to terminal", action="store_true")
 args = parser.parse_args()
 
 # Initalize the LED display.
-leds = PiicoDev_RGB()
+light = PiicoDev_RGB()
 
-# Turn on all LEDs.
-def leds_on():
-    leds.clear()
-    leds.fill([255, 255, 255])
+def light_on():
+    light.fill([255, 255, 255])
 
-# Turn off all LEDs.
-def leds_off():
-    leds.clear()
+def light_off():
+    light.clear()
+
+def light_measuring():
+    light.setPixel(READ_LED, GREEN)
+
+def light_writing():
+    light.setPixel(WRITE_LED, GREEN)
+
+def measure_time():
+    # Get the current date and time.
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+def measure_temp(sensor: PiicoDev_TMP117):
+    light_measuring()
+    measurement = sensor.readTempC()
+    light_off()
+    return measurement
+
+def measure_pres(sensor: PiicoDev_BME280):
+    light_measuring()
+    _, measurement, _ = sensor.values()
+    light_off()
+    return measurement
+
+def measure_hum(sensor: PiicoDev_BME280):
+    light_measuring()
+    _, _, measurement = sensor.values()
+    light_off()
+    return measurement
+
+def measure_light(sensor: PiicoDev_VEML6030):
+    light_measuring()
+    measurement = sensor.read()
+    light_off()
+    return measurement
 
 # Measure data and average 3 times to limit any outliers in measurement.
-def measure_data(sample_size = 3):
+def measure_data(sample_size=3):
     # Initialise the sensors.
     bme280 = PiicoDev_BME280()
     veml6030 = PiicoDev_VEML6030()
     tmp117 = PiicoDev_TMP117()
-
-    leds.setPixel(READ_LED, GREEN)
-    leds.show()
 
     # Read and assign initial altitude reading.
     zero_alt = bme280.altitude()
@@ -57,14 +82,14 @@ def measure_data(sample_size = 3):
     hum_RH_values = []
     light_Lx_values = []
 
-    # Get the current date and time.
-    date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    date_time = measure_time()
 
     for x in range(sample_size):
         # Read and assign the sensor values.
-        _, pres_Pa, hum_RH = bme280.values()
-        light_Lx = veml6030.read()
-        temp_C = tmp117.readTempC()
+        temp_C = measure_temp(tmp117)
+        pres_Pa = measure_pres(bme280)
+        hum_RH = measure_hum(bme280)
+        light_Lx = measure_light(veml6030)
 
         temp_C_values.append(temp_C)
         pres_HPa_values.append(pres_Pa/100)
@@ -77,39 +102,36 @@ def measure_data(sample_size = 3):
     hum_RH_ave = round(mean(hum_RH_values), 2)
     light_Lx_ave = round(mean(light_Lx_values), 2)
 
-    leds.clear()
-
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
-#TODO def write_data():
+def write_data(data: tuple):
+    light_writing()
+
+    conn = sqlite3.connect(DATABASE)
+    conn.execute('''CREATE TABLE IF NOT EXISTS measurements(
+                    datetime    TEXT PRIMARY KEY NOT NULL,
+                    temperature REAL             NOT NULL,
+                    pressure    REAL             NOT NULL,
+                    humidity    REAL             NOT NULL,
+                    light       REAL             NOT NULL);''')
+    conn.execute('INSERT INTO TABLE MEASURMENTS VALUES({}, {}, {}, {}, {});', data[0], data[1], data[2], data[3], data[4])
+    conn.commit()
+    conn.close()
+
+    light_off()
 
 # Controller logic handeler.
 def controller():
-    if(args.read or args.write):
-        date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = measure_data()
-
-        if(args.write):
-            leds.setPixel(WRITE_LED, BLUE)
-            leds.show()
-
-            # If data file does not exist, create it and add header row.
-            if (not path.exists(DATA_FILE_PATH)):
-                with open(DATA_FILE_PATH, 'a', newline='') as file:
-                    writer = csv.writer(file)
-                    writer.writerow(HEADER)
-            # Open data file in append mode and write the environmental variables.
-            with open(DATA_FILE_PATH, 'a', newline='') as file:
-                writer = csv.writer(file)
-                writer.writerow([date_time, str(temp_C_ave), str(pres_HPa_ave), str(hum_RH_ave), str(light_Lx_ave)])
-
-            leds.clear()
-
-        elif(args.read):
+    if (args.read or args.write):
+        data = measure_data()
+        if (args.write):
+            write_data(data)
+        elif (args.read):
             # Print measurement
-            print("Date-Time:\t", date_time)
-            print("Temperature:\t", str(temp_C_ave) + "°C")
-            print("Pressure:\t", str(pres_HPa_ave) + "HPa")
-            print("Humidity:\t", str(hum_RH_ave) + "RH")
-            print("Lux:\t\t", str(light_Lx_ave) + "lx")
+            print("Date-Time:\t", data[0])
+            print("Temperature:\t", str(data[1]) + "°C")
+            print("Pressure:\t", str(data[2]) + "HPa")
+            print("Humidity:\t", str(data[3]) + "RH")
+            print("Light:\t\t", str(data[4]) + "lx")
 
 controller()
