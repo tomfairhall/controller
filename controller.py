@@ -7,7 +7,7 @@ from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
 from PiicoDev_TMP117 import PiicoDev_TMP117
 
-DATABASE = '/home/controller/Data.db'
+DATABASE = '/home/controller/data.db'
 RED = [255, 0, 0]
 GREEN = [0, 255, 0]
 BLUE = [0, 0, 255]
