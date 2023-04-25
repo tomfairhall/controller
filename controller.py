@@ -31,9 +31,11 @@ def light_off():
 
 def light_measuring():
     light.setPixel(READ_LED, GREEN)
+    light.show()
 
 def light_writing():
     light.setPixel(WRITE_LED, GREEN)
+    light.show()
 
 def measure_time():
     # Get the current date and time.
