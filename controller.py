@@ -6,9 +6,8 @@ from PiicoDev_RGB import PiicoDev_RGB
 from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
 from PiicoDev_TMP117 import PiicoDev_TMP117
-from os import path
 
-DATABASE = 'Data.db'
+DATABASE = '/home/controller/Data.db'
 RED = [255, 0, 0]
 GREEN = [0, 255, 0]
 BLUE = [0, 0, 255]
@@ -17,10 +16,8 @@ WRITE_LED = 1
 
 # Initialize the input argument parser, add and parse input arguments.
 parser = argparse.ArgumentParser()
-parser.add_argument(
-    "-w", "--write", help="write measurements to file", action="store_true")
-parser.add_argument(
-    "-r", "--read", help="read measurements to terminal", action="store_true")
+parser.add_argument("-w", "--write", help="write measurements to file", action="store_true")
+parser.add_argument("-r", "--read", help="read measurements to terminal", action="store_true")
 args = parser.parse_args()
 
 # Initalize the LED display.
@@ -104,6 +101,7 @@ def measure_data(sample_size=3):
 
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
+# Write data to database.
 def write_data(data: tuple):
     light_writing()
 
@@ -127,7 +125,6 @@ def controller():
         if (args.write):
             write_data(data)
         elif (args.read):
-            # Print measurement
             print("Date-Time:\t", data[0])
             print("Temperature:\t", str(data[1]) + "°C")
             print("Pressure:\t", str(data[2]) + "HPa")
