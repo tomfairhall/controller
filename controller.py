@@ -7,7 +7,8 @@ from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
 from PiicoDev_TMP117 import PiicoDev_TMP117
 
-DATABASE = '/home/controller/data.db'
+DATABASE_PATH = '/home/controller/data.db'
+DATABASE = 'measurements'
 RED = [255, 0, 0]
 GREEN = [0, 255, 0]
 BLUE = [0, 0, 255]
@@ -29,7 +30,7 @@ def light_on():
 def light_off():
     light.clear()
 
-def light_measuring():
+def light_reading():
     light.setPixel(READ_LED, GREEN)
     light.show()
 
@@ -42,25 +43,25 @@ def measure_time():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 def measure_temp(sensor: PiicoDev_TMP117):
-    light_measuring()
+    light_reading()
     measurement = sensor.readTempC()
     light_off()
     return measurement
 
 def measure_pres(sensor: PiicoDev_BME280):
-    light_measuring()
+    light_reading()
     _, measurement, _ = sensor.values()
     light_off()
     return measurement
 
 def measure_hum(sensor: PiicoDev_BME280):
-    light_measuring()
+    light_reading()
     _, _, measurement = sensor.values()
     light_off()
     return measurement
 
 def measure_light(sensor: PiicoDev_VEML6030):
-    light_measuring()
+    light_reading()
     measurement = sensor.read()
     light_off()
     return measurement
@@ -103,17 +104,16 @@ def measure_data(sample_size=3):
 
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
-# Write data to database.
 def write_data(data: tuple):
     light_writing()
 
-    conn = sqlite3.connect(DATABASE)
-    conn.execute('''CREATE TABLE IF NOT EXISTS measurements(
+    conn = sqlite3.connect(DATABASE_PATH)
+    conn.execute('''CREATE TABLE IF NOT EXISTS ?(
                     datetime    TEXT PRIMARY KEY NOT NULL,
                     temperature REAL             NOT NULL,
                     pressure    REAL             NOT NULL,
                     humidity    REAL             NOT NULL,
-                    light       REAL             NOT NULL)''')
+                    light       REAL             NOT NULL)''', (DATABASE))
     conn.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4]))
     conn.commit()
     conn.close()

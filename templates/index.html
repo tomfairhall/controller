@@ -5,9 +5,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Dashboard</title>
-    <script> const exists = {{ file_exists| int }} </script>
-    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
     <script src={{ url_for('static', filename='script.js' ) }}></script>
 </head>
 
@@ -23,9 +22,6 @@
                 <h2>Data</h2>
             </div>
             <div class="pannel-content">
-                <button onclick="window.location.href='request_data'" title="read data from sensors">Request</button>
-                <button onclick="checkData()" title="download all logged data">Download</button>
-                <button onclick="deleteData()" title="delete all logged data">Delete</button>
                 <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Logging</label>
             </div>
         </div>
