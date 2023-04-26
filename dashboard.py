@@ -18,7 +18,7 @@ debug_output = ""
 def index():
     job, _ = get_logging_job()
     wifi_quality, wifi_strength = get_connection_strength()
-    date_time = temperature = pressure = humidity = light = controller.measure_data()
+    date_time, temperature, pressure, humidity, light = controller.measure_data()
 
     data = query_database('SELECT * FROM measurements ORDER BY datetime LIMIT 10')
     print(data)

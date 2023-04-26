@@ -49,7 +49,7 @@ var loggedDataChart = new Chart(humidityChart, {
     }
 });
 
-var loggedDataChart = new Chart(luxChart, {
+var loggedDataChart = new Chart(lightChart, {
     type: 'line',
     data: {
         labels: times,
