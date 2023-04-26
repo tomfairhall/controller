@@ -34,8 +34,7 @@ def index():
         wifi_quality = wifi_quality,
         wifi_strength = wifi_strength,
         hostname = gethostname(),
-        version = VERSION,
-        debug_output = debug_output)
+        version = VERSION)
 
 def get_connection_strength():
     link_start = "Link Quality="

@@ -138,25 +138,7 @@
             </div>
         </div>
 
-        <!-- Debug -->
-        <div class="pannel">
-            <div class="pannel-heading">
-                <h2>Debug </h2>
-            </div>
-            <div class="pannel-content">
-                <p id="debug-output">Debug: {{ debug_output }}</p>
-            </div>
-        </div>
-
     </div>
-
-    <script>
-        times       = {{ times|tojson }};
-        temp_Cs     = {{ temp_Cs|tojson }};
-        pres_HPas   = {{ pres_HPas|tojson }};
-        hum_RHs     = {{ hum_RHs|tojson }};
-        light_LXs   = {{ light_LXs|tojson }};
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
     <script type="text/javascript" src="../static/script.js"></script>
