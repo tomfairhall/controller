@@ -8,7 +8,6 @@ from PiicoDev_VEML6030 import PiicoDev_VEML6030
 from PiicoDev_TMP117 import PiicoDev_TMP117
 
 DATABASE_PATH = '/home/controller/data.db'
-DATABASE = 'measurements'
 RED = [255, 0, 0]
 GREEN = [0, 255, 0]
 BLUE = [0, 0, 255]
@@ -108,12 +107,12 @@ def write_data(data: tuple):
     light_writing()
 
     conn = sqlite3.connect(DATABASE_PATH)
-    conn.execute('''CREATE TABLE IF NOT EXISTS ?(
+    conn.execute('''CREATE TABLE IF NOT EXISTS measurements(
                     datetime    TEXT PRIMARY KEY NOT NULL,
                     temperature REAL             NOT NULL,
                     pressure    REAL             NOT NULL,
                     humidity    REAL             NOT NULL,
-                    light       REAL             NOT NULL)''', (DATABASE))
+                    light       REAL             NOT NULL)''')
     conn.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4]))
     conn.commit()
     conn.close()

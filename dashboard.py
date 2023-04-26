@@ -20,7 +20,7 @@ def index():
     wifi_quality, wifi_strength = get_connection_strength()
     date_time = temperature = pressure = humidity = light = controller.measure_data()
 
-    data = query_database('SELECT * FROM ? ORDER BY datetime LIMIT 10', (controller.DATABASE))
+    data = query_database('SELECT * FROM measurements ORDER BY datetime LIMIT 10')
     print(data)
 
     return render_template(
