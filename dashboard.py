@@ -87,22 +87,6 @@ def close_connection(exception):
     if database is not None:
         database.close()
 
-
-    global date_time
-    global temp_C_ave
-    global pres_HPa_ave
-    global hum_RH_ave
-    global light_Lx_ave
-
-    try:
-        date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave = controller.measure_data()
-    except:
-        debug("Could not request current data!")
-    else:
-        debug("Requested data sucessfully")
-
-    return redirect(url_for('index'))
-
 # If download button is clicked, the CSV file will be download.
 @app.route('/download_data') ##########
 def download_data():
