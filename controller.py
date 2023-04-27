@@ -8,6 +8,7 @@ from PiicoDev_VEML6030 import PiicoDev_VEML6030
 from PiicoDev_TMP117 import PiicoDev_TMP117
 
 DATABASE_PATH = '/home/controller/data.db'
+DATABASE_SCHEMA_PATH = '/home/controller/controller/schema.sql'
 RED = [255, 0, 0]
 GREEN = [0, 255, 0]
 BLUE = [0, 0, 255]
@@ -107,7 +108,7 @@ def write_data(data: tuple):
     light_writing()
 
     conn = sqlite3.connect(DATABASE_PATH)
-    with open('/home/controller/controller/schema.sql', mode='r') as schema:
+    with open(DATABASE_SCHEMA_PATH, mode='r') as schema:
         conn.cursor().execute(schema.read())
     conn.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4]))
     conn.commit()

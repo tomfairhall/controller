@@ -1,6 +1,3 @@
-const TEMP_MIN = 0;
-const TEMP_MAX = 30;
-
 const temperatureChart = document.getElementById('temperature-chart');
 const pressureChart = document.getElementById('pressure-chart');
 const humidityChart = document.getElementById('humidity-chart');

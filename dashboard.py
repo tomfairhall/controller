@@ -8,6 +8,7 @@ import sqlite3
 import csv
 
 VERSION = "0.1.0"
+CSV_FILE_PATH = '/home/controller/data.csv'
 
 app = Flask(__name__)
 
@@ -90,24 +91,17 @@ def query_database(query, args=(), one=False):
     cursor.close()
     return (rows[0] if rows else None) if one else rows
 
-def database_to_csv(): ####### HAVE NOT TESTED YET ######
+def database_to_csv():
     rows = query_database('SELECT * FROM measurements')
-    with open('data.csv', mode='w', newline='') as file:
+    with open(CSV_FILE_PATH, mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(rows)
-
-@app.teardown_appcontext
-def close_connection(exception):
-    database = getattr(g, '_database', None)
-    if database is not None:
-        database.close()
 
 # If download button is clicked, the CSV file will be download.
 @app.route('/download_data') ##########
 def download_data():
     database_to_csv()
-    
-    return redirect(url_for('index'))
+    return send_file(CSV_FILE_PATH, as_attachment=True)
 
 @app.route('/delete_data')
 def delete_data():
@@ -153,6 +147,12 @@ def update_controller():
     result = run(["git", "pull"], cwd="/home/controller/controller", text=True, capture_output=True)
 
     return redirect(url_for('index'))
+
+@app.teardown_appcontext
+def close_connection(exception):
+    database = getattr(g, '_database', None)
+    if database is not None:
+        database.close()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
