@@ -18,7 +18,7 @@ def index():
     wifi_quality, wifi_strength = get_connection_strength()
     date_time, temperature, pressure, humidity, light = controller.measure_data()
 
-    rows = query_database('SELECT * FROM measurements ORDER BY datetime LIMIT 10')
+    rows = query_database('SELECT * FROM measurements ORDER BY datetime DESC LIMIT 10')
 
     time_data = []
     temperature_data = []
@@ -27,7 +27,7 @@ def index():
     light_data = []
 
     for row in rows:
-        time_data.append(row[0][11:])
+        time_data.append(row[0][11:15])
         temperature_data.append(row[1])
         pressure_data.append(row[2])
         humidity_data.append(row[3])

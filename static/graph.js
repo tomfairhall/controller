@@ -32,9 +32,9 @@ var loggedDataChart = new Chart(temperatureChart, {
 var loggedDataChart = new Chart(pressureChart, {
     type: 'line',
     data: {
-        labels: times,
+        labels: timeData,
         datasets: [{
-            data: pres_HPas
+            data: pressureData
         }]
     }
 });
@@ -42,9 +42,9 @@ var loggedDataChart = new Chart(pressureChart, {
 var loggedDataChart = new Chart(humidityChart, {
     type: 'line',
     data: {
-        labels: times,
+        labels: timeData,
         datasets: [{
-            data: hum_RHs
+            data: humidityData
         }]
     }
 });
@@ -52,9 +52,9 @@ var loggedDataChart = new Chart(humidityChart, {
 var loggedDataChart = new Chart(lightChart, {
     type: 'line',
     data: {
-        labels: times,
+        labels: timeData,
         datasets: [{
-            data: luxChart
+            data: lightData
         }]
     }
 });
