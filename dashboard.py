@@ -77,12 +77,6 @@ def get_logging_job():
     for job in cron.find_command('controller.py -w'):
         return job, cron
 
-    cursor = connection.cursor()
-    cursor.execute('SELECT * FROM ? ORDER BY ? LIMIT ?', (controller.DATABASE, 'datetime', num_rows))
-    rows = cursor.fetchall()
-    cursor.close()
-    return rows
-
 def get_database() -> sqlite3.Connection:
     database = getattr(g, '_database', None) 
     if database is None:
@@ -152,6 +146,5 @@ def update_controller():
 
     return redirect(url_for('index'))
 
-# Only run when directly called.
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

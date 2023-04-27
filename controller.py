@@ -107,12 +107,8 @@ def write_data(data: tuple):
     light_writing()
 
     conn = sqlite3.connect(DATABASE_PATH)
-    conn.execute('''CREATE TABLE IF NOT EXISTS measurements(
-                    datetime    TEXT PRIMARY KEY NOT NULL,
-                    temperature REAL             NOT NULL,
-                    pressure    REAL             NOT NULL,
-                    humidity    REAL             NOT NULL,
-                    light       REAL             NOT NULL)''')
+    with open('schema.sql', mode='r') as schema:
+        conn.cursor().execute(schema.read())
     conn.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4]))
     conn.commit()
     conn.close()
