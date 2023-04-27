@@ -14,7 +14,7 @@ Chart.defaults.plugins.legend.display = false;
 var loggedDataChart = new Chart(temperatureChart, {
     type: 'line',
     data: {
-        labels: timeData,
+        labels: dateTimeData,
         datasets: [{
             data: temperatureData
         }]
