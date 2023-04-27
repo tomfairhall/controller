@@ -20,9 +20,6 @@ def index():
 
     data = query_database('SELECT * FROM measurements ORDER BY datetime LIMIT 10')
 
-    for row in data:
-        print(row[0], row[1])
-
     return render_template(
         'index.html',
         date_time = date_time,
@@ -30,6 +27,7 @@ def index():
         pressure = pressure,
         humidity = humidity,
         light = light,
+        data = data,
         logging_ability = job.is_enabled(),
         wifi_quality = wifi_quality,
         wifi_strength = wifi_strength,
