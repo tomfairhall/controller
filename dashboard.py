@@ -27,7 +27,7 @@ def index():
     light_data = []
 
     for row in rows:
-        time_data.append(row[0][11:15])
+        time_data.append(row[0][11:16])
         temperature_data.append(row[1])
         pressure_data.append(row[2])
         humidity_data.append(row[3])
