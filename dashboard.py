@@ -1,11 +1,11 @@
 from flask import Flask, g, render_template, send_file, redirect, url_for
-from crontab import CronTab, CronItem
-from os import getlogin, remove, path
+from crontab import CronTab
+from os import getlogin
 from subprocess import run
 from socket import gethostname
-from datetime import datetime
 import controller
 import sqlite3
+import csv
 
 VERSION = "0.1.0"
 
@@ -90,6 +90,12 @@ def query_database(query, args=(), one=False):
     cursor.close()
     return (rows[0] if rows else None) if one else rows
 
+def database_to_csv(): ####### HAVE NOT TESTED YET ######
+    rows = query_database('SELECT * FROM measurements')
+    with open('data.csv', mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(rows)
+
 @app.teardown_appcontext
 def close_connection(exception):
     database = getattr(g, '_database', None)
@@ -99,7 +105,9 @@ def close_connection(exception):
 # If download button is clicked, the CSV file will be download.
 @app.route('/download_data') ##########
 def download_data():
-    return
+    database_to_csv()
+    
+    return redirect(url_for('index'))
 
 @app.route('/delete_data')
 def delete_data():

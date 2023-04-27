@@ -107,7 +107,7 @@ def write_data(data: tuple):
     light_writing()
 
     conn = sqlite3.connect(DATABASE_PATH)
-    with open('schema.sql', mode='r') as schema:
+    with open('/home/controller/controller/schema.sql', mode='r') as schema:
         conn.cursor().execute(schema.read())
     conn.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4]))
     conn.commit()
