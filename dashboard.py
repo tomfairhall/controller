@@ -20,14 +20,14 @@ def index():
 
     rows = query_database('SELECT * FROM measurements ORDER BY datetime LIMIT 10')
 
-    date_time_data = []
+    time_data = []
     temperature_data = []
     pressure_data = []
     humidity_data = []
     light_data = []
 
     for row in rows:
-        date_time_data.append(row[0])
+        time_data.append(row[0][11:])
         temperature_data.append(row[1])
         pressure_data.append(row[2])
         humidity_data.append(row[3])
@@ -40,7 +40,7 @@ def index():
         pressure = pressure,
         humidity = humidity,
         light = light,
-        date_time_data = date_time_data,
+        time_data = time_data,
         temperature_data = temperature_data,
         pressure_data = pressure_data,
         humidity_data = humidity_data,
