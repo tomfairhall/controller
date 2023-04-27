@@ -18,7 +18,16 @@ def index():
     wifi_quality, wifi_strength = get_connection_strength()
     date_time, temperature, pressure, humidity, light = controller.measure_data()
 
-    data = query_database('SELECT * FROM measurements ORDER BY datetime LIMIT 10')
+    rows = query_database('SELECT * FROM measurements ORDER BY datetime LIMIT 10')
+
+    date_time_data = temperature_data = pressure_data = humidity_data = light_data = []
+
+    for row in rows:
+        date_time_data.append(row[0])
+        temperature_data.append(row[1])
+        pressure_data.append(row[2])
+        humidity_data.append(row[3])
+        light_data.append(row[4])
 
     return render_template(
         'index.html',
@@ -27,7 +36,11 @@ def index():
         pressure = pressure,
         humidity = humidity,
         light = light,
-        data = data,
+        date_time_data = date_time_data,
+        temperature_data = temperature_data,
+        pressure_data = pressure_data,
+        humidity_data = humidity_data,
+        light_data = light_data,
         logging_ability = job.is_enabled(),
         wifi_quality = wifi_quality,
         wifi_strength = wifi_strength,

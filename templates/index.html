@@ -138,18 +138,13 @@
             </div>
         </div>
 
-            <script>
-                var data = [[]]
-                {% for row in data %}
-                    const dateTime = {{ row[0]|tojson }};
-                    const temperature = {{ row[1]|tojson }};
-                    const pressure = {{ row[2]|tojson }};
-                    const humidity = {{ row[3]|tojson }};
-                    const light = {{ row[4]|tojson }};
-
-                    data.push([dateTime, temperature, pressure, humidity, light])
-                {% endfor %}
-            </script>
+        <script>
+            const dateTimeData = {{ date_time_data|tojson }};
+            const temperatureData = {{ temperature_data|tojson }};
+            cosnt pressureData = {{ pressure_data|tojson }};
+            const  humidityData = {{ humidity_data|tojson }};
+            const lightData = {{ light_data|tojson }};
+        </script>
 
     </div>
 
