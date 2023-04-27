@@ -21,7 +21,7 @@ def index():
     data = query_database('SELECT * FROM measurements ORDER BY datetime LIMIT 10')
 
     for row in data:
-        print(row)
+        print(row[0], row[1])
 
     return render_template(
         'index.html',
