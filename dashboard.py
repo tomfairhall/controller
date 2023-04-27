@@ -27,11 +27,11 @@ def index():
     light_data = []
 
     for row in rows:
-        time_data.append(row[0][11:16])
-        temperature_data.append(row[1])
-        pressure_data.append(row[2])
-        humidity_data.append(row[3])
-        light_data.append(row[4])
+        time_data.insert(0, row[0][11:16])
+        temperature_data.insert(0, row[1])
+        pressure_data.insert(0, row[2])
+        humidity_data.insert(0, row[3])
+        light_data.insert(0, row[4])
 
     return render_template(
         'index.html',
