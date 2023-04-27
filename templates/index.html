@@ -23,7 +23,7 @@
             </div>
             <div class="pannel-content">
                 <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Logging</label>
-                <button>Download</button>
+                <button onclick="window.location.href='download_data'" title="Download all database data">Download</button>
                 <button>Delete</button>
             </div>
         </div>
@@ -113,10 +113,8 @@
                 <h2>Controller </h2>
             </div>
             <div class="pannel-content">
-                <button onclick="window.location.href='reboot_controller'"
-                    title="reboot controller in 1 minute">Reboot</button>
-                <button onclick="window.location.href='update_controller'"
-                    title="update controller (after reboot)">Update</button>
+                <button onclick="window.location.href='reboot_controller'" title="Reboot controller in 1 minute">Reboot</button>
+                <button onclick="window.location.href='update_controller'" title="Update controller on next reboot">Update</button>
             </div>
             <div class="pannel-content">
                 <table>
