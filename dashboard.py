@@ -7,11 +7,9 @@ from datetime import datetime
 import controller
 import sqlite3
 
-app = Flask(__name__)
-
 VERSION = "0.1.0"
 
-debug_output = ""
+app = Flask(__name__)
 
 # Main page.
 @app.route('/')
@@ -21,7 +19,9 @@ def index():
     date_time, temperature, pressure, humidity, light = controller.measure_data()
 
     data = query_database('SELECT * FROM measurements ORDER BY datetime LIMIT 10')
-    print(data)
+
+    for row in data:
+        print(row)
 
     return render_template(
         'index.html',
