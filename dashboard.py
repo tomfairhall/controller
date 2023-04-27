@@ -94,10 +94,10 @@ def query_database(query, args=(), one=False):
 def database_to_csv():
     column_names = query_database('SELECT name FROM PRAGMA_TABLE_INFO(\'measurements\')')
     rows = query_database('SELECT * FROM measurements')
-    database = column_names.extend(rows)
     with open(CSV_FILE_PATH, mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerows(database)
+        writer.writerows(column_names)
+        writer.writerows(rows)
 
 @app.route('/download_data')
 def download_data():
