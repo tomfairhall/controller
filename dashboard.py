@@ -92,9 +92,11 @@ def query_database(query, args=(), one=False):
     return (rows[0] if rows else None) if one else rows
 
 def database_to_csv():
+    column_names = query_database('SELECT name FROM PRAGMA_TABLE_INFO(\'measurements\')')
     rows = query_database('SELECT * FROM measurements')
     with open(CSV_FILE_PATH, mode='w', newline='') as file:
         writer = csv.writer(file)
+        writer.writerow(column_names)
         writer.writerows(rows)
 
 # If download button is clicked, the CSV file will be download.
