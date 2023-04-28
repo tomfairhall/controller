@@ -6,6 +6,7 @@ from socket import gethostname
 import controller
 import sqlite3
 import csv
+import sys
 
 VERSION = "0.1.0"
 CSV_FILE_PATH = '/home/controller/'
@@ -95,7 +96,7 @@ def query_database(query, args=(), one=False):
 def download_data():
         rows = query_database('SELECT * FROM measurements')
         with open(CSV_FILE_PATH, mode='w', newline='') as file:
-            print("here")
+            print("here", file=sys.stdout)
             writer = csv.writer(file)
             writer.writerows(rows)
 
