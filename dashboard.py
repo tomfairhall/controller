@@ -8,7 +8,7 @@ import sqlite3
 import csv
 
 VERSION = "0.1.0"
-CSV_FILE_PATH = 'static/downloads/data.csv'
+CSV_FILE_PATH = '/'
 
 app = Flask(__name__)
 
@@ -91,16 +91,17 @@ def query_database(query, args=(), one=False):
     cursor.close()
     return (rows[0] if rows else None) if one else rows
 
-@app.route('/download_data')
+@app.route('/download_data') #################NOT WORKING
 def download_data():
         rows = query_database('SELECT * FROM measurements')
         with open(CSV_FILE_PATH, mode='w', newline='') as file:
+            print("here")
             writer = csv.writer(file)
             writer.writerows(rows)
 
         return send_file(CSV_FILE_PATH, as_attachment=True)
 
-@app.route('/delete_data')
+@app.route('/delete_data') ###################### NOT WORKING
 def delete_data():
     get_database().execute('DELETE FROM measurements')
 
