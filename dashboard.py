@@ -96,7 +96,7 @@ def database_to_csv():
     rows = query_database('SELECT * FROM measurements')
     with open(CSV_FILE_PATH, mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow([name[0] for name in column_names])
+        writer.writerow([name[0][0] for name in column_names])
         writer.writerows(rows)
 
 @app.route('/download_data')
