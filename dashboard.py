@@ -22,8 +22,6 @@ def index():
 
     rows = query_database('SELECT * FROM measurements ORDER BY datetime DESC LIMIT 20')
 
-    print("here", file=sys.stdout)
-
     time_data = []
     temperature_data = []
     pressure_data = []
@@ -97,13 +95,11 @@ def query_database(query, args=(), one=False):
 @app.route('/download_data') #SHOULD DO BY STREAMING NOT HAVING AN INTERMEDIATE FILE
 def download_data():
         rows = query_database('SELECT * FROM measurements')
-
         with open(CSV_FILE_PATH, mode='w', newline='') as file:
-
             writer = csv.writer(file)
             writer.writerows(rows)
 
-        return send_file(CSV_FILE_PATH, as_attachment=True)
+        return send_file(CSV_FILE_PATH, mimetype='text/csv', as_attachment=True, max_age=0)
 
 @app.route('/delete_data') ###################### NOT WORKING
 def delete_data():
