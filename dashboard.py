@@ -9,7 +9,7 @@ import csv
 import sys
 
 VERSION = "0.1.0"
-CSV_FILE_PATH = '/home/controller/'
+CSV_FILE_PATH = '/home/controller/data.csv'
 
 app = Flask(__name__)
 
