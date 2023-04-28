@@ -22,6 +22,8 @@ def index():
 
     rows = query_database('SELECT * FROM measurements ORDER BY datetime DESC LIMIT 20')
 
+    print("here", file=sys.stdout)
+
     time_data = []
     temperature_data = []
     pressure_data = []
