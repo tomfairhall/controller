@@ -8,7 +8,7 @@ import sqlite3
 import csv
 
 VERSION = "0.1.0"
-CSV_FILE_PATH = '/home/controller/data.csv'
+CSV_FILE_PATH = 'static/downloads/data.csv'
 
 app = Flask(__name__)
 
