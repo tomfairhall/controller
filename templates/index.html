@@ -104,9 +104,9 @@
                 <h2>System View </h2>
             </div>
             <div class="pannel-content">
-                <button>Capture</button>
-                <button>Delete</button>
-                <button>Delete All</button>
+                <a>Capture</a>
+                <a>Delete</a>
+                <a>Delete All</a>
             </div>
             <div class="pannel-content">
                 <img src="https://cdn.wikifarmer.com/wp-content/uploads/2022/12/What-is-hydroponic-farming.jpg">
@@ -119,8 +119,8 @@
                 <h2>Controller </h2>
             </div>
             <div class="pannel-content">
-                <button onclick="window.location.href='reboot_controller'" title="Reboot controller in 1 minute">Reboot</button>
-                <button onclick="window.location.href='update_controller'" title="Update controller on next reboot">Update</button>
+                <a href="{{ url_for('reboot_controller') }}" title="Reboot controller in 1 minute">Reboot</button>
+                <a href="{{ url_for('update_controller') }}" title="Update controller on next reboot">Update</button>
             </div>
             <div class="pannel-content">
                 <table>
