@@ -97,8 +97,11 @@ def query_database(query, args=(), one=False):
 @app.route('/download_data') #################NOT WORKING
 def download_data():
         rows = query_database('SELECT * FROM measurements')
+
+        print("here", file=sys.stdout)
+
         with open(CSV_FILE_PATH, mode='w', newline='') as file:
-            print("here", file=sys.stdout)
+
             writer = csv.writer(file)
             writer.writerows(rows)
 
