@@ -95,7 +95,7 @@ def database_to_csv():
     column_names = query_database('SELECT name FROM PRAGMA_TABLE_INFO(\'measurements\')')
 
     for name in column_names:
-        print(name)
+        print(name[1])
 
     
     rows = query_database('SELECT * FROM measurements')
