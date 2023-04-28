@@ -94,7 +94,7 @@ def query_database(query, args=(), one=False):
     cursor.close()
     return (rows[0] if rows else None) if one else rows
 
-@app.route('/download_data') #################NOT WORKING
+@app.route('/download_data') #SHOULD DO BY STREAMING NOT HAVING AN INTERMEDIATE FILE
 def download_data():
         rows = query_database('SELECT * FROM measurements')
 

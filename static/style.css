@@ -6,7 +6,7 @@ h1 {
     margin: .5em;
 }
 
-button, label {
+a, button, label {
     color: darkslategrey;
     background-color: lightgrey;
     border: none;
