@@ -91,24 +91,18 @@ def query_database(query, args=(), one=False):
     cursor.close()
     return (rows[0] if rows else None) if one else rows
 
-def database_to_csv():
-    column_names = query_database('SELECT name FROM PRAGMA_TABLE_INFO(\'measurements\')')
-    rows = query_database('SELECT * FROM measurements')
-    with open(CSV_FILE_PATH, mode='w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(column_names[0][0])
-        writer.writerows(rows)
-
 @app.route('/download_data')
 def download_data():
-    database_to_csv()
-    return send_file(CSV_FILE_PATH, as_attachment=True)
+        rows = query_database('SELECT * FROM measurements')
+        with open(CSV_FILE_PATH, mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerows(rows)
+
+        return send_file(CSV_FILE_PATH, as_attachment=True)
 
 @app.route('/delete_data')
 def delete_data():
-    connection = sqlite3.connect(controller.DATABASE_PATH)
-    connection.execute('DROP TABLE IF EXISTS ?;', (controller.DATABASE))
-    connection.close()
+    query_database('DROP TABLE IF EXISTS measurements')
 
     return redirect(url_for('index'))
 
