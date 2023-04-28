@@ -102,7 +102,7 @@ def download_data():
 
 @app.route('/delete_data')
 def delete_data():
-    query_database('DELETE FROM measurements')
+    get_database().execute('DELETE FROM measurements')
 
     return redirect(url_for('index'))
 
