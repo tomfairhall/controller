@@ -41,7 +41,7 @@ class Measurement(object):
 parser = argparse.ArgumentParser(description="System Controller")
 parser.add_argument('-r', '--read', help="read measurements to terminal", action='store_true')
 parser.add_argument('-w', '--write', help="write measurements to file", action='store_true')
-parser.add_argument('repeat', nargs='?', help="number of times to read/write", default=1)
+parser.add_argument('repeat', nargs='?', help="number of times to read/write", default=1, type=int)
 args = parser.parse_args()
 
 # Initalize the LED display.
