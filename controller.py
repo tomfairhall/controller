@@ -117,9 +117,8 @@ def write_data(data: tuple):
             conn.close()
 
 if __name__ == '__main__':
-    data = measure_data()
-
     for _ in range(args.repeat):
+        data = measure_data()
         if args.write:
             write_data(data)
         if args.read:
