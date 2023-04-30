@@ -22,10 +22,10 @@ class Measurement(object):
         self._light_ouput = light_output
         self._mode = mode
 
-    def __enter__(self, mode):
-        if mode == 'r' or mode == 'read':
+    def __enter__(self):
+        if self._mode == 'r' or self._mode == 'read':
             self.__set_light_on(led_index=READ_LED, colour=GREEN)
-        elif mode == 'w' or mode == 'write':
+        elif self._mode == 'w' or self._mode == 'write':
             self.__set_light_on(led_index=WRITE_LED, colour=GREEN)
 
     def __exit__(self):
@@ -50,8 +50,9 @@ args = parser.parse_args()
 light = PiicoDev_RGB()
 
 def measure_time():
-    # Get the current date and time.
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with Measurement(light, mode='read'):
+        measurement = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return measurement
 
 def get_temperature(sensor: PiicoDev_TMP117):
     with Measurement(light, mode='read'):
