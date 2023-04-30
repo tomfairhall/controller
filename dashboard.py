@@ -6,7 +6,6 @@ from socket import gethostname
 import controller
 import sqlite3
 import csv
-import sys
 
 VERSION = "0.1.0"
 CSV_FILE_PATH = '/home/controller/data.csv'
@@ -18,7 +17,7 @@ app = Flask(__name__)
 def index():
     job, _ = get_logging_job()
     wifi_quality, wifi_strength = get_connection_strength()
-    date_time, temperature, pressure, humidity, light = controller.measure_data()
+    date_time, temperature, pressure, humidity, light = controller.read_data()
 
     rows = query_database('SELECT * FROM measurements ORDER BY datetime DESC LIMIT 20')
 
@@ -87,30 +86,15 @@ def get_database() -> sqlite3.Connection:
     return database
 
 def database(query, args=()):
-    cursor = get_database()
-    cursor.execute(query, args)
-    cursor.commit()
-    cursor.close()
+    connection = get_database()
+    connection.execute(query, args)
+    connection.commit()
 
 def query_database(query, args=(), one=False):
     cursor = get_database().execute(query, args)
     rows = cursor.fetchall()
     cursor.close()
     return (rows[0] if rows else None) if one else rows
-
-@app.route('/download_data') #SHOULD DO BY STREAMING NOT HAVING AN INTERMEDIATE FILE
-def download_data():
-        rows = query_database('SELECT * FROM measurements')
-        with open(CSV_FILE_PATH, mode='w', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerows(rows)
-
-        return send_file(CSV_FILE_PATH, mimetype='text/csv', as_attachment=True, max_age=0)
-
-@app.route('/delete_data') ###################### NOT WORKING
-def delete_data():
-    database('DELETE FROM measurements')
-    return redirect(url_for('index'))
 
 @app.route('/logging_ability')
 def change_logging_ability():
@@ -123,8 +107,24 @@ def change_logging_ability():
     cron.write()
 
     return redirect(url_for('index'))
-    controller.light_off()
 
+@app.route('/download_data') #TODO Stream file rather than create an intermediate file
+def download_data():
+        rows = query_database('SELECT * FROM measurements')
+        with open(CSV_FILE_PATH, mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerows(rows)
+
+        return send_file(CSV_FILE_PATH, mimetype='text/csv', as_attachment=True, max_age=0)
+
+@app.route('/delete_data')
+def delete_data():
+    database('DELETE FROM measurements')
+    return redirect(url_for('index'))
+
+@app.route('/log data')
+def log_data():
+    controller.write_data(controller.read_data())
     return redirect(url_for('index'))
 
 @app.route('/reboot_controller')

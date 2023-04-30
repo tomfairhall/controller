@@ -16,7 +16,7 @@ BLUE = [0, 0, 255]
 READ_LED = 0
 WRITE_LED = 1
 
-class Measurement(object):
+class Display(object):
     def __init__(self, light_output: PiicoDev_RGB, mode):
         self._light_ouput = light_output
         self._mode = mode
@@ -48,29 +48,29 @@ args = parser.parse_args()
 light = PiicoDev_RGB()
 
 def measure_time():
-    with Measurement(light, mode='read'):
+    with Display(light, mode='read'):
         return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
 def get_temperature(sensor: PiicoDev_TMP117):
-    with Measurement(light, mode='read'):
+    with Display(light, mode='read'):
         return sensor.readTempC()
 
 def get_pressure(sensor: PiicoDev_BME280):
-    with Measurement(light, mode='read'):
+    with Display(light, mode='read'):
         _, measurement, _ = sensor.values()
         return measurement
 
 def get_humidity(sensor: PiicoDev_BME280):
-    with Measurement(light, mode='read'):
+    with Display(light, mode='read'):
         _, _, measurement = sensor.values()
         return measurement
 
 def get_light(sensor: PiicoDev_VEML6030):
-    with Measurement(light, mode='read'):
+    with Display(light, mode='read'):
         return sensor.read()
 
 # Measure data and average 3 times to limit any outliers in measurement.
-def measure_data(sample_size=3):
+def read_data(sample_size=3):
     # Initialise the sensors.
     bme280 = PiicoDev_BME280()
     veml6030 = PiicoDev_VEML6030()
@@ -87,17 +87,12 @@ def measure_data(sample_size=3):
 
     date_time = measure_time()
 
-    for x in range(sample_size):
+    for _ in range(sample_size):
         # Read and assign the sensor values.
-        temp_C = get_temperature(tmp117)
-        pres_Pa = get_pressure(bme280)
-        hum_RH = get_humidity(bme280)
-        light_Lx = get_light(veml6030)
-
-        temp_C_values.append(temp_C)
-        pres_HPa_values.append(pres_Pa/100)
-        hum_RH_values.append(hum_RH)
-        light_Lx_values.append(light_Lx)
+        temp_C_values.append(get_temperature(tmp117))
+        pres_HPa_values.append((get_pressure(bme280))/100)
+        hum_RH_values.append(get_humidity(bme280))
+        light_Lx_values.append(get_light(veml6030))
 
     # Find average of measurement values.
     temp_C_ave = round(mean(temp_C_values), 2)
@@ -108,17 +103,17 @@ def measure_data(sample_size=3):
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
 def write_data(data: tuple):
-        with Measurement(light, mode='write'):
-            conn = sqlite3.connect(DATABASE_PATH)
+        with Display(light, mode='write'):
+            connection = sqlite3.connect(DATABASE_PATH)
             with open(DATABASE_SCHEMA_PATH, mode='r') as schema:
-                conn.cursor().execute(schema.read())
-            conn.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4]))
-            conn.commit()
-            conn.close()
+                connection.execute(schema.read())
+            connection.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4]))
+            connection.commit()
+            connection.close()
 
 if __name__ == '__main__':
     for _ in range(args.repeat):
-        data = measure_data()
+        data = read_data()
         if args.write:
             write_data(data)
         if args.read:
