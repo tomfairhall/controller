@@ -29,8 +29,7 @@ class Measurement(object):
             self.__set_light_on(led_index=WRITE_LED, colour=GREEN)
 
     def __exit__(self, exc_type, exc_val, traceback):
-        if type is None:
-            self.__light_off()
+        self.__light_off()
 
     def __set_light_on(self, led_index, colour):
         self._light_ouput.setPixel(led_index, colour)
