@@ -8,8 +8,8 @@ import sqlite3
 import csv
 
 VERSION = "0.1.0"
-CSV_FILE_PATH = '/home/controller/data.csv'
-IMAGE_FILE_PATH = '/home/controller/controller/static/image.jpg'
+CSV_PATH = '/home/controller/data.csv'
+IMAGE_PATH = '/home/controller/controller/static/image.jpg'
 
 app = Flask(__name__)
 
@@ -83,10 +83,18 @@ def get_database() -> sqlite3.Connection:
     database = getattr(g, '_database', None) 
     if database is None:
         database = g._database = sqlite3.connect(controller.DATABASE_PATH)
+        init_database()
         database.row_factory = sqlite3.Row
     return database
 
-def database(query, args=()):
+def init_database():
+    with app.app_context():
+        database = get_database()
+        with app.open_resource(controller.DATABASE_SCHEMA_PATH, mode='r') as file:
+            database.cursor().executescript(file.read())
+        database.commit()
+
+def execute_database(query, args=()):
     connection = get_database()
     connection.execute(query, args)
     connection.commit()
@@ -112,15 +120,15 @@ def change_logging_ability():
 @app.route('/download_data') #TODO Stream file rather than create an intermediate file
 def download_data():
         rows = query_database('SELECT * FROM measurements')
-        with open(CSV_FILE_PATH, mode='w', newline='') as file:
+        with open(CSV_PATH, mode='w', newline='') as file:
             writer = csv.writer(file)
             writer.writerows(rows)
 
-        return send_file(CSV_FILE_PATH, mimetype='text/csv', as_attachment=True, max_age=0)
+        return send_file(CSV_PATH, mimetype='text/csv', as_attachment=True, max_age=0)
 
 @app.route('/delete_data')
 def delete_data():
-    database('DELETE FROM measurements')
+    execute_database('DELETE FROM measurements')
     return redirect(url_for('index'))
 
 @app.route('/log_data')
@@ -130,12 +138,12 @@ def log_data():
 
 @app.route('/capture_image')
 def capture_image():
-    run(['raspistill', '-o', IMAGE_FILE_PATH])
+    run(['raspistill', '-o', IMAGE_PATH])
     return redirect(url_for('index'))
 
 @app.route('/delete_image')
 def delete_image():
-    run(['rm', IMAGE_FILE_PATH])
+    run(['rm', IMAGE_PATH])
     return redirect(url_for('index'))
 
 @app.route('/reboot_controller')
