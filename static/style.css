@@ -15,6 +15,7 @@ a, button, label {
     padding: .25em .5em;
     margin: .25em;
     text-decoration: none;
+    display: block;
 }
 
 a:hover, button:hover, label:hover{
