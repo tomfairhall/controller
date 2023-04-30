@@ -18,7 +18,7 @@ a, button, label {
 }
 
 a:hover, button:hover, label:hover{
-    filter: brightness(50%);
+    filter: brightness(80%);
 }
 
 input[type="checkbox"] {

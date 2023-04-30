@@ -104,6 +104,8 @@ def download_data():
 @app.route('/delete_data') ###################### NOT WORKING
 def delete_data():
 
+    query_database('DELETE FROM measurements')
+
     return redirect(url_for('index'))
 
 @app.route('/logging_ability')
