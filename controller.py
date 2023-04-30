@@ -28,17 +28,16 @@ class Measurement(object):
         elif self._mode == 'w' or self._mode == 'write':
             self.__set_light_on(led_index=WRITE_LED, colour=GREEN)
 
-    def __exit__(self, type, value, traceback):
-        self.__light_off()
+    def __exit__(self, exc_type, exc_val, traceback):
+        if type is None:
+            self.__light_off()
 
     def __set_light_on(self, led_index, colour):
         self._light_ouput.setPixel(led_index, colour)
         self._light_ouput.show()
-        print("LED on")
 
     def __light_off(self):
         self._light_ouput.clear()
-        print("LED off")
 
 # Initialize the input argument parser, add and parse input arguments.
 parser = argparse.ArgumentParser()
@@ -51,28 +50,25 @@ light = PiicoDev_RGB()
 
 def measure_time():
     with Measurement(light, mode='read'):
-        measurement = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    return measurement
+        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 def get_temperature(sensor: PiicoDev_TMP117):
     with Measurement(light, mode='read'):
-        measurement = sensor.readTempC()
-    return measurement
+        return sensor.readTempC()
 
 def get_pressure(sensor: PiicoDev_BME280):
     with Measurement(light, mode='read'):
         _, measurement, _ = sensor.values()
-    return measurement
+        return measurement
 
 def get_humidity(sensor: PiicoDev_BME280):
     with Measurement(light, mode='read'):
         _, _, measurement = sensor.values()
-    return measurement
+        return measurement
 
 def get_light(sensor: PiicoDev_VEML6030):
     with Measurement(light, mode='read'):
-        measurement = sensor.read()
-    return measurement
+        return sensor.read()
 
 # Measure data and average 3 times to limit any outliers in measurement.
 def measure_data(sample_size=3):
