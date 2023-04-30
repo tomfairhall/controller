@@ -103,12 +103,12 @@ def read_data(sample_size=3):
 
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
-def write_data(data: tuple):
+def write_data(data: tuple, mode='a'):
         with Display(light, mode='write'):
             connection = sqlite3.connect(DATABASE_PATH)
             with open(DATABASE_SCHEMA_PATH, mode='r') as schema:
                 connection.execute(schema.read())
-            connection.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4]))
+            connection.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4], mode))
             connection.commit()
             connection.close()
 

@@ -9,6 +9,7 @@ import csv
 
 VERSION = "0.1.0"
 CSV_FILE_PATH = '/home/controller/data.csv'
+IMAGE_FILE_PATH = '/home/controller/controller/static/image.jpg'
 
 app = Flask(__name__)
 
@@ -122,14 +123,19 @@ def delete_data():
     database('DELETE FROM measurements')
     return redirect(url_for('index'))
 
-@app.route('/log data')
+@app.route('/log_data')
 def log_data():
-    controller.write_data(controller.read_data())
+    controller.write_data(controller.read_data(), mode='m')
     return redirect(url_for('index'))
 
-@app.route('/capture')
-def capture():
-    run(['raspistill', '-o', '/home/controller/controller/static/image.jpg'])
+@app.route('/capture_image')
+def capture_image():
+    run(['raspistill', '-o', IMAGE_FILE_PATH])
+    return redirect(url_for('index'))
+
+@app.route('/delete_image')
+def delete_image():
+    run(['rm', IMAGE_FILE_PATH])
     return redirect(url_for('index'))
 
 @app.route('/reboot_controller')
