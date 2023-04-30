@@ -86,6 +86,9 @@ def get_database() -> sqlite3.Connection:
         database.row_factory = sqlite3.Row
     return database
 
+def database(query, args=()):
+    get_database().execute(query, args)
+
 def query_database(query, args=(), one=False):
     cursor = get_database().execute(query, args)
     rows = cursor.fetchall()
@@ -103,9 +106,7 @@ def download_data():
 
 @app.route('/delete_data') ###################### NOT WORKING
 def delete_data():
-
-    query_database('DELETE FROM measurements')
-
+    database('DELETE FROM measurements')
     return redirect(url_for('index'))
 
 @app.route('/logging_ability')
