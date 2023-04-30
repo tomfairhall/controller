@@ -70,10 +70,6 @@ def get_light(sensor: PiicoDev_VEML6030):
     with Display(light, mode='read'):
         return sensor.read()
 
-def get_image():
-    with Display(light, mode='read'):
-        run(['raspistill', '-o', 'image.jpg'])
-
 # Measure data and average 3 times to limit any outliers in measurement.
 def read_data(sample_size=3):
     # Initialise the sensors.

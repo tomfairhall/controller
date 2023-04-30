@@ -129,7 +129,8 @@ def log_data():
 
 @app.route('/capture')
 def capture():
-    controller.get_image()
+    run(['raspistill', '-o', '/home/controller/controller/static/image.jpg'])
+    return redirect(url_for('index'))
 
 @app.route('/reboot_controller')
 def reboot_controller():
