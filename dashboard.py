@@ -87,7 +87,10 @@ def get_database() -> sqlite3.Connection:
     return database
 
 def database(query, args=()):
-    get_database().execute(query, args)
+    cursor = get_database()
+    cursor.execute(query, args)
+    cursor.commit()
+    cursor.close()
 
 def query_database(query, args=(), one=False):
     cursor = get_database().execute(query, args)
