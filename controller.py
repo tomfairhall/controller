@@ -1,6 +1,5 @@
 import argparse
 import sqlite3
-import typing
 from statistics import mean
 from datetime import datetime
 from PiicoDev_RGB import PiicoDev_RGB

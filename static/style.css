@@ -17,6 +17,10 @@ a, button, label {
     text-decoration: none;
 }
 
+a:hover, button:hover, label:hover{
+    filter: brightness(50%);
+}
+
 input[type="checkbox"] {
     margin: 0 .25em 0 0;
 }
