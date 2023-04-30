@@ -28,7 +28,7 @@ class Measurement(object):
         elif self._mode == 'w' or self._mode == 'write':
             self.__set_light_on(led_index=WRITE_LED, colour=GREEN)
 
-    def __exit__(self):
+    def __exit__(self, type, value, traceback):
         self.__light_off()
 
     def __set_light_on(self, led_index, colour):
