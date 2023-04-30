@@ -6,6 +6,7 @@ from PiicoDev_RGB import PiicoDev_RGB
 from PiicoDev_BME280 import PiicoDev_BME280
 from PiicoDev_VEML6030 import PiicoDev_VEML6030
 from PiicoDev_TMP117 import PiicoDev_TMP117
+from subprocess import run
 
 DATABASE_PATH = '/home/controller/data.db'
 DATABASE_SCHEMA_PATH = '/home/controller/controller/schema.sql'
@@ -47,7 +48,7 @@ args = parser.parse_args()
 # Initalize the LED display.
 light = PiicoDev_RGB()
 
-def measure_time():
+def get_time():
     with Display(light, mode='read'):
         return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
@@ -69,6 +70,10 @@ def get_light(sensor: PiicoDev_VEML6030):
     with Display(light, mode='read'):
         return sensor.read()
 
+def get_image():
+    with Display(light, mode='read'):
+        run(['raspistill', '-o', 'image.jpg'])
+
 # Measure data and average 3 times to limit any outliers in measurement.
 def read_data(sample_size=3):
     # Initialise the sensors.
@@ -85,7 +90,7 @@ def read_data(sample_size=3):
     hum_RH_values = []
     light_Lx_values = []
 
-    date_time = measure_time()
+    date_time = get_time()
 
     for _ in range(sample_size):
         # Read and assign the sensor values.

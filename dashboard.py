@@ -127,6 +127,10 @@ def log_data():
     controller.write_data(controller.read_data())
     return redirect(url_for('index'))
 
+@app.route('/capture')
+def capture():
+    controller.get_image()
+
 @app.route('/reboot_controller')
 def reboot_controller():
     run(["sudo", "shutdown", "-r", "1"])
