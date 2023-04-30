@@ -103,14 +103,12 @@ def download_data():
 
 @app.route('/delete_data') ###################### NOT WORKING
 def delete_data():
-    get_database().execute('DELETE FROM measurements')
 
     return redirect(url_for('index'))
 
 @app.route('/logging_ability')
 def change_logging_ability():
     job, cron = get_logging_job()
-
     if job.is_enabled():
         job.enable(False)
     else:
@@ -119,15 +117,6 @@ def change_logging_ability():
     cron.write()
 
     return redirect(url_for('index'))
-
-@app.route('/light_on')
-def light_on():
-    controller.light_on()
-
-    return redirect(url_for('index'))
-
-@app.route('/light_off')
-def light_off():
     controller.light_off()
 
     return redirect(url_for('index'))

@@ -22,7 +22,9 @@
                 <h2>Data</h2>
             </div>
             <div class="pannel-content">
-                <label for="checkbox-logging-ability"><input type="checkbox" id="checkbox-logging-ability" onclick="window.location.href='logging_ability'" {{ "checked" if logging_ability else "" }}>Logging</label>
+                <label for="checkbox-logging-ability">
+                    <input type="checkbox" id="checkbox-logging-ability" href="{{ url_for('logging_ability') }}" {{ "checked" if logging_ability}}>Logging
+                </label>
                 <a href="{{ url_for('download_data') }}" title="Download all database data">Download</a>
                 <a href="{{ url_for('delete_data') }}" title="Delete all database data">Delete</a>
             </div>

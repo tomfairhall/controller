@@ -1,5 +1,6 @@
 import argparse
 import sqlite3
+import typing
 from statistics import mean
 from datetime import datetime
 from PiicoDev_RGB import PiicoDev_RGB
@@ -9,11 +10,35 @@ from PiicoDev_TMP117 import PiicoDev_TMP117
 
 DATABASE_PATH = '/home/controller/data.db'
 DATABASE_SCHEMA_PATH = '/home/controller/controller/schema.sql'
+
 RED = [255, 0, 0]
 GREEN = [0, 255, 0]
 BLUE = [0, 0, 255]
 READ_LED = 0
 WRITE_LED = 1
+
+class Measurement(object):
+    def __init__(self, light_output: PiicoDev_RGB, mode):
+        self._light_ouput = light_output
+        self._mode = mode
+
+    def __enter__(self, mode):
+        if mode == 'r' or mode == 'read':
+            self.__set_light_on(led_index=READ_LED, colour=GREEN)
+        elif mode == 'w' or mode == 'write':
+            self.__set_light_on(led_index=WRITE_LED, colour=GREEN)
+
+    def __exit__(self):
+        self.__light_off()
+
+    def __set_light_on(self, led_index, colour):
+        self._light_ouput.setPixel(led_index, colour)
+        self._light_ouput.show()
+        print("LED on")
+
+    def __light_off(self):
+        self._light_ouput.clear()
+        print("LED off")
 
 # Initialize the input argument parser, add and parse input arguments.
 parser = argparse.ArgumentParser()
@@ -24,46 +49,28 @@ args = parser.parse_args()
 # Initalize the LED display.
 light = PiicoDev_RGB()
 
-def light_on():
-    light.fill([255, 255, 255])
-
-def light_off():
-    light.clear()
-
-def light_reading():
-    light.setPixel(READ_LED, GREEN)
-    light.show()
-
-def light_writing():
-    light.setPixel(WRITE_LED, GREEN)
-    light.show()
-
 def measure_time():
     # Get the current date and time.
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-def measure_temp(sensor: PiicoDev_TMP117):
-    light_reading()
-    measurement = sensor.readTempC()
-    light_off()
+def get_temperature(sensor: PiicoDev_TMP117):
+    with Measurement(light, mode='read'):
+        measurement = sensor.readTempC()
     return measurement
 
-def measure_pres(sensor: PiicoDev_BME280):
-    light_reading()
-    _, measurement, _ = sensor.values()
-    light_off()
+def get_pressure(sensor: PiicoDev_BME280):
+    with Measurement(light, mode='read'):
+        _, measurement, _ = sensor.values()
     return measurement
 
-def measure_hum(sensor: PiicoDev_BME280):
-    light_reading()
-    _, _, measurement = sensor.values()
-    light_off()
+def get_humidity(sensor: PiicoDev_BME280):
+    with Measurement(light, mode='read'):
+        _, _, measurement = sensor.values()
     return measurement
 
-def measure_light(sensor: PiicoDev_VEML6030):
-    light_reading()
-    measurement = sensor.read()
-    light_off()
+def get_light(sensor: PiicoDev_VEML6030):
+    with Measurement(light, mode='read'):
+        measurement = sensor.read()
     return measurement
 
 # Measure data and average 3 times to limit any outliers in measurement.
@@ -86,10 +93,10 @@ def measure_data(sample_size=3):
 
     for x in range(sample_size):
         # Read and assign the sensor values.
-        temp_C = measure_temp(tmp117)
-        pres_Pa = measure_pres(bme280)
-        hum_RH = measure_hum(bme280)
-        light_Lx = measure_light(veml6030)
+        temp_C = get_temperature(tmp117)
+        pres_Pa = get_pressure(bme280)
+        hum_RH = get_humidity(bme280)
+        light_Lx = get_light(veml6030)
 
         temp_C_values.append(temp_C)
         pres_HPa_values.append(pres_Pa/100)
@@ -105,28 +112,22 @@ def measure_data(sample_size=3):
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
 def write_data(data: tuple):
-    light_writing()
+        with Measurement(light, mode='write'):
+            conn = sqlite3.connect(DATABASE_PATH)
+            with open(DATABASE_SCHEMA_PATH, mode='r') as schema:
+                conn.cursor().execute(schema.read())
+            conn.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4]))
+            conn.commit()
+            conn.close()
 
-    conn = sqlite3.connect(DATABASE_PATH)
-    with open(DATABASE_SCHEMA_PATH, mode='r') as schema:
-        conn.cursor().execute(schema.read())
-    conn.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4]))
-    conn.commit()
-    conn.close()
-
-    light_off()
-
-# Controller logic handeler.
-def controller():
-    if (args.read or args.write):
+if __name__ == '__main__':
+    if args.read or args.write:
         data = measure_data()
-        if (args.write):
-            write_data(data)
-        elif (args.read):
-            print("Date-Time:\t", data[0])
-            print("Temperature:\t", str(data[1]) + "°C")
-            print("Pressure:\t", str(data[2]) + "HPa")
-            print("Humidity:\t", str(data[3]) + "RH")
-            print("Light:\t\t", str(data[4]) + "lx")
-
-controller()
+    if args.write:
+        write_data(data)
+    elif args.read:
+        print("Date-Time:\t", data[0])
+        print("Temperature:\t", str(data[1]) + "°C")
+        print("Pressure:\t", str(data[2]) + "HPa")
+        print("Humidity:\t", str(data[3]) + "RH")
+        print("Light:\t\t", str(data[4]) + "lx")
