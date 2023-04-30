@@ -38,9 +38,10 @@ class Measurement(object):
         self._light_ouput.clear()
 
 # Initialize the input argument parser, add and parse input arguments.
-parser = argparse.ArgumentParser()
-parser.add_argument("-w", "--write", help="write measurements to file", action="store_true")
-parser.add_argument("-r", "--read", help="read measurements to terminal", action="store_true")
+parser = argparse.ArgumentParser(description="System Controller")
+parser.add_argument('-r', '--read', help="read measurements to terminal", action='store_true')
+parser.add_argument('-w', '--write', help="write measurements to file", action='store_true')
+parser.add_argument('repeat', nargs='?', help="number of times to read/write", required=False, default=1)
 args = parser.parse_args()
 
 # Initalize the LED display.
@@ -116,13 +117,14 @@ def write_data(data: tuple):
             conn.close()
 
 if __name__ == '__main__':
-    if args.read or args.write:
-        data = measure_data()
-    if args.write:
-        write_data(data)
-    elif args.read:
-        print("Date-Time:\t", data[0])
-        print("Temperature:\t", str(data[1]) + "°C")
-        print("Pressure:\t", str(data[2]) + "HPa")
-        print("Humidity:\t", str(data[3]) + "RH")
-        print("Light:\t\t", str(data[4]) + "lx")
+    data = measure_data()
+
+    for _ in range(args.repeat):
+        if args.write:
+            write_data(data)
+        if args.read:
+            print("Date-Time:\t", data[0])
+            print("Temperature:\t", str(data[1]) + "°C")
+            print("Pressure:\t", str(data[2]) + "HPa")
+            print("Humidity:\t", str(data[3]) + "RH")
+            print("Light:\t\t", str(data[4]) + "lx")
