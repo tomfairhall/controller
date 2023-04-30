@@ -49,7 +49,7 @@ light = PiicoDev_RGB()
 
 def measure_time():
     with Measurement(light, mode='read'):
-        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
 def get_temperature(sensor: PiicoDev_TMP117):
     with Measurement(light, mode='read'):
