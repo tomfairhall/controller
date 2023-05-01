@@ -7,7 +7,7 @@ import controller
 import sqlite3
 import csv
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 CSV_PATH = '/home/controller/data.csv'
 IMAGE_PATH = '/home/controller/controller/static/image.jpg'
 
@@ -95,9 +95,9 @@ def init_database():
         database.commit()
 
 def execute_database(query, args=()):
-    connection = get_database()
-    connection.execute(query, args)
-    connection.commit()
+    cursor = get_database()
+    cursor.execute(query, args)
+    cursor.commit()
 
 def query_database(query, args=(), one=False):
     cursor = get_database().execute(query, args)
@@ -117,7 +117,7 @@ def change_logging_ability():
 
     return redirect(url_for('index'))
 
-@app.route('/download_data') #TODO Stream file rather than create an intermediate file
+@app.route('/download_data') #TODO Stream file rather than create an intermediate file & add header to CSV
 def download_data():
         rows = query_database('SELECT * FROM measurements')
         with open(CSV_PATH, mode='w', newline='') as file:
