@@ -83,7 +83,6 @@ def get_database() -> sqlite3.Connection:
     database = getattr(g, '_database', None) 
     if database is None:
         database = g._database = sqlite3.connect(controller.DATABASE_PATH)
-        init_database()
         database.row_factory = sqlite3.Row
     return database
 
