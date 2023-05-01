@@ -99,11 +99,7 @@ def execute_database(query, args=()):
     cursor.commit()
 
 def query_database(query, args=(), one=False):
-    try:
-        cursor = get_database().execute(query, args)
-    except sqlite3.OperationalError:
-        init_database()
-        query_database(query=query, args=args, one=one)
+    cursor = get_database().execute(query, args)
     rows = cursor.fetchall()
     cursor.close()
     return (rows[0] if rows else None) if one else rows
@@ -168,4 +164,5 @@ def close_connection(exception):
         database.close()
 
 if __name__ == '__main__':
+    init_database() ##hacky
     app.run(host='0.0.0.0')
