@@ -99,7 +99,11 @@ def execute_database(query, args=()):
     cursor.commit()
 
 def query_database(query, args=(), one=False):
-    cursor = get_database().execute(query, args)
+    try:
+        cursor = get_database().execute(query, args)
+    except sqlite3.OperationalError:
+        init_database()
+        query_database(query=query, args=args, one=one)
     rows = cursor.fetchall()
     cursor.close()
     return (rows[0] if rows else None) if one else rows
