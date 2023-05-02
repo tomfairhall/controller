@@ -22,8 +22,8 @@ a:hover, button:hover, label:hover{
     filter: brightness(80%);
 }
 
-input[type="checkbox"] {
-    margin: 0 .25em 0 0;
+input[type="checkbox"], input[type="number"] {
+    margin: 0 .25em;
 }
 
 body {
