@@ -3,7 +3,6 @@ from crontab import CronTab
 from os import getlogin
 from subprocess import run
 from socket import gethostname
-from pathlib import Path
 import sqlite3
 import csv
 import controller
@@ -99,9 +98,12 @@ def execute_database(query, args=()):
     cursor.execute(query, args)
     cursor.commit()
 
-def query_database(query, args=(), one=False):
+def query_database(query, args=(), one=False, names=False):
     cursor = get_database().execute(query, args)
     rows = cursor.fetchall()
+    if names:
+        names = [name[0] for name in cursor.description]
+        rows.insert(0, names)
     cursor.close()
     return (rows[0] if rows else None) if one else rows
 
@@ -119,7 +121,7 @@ def change_logging_ability():
 
 @app.route('/download_data') #TODO Stream file rather than create an intermediate file & add header to CSV
 def download_data():
-        rows = query_database('SELECT * FROM measurements')
+        rows = query_database('SELECT * FROM measurements', names=True)
         with open(CSV_PATH, mode='w', newline='') as file:
             writer = csv.writer(file)
             writer.writerows(rows)
