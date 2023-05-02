@@ -7,7 +7,7 @@ import controller
 import sqlite3
 import csv
 
-VERSION = "0.2.0"
+VERSION = "test"
 CSV_PATH = '/home/controller/data.csv'
 IMAGE_PATH = '/home/controller/controller/static/image.jpg'
 
