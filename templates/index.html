@@ -28,6 +28,9 @@
                 <a href="{{ url_for('download_data') }}" title="Download all database data">Download</a>
                 <a href="{{ url_for('delete_data') }}" title="Delete all database data">Delete</a>
                 <a href="{{ url_for('log_data') }}" title="Log current data to database">Log</a>
+                <label for="logging-interval">
+                    <input type="number" id="logging-interval" min="1" max="1440">
+                </label>
             </div>
         </div>
 

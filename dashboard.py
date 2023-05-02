@@ -3,9 +3,10 @@ from crontab import CronTab
 from os import getlogin
 from subprocess import run
 from socket import gethostname
-import controller
+from pathlib import Path
 import sqlite3
 import csv
+import controller
 
 VERSION = "test"
 CSV_PATH = '/home/controller/data.csv'
