@@ -37,8 +37,8 @@
                     <input type="checkbox" id="checkbox-logging-ability" href="{{ url_for('change_logging_ability') }}" {{ "checked" if logging_ability}}>Data Logging
                 </label>
                 <a href="{{ url_for('log_data') }}" title="Log current data to database">Log</a>
-                <label for="logging-interval">
-                    Interval: <input type="number" id="logging-interval" min="1" max="1440"> min
+                <label for="logging-frequency">
+                    Frequency:<input type="number" id="logging-frequency" min="1" max="60">/h
                 </label>
             </div>
         </div>

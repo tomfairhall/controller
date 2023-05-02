@@ -26,6 +26,10 @@ input[type="checkbox"], input[type="number"] {
     margin: 0 .25em;
 }
 
+input[type="number"] {
+    width: 2.5em;
+}
+
 body {
     background-color: darkslategrey;
     color: lightgrey;
