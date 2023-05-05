@@ -3,17 +3,16 @@ from crontab import CronTab
 from os import getlogin
 from subprocess import run
 from socket import gethostname
-import controller
 import sqlite3
 import csv
+import controller
 
-VERSION = "0.2.0"
+VERSION = "v0.1.0"
 CSV_PATH = '/home/controller/data.csv'
 IMAGE_PATH = '/home/controller/controller/static/image.jpg'
 
 app = Flask(__name__)
 
-# Main page.
 @app.route('/')
 def index():
     job, _ = get_logging_job()
@@ -65,7 +64,6 @@ def get_connection_strength():
     link_index_end = result.stdout.find(link_end, link_index_start)
     signal_index_start = result.stdout.find(signal_start)
     signal_index_end = result.stdout.find(signal_end, signal_index_start)
-
     index_link_start = link_index_start+len(link_start)
     index_link_end = link_index_end
     index_signal_start = signal_index_start+len(signal_start)
@@ -74,8 +72,7 @@ def get_connection_strength():
     return(int(result.stdout[index_link_start:index_link_end]), int(result.stdout[index_signal_start:index_signal_end]))
 
 def get_logging_job():
-    cron = CronTab(user = getlogin())
-
+    cron = CronTab(user=getlogin())
     for job in cron.find_command('controller.py -w'):
         return job, cron
 
@@ -98,9 +95,12 @@ def execute_database(query, args=()):
     cursor.execute(query, args)
     cursor.commit()
 
-def query_database(query, args=(), one=False):
+def query_database(query, args=(), one=False, names=False):
     cursor = get_database().execute(query, args)
     rows = cursor.fetchall()
+    if names:
+        names = [name[0] for name in cursor.description]
+        rows.insert(0, names)
     cursor.close()
     return (rows[0] if rows else None) if one else rows
 
@@ -111,18 +111,15 @@ def change_logging_ability():
         job.enable(False)
     else:
         job.enable()
-
     cron.write()
-
     return redirect(url_for('index'))
 
 @app.route('/download_data') #TODO Stream file rather than create an intermediate file & add header to CSV
 def download_data():
-        rows = query_database('SELECT * FROM measurements')
+        rows = query_database('SELECT * FROM measurements', names=True)
         with open(CSV_PATH, mode='w', newline='') as file:
             writer = csv.writer(file)
             writer.writerows(rows)
-
         return send_file(CSV_PATH, mimetype='text/csv', as_attachment=True, max_age=0)
 
 @app.route('/delete_data')
@@ -148,13 +145,11 @@ def delete_image():
 @app.route('/reboot_controller')
 def reboot_controller():
     run(["sudo", "shutdown", "-r", "1"])
-
     return redirect(url_for('index'))
 
 @app.route('/update_controller')
 def update_controller():
-    result = run(["git", "pull"], cwd="/home/controller/controller", text=True, capture_output=True)
-
+    run(["git", "pull"], cwd="/home/controller/controller")
     return redirect(url_for('index'))
 
 @app.teardown_appcontext
@@ -164,5 +159,5 @@ def close_connection(exception):
         database.close()
 
 if __name__ == '__main__':
-    init_database() ##hacky
+    init_database() #hacky
     app.run(host='0.0.0.0')
