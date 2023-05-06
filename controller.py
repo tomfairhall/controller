@@ -55,7 +55,7 @@ def get_light(sensor: PiicoDev_VEML6030):
     return sensor.read()
 
 # Measure data and average 3 times to limit any outliers in measurement.
-def read_data(light: PiicoDev_RGB,sample_size=3):
+def read_data(sample_size=3):
     with Display(light, mode='read'):
         # Initialise the sensors.
         bme280 = PiicoDev_BME280()
@@ -84,9 +84,10 @@ def read_data(light: PiicoDev_RGB,sample_size=3):
         pres_HPa_ave = round(mean(pres_HPa_values), 2)
         hum_RH_ave = round(mean(hum_RH_values), 2)
         light_Lx_ave = round(mean(light_Lx_values), 2)
+    
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
-def write_data(light: PiicoDev_RGB,data: tuple, mode='a'):
+def write_data(data: tuple, mode='a'):
         with Display(light, mode='write'):
             connection = sqlite3.connect(DATABASE_PATH)
             with open(DATABASE_SCHEMA_PATH, mode='r') as schema:
@@ -107,9 +108,9 @@ if __name__ == '__main__':
     light = PiicoDev_RGB()
 
     for _ in range(args.repeat):
-        data = read_data(light)
+        data = read_data()
         if args.write:
-            write_data(light, data)
+            write_data(data)
         if args.read:
             print("Date-Time:\t", data[0])
             print("Temperature:\t", str(data[1]) + "°C")
