@@ -17,9 +17,9 @@ READ_LED = 0
 WRITE_LED = 1
 
 class Display(object):
-    def __init__(self, light_output: PiicoDev_RGB, mode):
-        self._light_ouput = light_output
+    def __init__(self, mode):
         self._mode = mode
+        self._light_output = PiicoDev_RGB()
 
     def __enter__(self):
         if self._mode == 'r' or self._mode == 'read':
@@ -31,11 +31,11 @@ class Display(object):
         self.__light_off()
 
     def __set_light_on(self, led_index, colour):
-        self._light_ouput.setPixel(led_index, colour)
-        self._light_ouput.show()
+        self._light_output.setPixel(led_index, colour)
+        self._light_output.show()
 
     def __light_off(self):
-        self._light_ouput.clear()
+        self._light_output.clear()
 
 def get_time():
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
@@ -103,9 +103,6 @@ if __name__ == '__main__':
     parser.add_argument('-w', '--write', help="write measurements to file", action='store_true')
     parser.add_argument('repeat', nargs='?', help="number of times to read/write", default=1, type=int)
     args = parser.parse_args()
-
-    # Initalize the LED display.
-    light = PiicoDev_RGB()
 
     for _ in range(args.repeat):
         data = read_data()
