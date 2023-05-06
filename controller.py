@@ -10,11 +10,20 @@ from PiicoDev_TMP117 import PiicoDev_TMP117
 DATABASE_PATH = '/home/controller/data.db'
 DATABASE_SCHEMA_PATH = '/home/controller/controller/schema.sql'
 
-RED = [255, 0, 0]
-GREEN = [0, 255, 0]
-BLUE = [0, 0, 255]
-READ_LED = 0
-WRITE_LED = 1
+RED     = [255, 0, 0]
+GREEN   = [0, 255, 0]
+BLUE    = [0, 0, 255]
+YELLOW  = [255, 255, 0]
+CYAN    = [0, 255, 255]
+MAGENTA = [255, 0, 255]
+CLEAR   = [0, 0, 0]
+WHITE   = [255, 255, 255]
+
+MODE_DICT = {
+    'r': 0,
+    'w': 1,
+    's': 2
+}
 
 class Display(object):
     def __init__(self, mode):
@@ -22,20 +31,14 @@ class Display(object):
         self._light_output = PiicoDev_RGB()
 
     def __enter__(self):
-        if self._mode == 'r' or self._mode == 'read':
-            self.__set_light_on(led_index=READ_LED, colour=GREEN)
-        elif self._mode == 'w' or self._mode == 'write':
-            self.__set_light_on(led_index=WRITE_LED, colour=GREEN)
+        self._set_light(MODE_DICT[self._mode], colour=GREEN)
 
     def __exit__(self, exc_type, exc_val, traceback):
-        self.__light_off()
+        self._set_light(MODE_DICT[self._mode], colour=CLEAR)
 
-    def __set_light_on(self, led_index, colour):
+    def _set_light(self, led_index, colour):
         self._light_output.setPixel(led_index, colour)
         self._light_output.show()
-
-    def __light_off(self):
-        self._light_output.clear()
 
 def get_time():
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
@@ -56,7 +59,7 @@ def get_light(sensor: PiicoDev_VEML6030):
 
 # Measure data and average 3 times to limit any outliers in measurement.
 def read_data(sample_size=3):
-    with Display(mode='read'):
+    with Display(mode='r'):
         # Initialise the sensors.
         bme280 = PiicoDev_BME280()
         veml6030 = PiicoDev_VEML6030()
@@ -88,7 +91,7 @@ def read_data(sample_size=3):
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
 def write_data(data: tuple, mode='a'):
-        with Display(mode='write'):
+        with Display(mode='w'):
             connection = sqlite3.connect(DATABASE_PATH)
             with open(DATABASE_SCHEMA_PATH, mode='r') as schema:
                 connection.execute(schema.read())
