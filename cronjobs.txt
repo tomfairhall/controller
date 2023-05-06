@@ -1,3 +1,3 @@
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-@reboot /usr/bin/python3.9 /home/controller/controller/app.py
-*/30 * * * * /usr/bin/python3.9 /home/controller/controller/app.py -w
+@reboot flask --app /home/controller/controller/app run --host=0.0.0.0 --port=5000 --debug
+*/30 * * * * /usr/bin/python3.9 /home/controller/controller/controller.py -w
