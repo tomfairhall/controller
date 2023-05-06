@@ -104,6 +104,11 @@ def query_database(query, args=(), one=False, names=False):
     cursor.close()
     return (rows[0] if rows else None) if one else rows
 
+@app.cli.command('initdb')
+def init_database_command():
+    init_database()
+    print("Initalised the database")
+
 @app.route('/logging_ability')
 def change_logging_ability():
     job, cron = get_logging_job()
@@ -157,6 +162,3 @@ def close_connection(exception):
     database = getattr(g, '_database', None)
     if database is not None:
         database.close()
-
-if __name__ == '__main__':
-    init_database() #hacky
