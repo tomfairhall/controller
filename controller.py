@@ -56,7 +56,7 @@ def get_light(sensor: PiicoDev_VEML6030):
 
 # Measure data and average 3 times to limit any outliers in measurement.
 def read_data(sample_size=3):
-    with Display(light, mode='read'):
+    with Display(mode='read'):
         # Initialise the sensors.
         bme280 = PiicoDev_BME280()
         veml6030 = PiicoDev_VEML6030()
@@ -88,7 +88,7 @@ def read_data(sample_size=3):
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
 def write_data(data: tuple, mode='a'):
-        with Display(light, mode='write'):
+        with Display(mode='write'):
             connection = sqlite3.connect(DATABASE_PATH)
             with open(DATABASE_SCHEMA_PATH, mode='r') as schema:
                 connection.execute(schema.read())
