@@ -10,19 +10,20 @@ from PiicoDev_TMP117 import PiicoDev_TMP117
 DATABASE_PATH = '/home/controller/data.db'
 DATABASE_SCHEMA_PATH = '/home/controller/controller/schema.sql'
 
+# LED RBG colours.
 RED     = [255, 0, 0]
 GREEN   = [0, 255, 0]
 BLUE    = [0, 0, 255]
 YELLOW  = [255, 255, 0]
 CYAN    = [0, 255, 255]
 MAGENTA = [255, 0, 255]
-CLEAR   = [0, 0, 0]
 WHITE   = [255, 255, 255]
+CLEAR   = [0, 0, 0]
 
 MODE_DICT = {
-    'r': 0,
-    'w': 1,
-    's': 2
+    'r': 0, #LED0: Read
+    'w': 1, #LED1: Write
+    's': 2  #LED2: Server
 }
 
 class Display(object):
@@ -34,11 +35,23 @@ class Display(object):
         self._set_light(MODE_DICT[self._mode], colour=GREEN)
 
     def __exit__(self, exc_type, exc_val, traceback):
-        self._set_light(MODE_DICT[self._mode], colour=CLEAR)
+        if exc_type is not None:
+            self._set_light(MODE_DICT[self._mode], colour=RED)
+        else:
+            self._set_light(MODE_DICT[self._mode], colour=CLEAR)
 
     def _set_light(self, led_index, colour):
-        self._light_output.setPixel(led_index, colour)
-        self._light_output.show()
+        try:
+            self._light_output.setPixel(led_index, colour)
+            self._light_output.show()
+        except:
+            pass
+
+    def _set_power_light(self, state):
+        try:
+            self._light_output.pwrLED(state)
+        except:
+            pass
 
 def get_time():
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
