@@ -77,7 +77,8 @@ def get_logging_job():
         return job, cron
 
 def get_version_hash():
-    return run(['git', 'rev-parse', '--short', 'main'], cwd='/home/controller/controller', text=True, capture_output=True)
+    result = run(['git', 'rev-parse', '--short', 'main'], cwd='/home/controller/controller', text=True, capture_output=True)
+    return result.stdout
 
 def get_database() -> sqlite3.Connection:
     database = getattr(g, '_database', None) 
