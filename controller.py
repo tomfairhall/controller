@@ -26,7 +26,7 @@ MODE_DICT = {
     's': 2  #LED2: Server
 }
 
-class Display(object):
+class Display():
     def __init__(self, mode):
         self._mode = mode
         self._light_output = PiicoDev_RGB()
@@ -57,12 +57,7 @@ def get_time():
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
 def get_temperature(sensor: PiicoDev_TMP117):
-    measurement = sensor.readTempC()
-    if measurement == 'nan':
-        raise ValueError
-    else:
-        return measurement
-    
+    return sensor.readTempC()
 
 def get_pressure(sensor: PiicoDev_BME280):
     _, measurement, _ = sensor.values()

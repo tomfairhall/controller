@@ -7,7 +7,6 @@ import sqlite3
 import csv
 import controller
 
-VERSION = "v0.1.0"
 CSV_PATH = '/home/controller/data.csv'
 IMAGE_PATH = '/home/controller/controller/static/image.jpg'
 
@@ -17,6 +16,7 @@ app = Flask(__name__)
 def index():
     job, _ = get_logging_job()
     wifi_quality, wifi_strength = get_connection_strength()
+    version = get_version_hash()
     date_time, temperature, pressure, humidity, light = controller.read_data()
 
     rows = query_database('SELECT * FROM measurements ORDER BY "date time" DESC LIMIT 20')
@@ -50,15 +50,15 @@ def index():
         wifi_quality = wifi_quality,
         wifi_strength = wifi_strength,
         hostname = gethostname(),
-        version = VERSION)
+        version = version)
 
 def get_connection_strength():
-    link_start = "Link Quality="
-    link_end = "/70"
-    signal_start = "Signal level="
-    signal_end   = " dBm"
+    link_start = 'Link Quality='
+    link_end = '/70'
+    signal_start = 'Signal level='
+    signal_end   = ' dBm'
 
-    result = run(["iwconfig","wlan0"], text=True, capture_output=True)
+    result = run(['iwconfig','wlan0'], text=True, capture_output=True)
 
     link_index_start = result.stdout.find(link_start)
     link_index_end = result.stdout.find(link_end, link_index_start)
@@ -75,6 +75,9 @@ def get_logging_job():
     cron = CronTab(user=getlogin())
     for job in cron.find_command('controller.py -w'):
         return job, cron
+
+def get_version_hash():
+    return run(['git', 'rev-parse', '--short', 'main'], cwd='/home/controller/controller', text=True, capture_output=True)
 
 def get_database() -> sqlite3.Connection:
     database = getattr(g, '_database', None) 
@@ -162,3 +165,5 @@ def close_connection(exception):
     database = getattr(g, '_database', None)
     if database is not None:
         database.close()
+    
+    
