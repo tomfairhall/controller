@@ -57,7 +57,12 @@ def get_time():
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
 def get_temperature(sensor: PiicoDev_TMP117):
-    return sensor.readTempC()
+    measurement = sensor.readTempC()
+    if measurement == 'nan':
+        raise ValueError
+    else:
+        return measurement
+    
 
 def get_pressure(sensor: PiicoDev_BME280):
     _, measurement, _ = sensor.values()
