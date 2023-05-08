@@ -64,11 +64,11 @@ class Display():
         state = {int: list[int]}
         try:
             with open('display.json', 'r') as file:
-                data = json.load(file)
+                data = json.load(file.read())
                 state = {
-                    int(data[0]): [int(value) for value in data['r']],
-                    int(data[1]): [int(value) for value in data['w']],
-                    int(data[2]): [int(value) for value in data['s']],
+                    LED_INDEX['r']: [int(value) for value in data['r']],
+                    LED_INDEX['w']: [int(value) for value in data['w']],
+                    LED_INDEX['s']: [int(value) for value in data['s']],
                 }
         except:
             state = {
