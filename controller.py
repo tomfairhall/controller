@@ -70,6 +70,7 @@ class Display():
                     LED_INDEX['w']: [int(value) for value in data['w']],
                     LED_INDEX['s']: [int(value) for value in data['s']],
                 }
+                print("here")
                 print(state)
         except:
             state = {
