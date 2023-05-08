@@ -63,7 +63,7 @@ class Display():
     def _read_state(self):
         state = {}
         try:
-            with open('display.json', 'r') as file:
+            with open('/home/controller/display.json', 'r') as file:
                 raw_state = json.load(file)
                 for key, values in raw_state.items():
                     print(key)
