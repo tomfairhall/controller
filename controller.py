@@ -66,6 +66,8 @@ class Display():
             with open('display.json', 'r') as file:
                 raw_state = json.load(file)
                 for key, values in raw_state.items():
+                    print(key)
+                    print(values)
                     state[int(key)] = [int(value) for value in values]
         except:
             state = {
