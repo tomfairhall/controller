@@ -52,8 +52,8 @@ class Display():
         self._write_state()
 
     def _set_display(self):
-        for key, value in self._state.items():
-            self._light_output.setPixel(key, value)
+        for key, values in self._state.items():
+            self._light_output.setPixel(int(key), [int(value) for value in values])
 
     def _set_light(self, led_index, colour):
         try:
