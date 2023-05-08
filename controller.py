@@ -27,12 +27,6 @@ LED_INDEX = {
     's': 2  #LED2: Server
 }
 
-state = {
-    0: [],
-    1: [],
-    2: []
-}
-
 class Display():
     def __init__(self, mode):
         self._mode = LED_INDEX[mode]
@@ -51,23 +45,31 @@ class Display():
 
         self._write_state()
 
+    # Sets all LEDs to the saved values.
     def _set_display(self):
-        for key, values in self._state.items():
-            self._light_output.setPixel(int(key), [int(value) for value in values])
+        for key, value in self._state.items():
+            self._light_output.setPixel(key, value)
 
+    # Set read/write/server LED to given colour.
     def _set_light(self, led_index, colour):
         try:
             self._light_output.setPixel(led_index, colour)
             self._light_output.show()
-            state[self._mode] = colour
+            self._state[self._mode] = colour
         except:
             pass
 
+    # Read saved display state from JSON file.
     def _read_state(self):
-        state = {}
+        state = {int: list[int]}
         try:
             with open('display.json', 'r') as file:
-                state = json.load(file)
+                data = json.load(file)
+                state = {
+                    int(data[0]): [int(value) for value in data['r']],
+                    int(data[1]): [int(value) for value in data['w']],
+                    int(data[2]): [int(value) for value in data['s']],
+                }
         except:
             state = {
                 LED_INDEX['r']: CLEAR,
@@ -77,6 +79,7 @@ class Display():
         finally:
             return state
 
+    # Write display state to JSON file.
     def _write_state(self):
         with open('display.json', 'w') as file:
             json.dump(self._state, file)
