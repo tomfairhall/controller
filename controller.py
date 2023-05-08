@@ -1,5 +1,6 @@
 import argparse
 import sqlite3
+import json
 from statistics import mean
 from datetime import datetime
 from PiicoDev_RGB import PiicoDev_RGB
@@ -20,38 +21,60 @@ MAGENTA = [255, 0, 255]
 WHITE   = [255, 255, 255]
 CLEAR   = [0, 0, 0]
 
-MODE_DICT = {
+LED_INDEX = {
     'r': 0, #LED0: Read
     'w': 1, #LED1: Write
     's': 2  #LED2: Server
 }
 
+state = {
+    0: [],
+    1: [],
+    2: []
+}
+
 class Display():
     def __init__(self, mode):
-        self._mode = mode
+        self._mode = LED_INDEX[mode]
         self._light_output = PiicoDev_RGB()
+        self._state = self._read_state()
 
     def __enter__(self):
-        self._set_light(MODE_DICT[self._mode], colour=GREEN)
+        self._set_light(self._mode, colour=GREEN)
 
     def __exit__(self, exc_type, exc_val, traceback):
         if exc_type is not None:
-            self._set_light(MODE_DICT[self._mode], colour=RED)
+            self._set_light(self._mode, colour=RED)
         else:
-            self._set_light(MODE_DICT[self._mode], colour=CLEAR)
+            self._set_light(self._mode, colour=CLEAR)
+
+        self._write_state(self._state)
 
     def _set_light(self, led_index, colour):
         try:
             self._light_output.setPixel(led_index, colour)
             self._light_output.show()
+            state[self._mode] = colour
         except:
             pass
 
-    def _set_power_light(self, state):
+    def _read_state(self):
+        state = {}
         try:
-            self._light_output.pwrLED(state)
+            with open('display.json', 'r') as file:
+                state = json.load(file)
         except:
-            pass
+            state = {
+                LED_INDEX['r']: CLEAR,
+                LED_INDEX['w']: CLEAR,
+                LED_INDEX['s']: CLEAR
+            }
+        finally:
+            return state
+
+    def _write_state(self):
+        with open('display.json', 'w') as file:
+            json.dump(self._state, file)
 
 def get_time():
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
@@ -100,7 +123,7 @@ def read_data(sample_size=3):
         pres_HPa_ave = round(mean(pres_HPa_values), 2)
         hum_RH_ave = round(mean(hum_RH_values), 2)
         light_Lx_ave = round(mean(light_Lx_values), 2)
-    
+
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
 def write_data(data: tuple, mode='a'):
