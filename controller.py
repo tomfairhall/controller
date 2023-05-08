@@ -52,7 +52,7 @@ class Display():
         self._write_state()
 
     def _set_display(self):
-        for key, value in self._state.items:
+        for key, value in self._state.items():
             self._light_output.setPixel(key, value)
 
     def _set_light(self, led_index, colour):
