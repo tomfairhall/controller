@@ -38,6 +38,7 @@ class Display():
         self._mode = LED_INDEX[mode]
         self._light_output = PiicoDev_RGB()
         self._state = self._read_state()
+        self._set_display()
 
     def __enter__(self):
         self._set_light(self._mode, colour=GREEN)
@@ -49,6 +50,10 @@ class Display():
             self._set_light(self._mode, colour=CLEAR)
 
         self._write_state()
+
+    def _set_display(self):
+        for key, value in self._state.items:
+            self._light_output.setPixel(key, value)
 
     def _set_light(self, led_index, colour):
         try:
