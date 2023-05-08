@@ -48,7 +48,7 @@ class Display():
         else:
             self._set_light(self._mode, colour=CLEAR)
 
-        self._write_state(self._state)
+        self._write_state()
 
     def _set_light(self, led_index, colour):
         try:
