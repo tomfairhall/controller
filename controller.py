@@ -61,17 +61,12 @@ class Display():
 
     # Read saved display state from JSON file.
     def _read_state(self):
-        state = {int: list[int]}
-        print('here')
+        state = {}
         try:
             with open('display.json', 'r') as file:
-                data = json.load(file.read())
-                state = {
-                    LED_INDEX['r']: [int(value) for value in data['r']],
-                    LED_INDEX['w']: [int(value) for value in data['w']],
-                    LED_INDEX['s']: [int(value) for value in data['s']],
-                }
-                print(state)
+                raw_state = json.load(file)
+                for key, values in raw_state.items():
+                    state[int(key)] = [int(value) for value in values]
         except:
             state = {
                 LED_INDEX['r']: CLEAR,
