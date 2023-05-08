@@ -96,44 +96,50 @@ def get_light(sensor: PiicoDev_VEML6030):
 # Measure data and average 3 times to limit any outliers in measurement.
 def read_data(sample_size=3):
     with Display(mode='r'):
-        # Initialise the sensors.
-        bme280 = PiicoDev_BME280()
-        veml6030 = PiicoDev_VEML6030()
-        tmp117 = PiicoDev_TMP117()
+        try:
+            # Initialise the sensors.
+            bme280 = PiicoDev_BME280()
+            veml6030 = PiicoDev_VEML6030()
+            tmp117 = PiicoDev_TMP117()
 
-        # Read and assign initial altitude reading.
-        zero_alt = bme280.altitude()
+            # Read and assign initial altitude reading.
+            zero_alt = bme280.altitude()
 
-        # Initialise sensor value lists.
-        temp_C_values = []
-        pres_HPa_values = []
-        hum_RH_values = []
-        light_Lx_values = []
+            # Initialise sensor value lists.
+            temp_C_values = []
+            pres_HPa_values = []
+            hum_RH_values = []
+            light_Lx_values = []
 
-        date_time = get_time()
+            date_time = get_time()
 
-        for _ in range(sample_size):
-            # Read and assign the sensor values.
-            temp_C_values.append(get_temperature(tmp117))
-            pres_HPa_values.append((get_pressure(bme280))/100)
-            hum_RH_values.append(get_humidity(bme280))
-            light_Lx_values.append(get_light(veml6030))
-        # Find average of measurement values.
-        temp_C_ave = round(mean(temp_C_values), 2)
-        pres_HPa_ave = round(mean(pres_HPa_values), 2)
-        hum_RH_ave = round(mean(hum_RH_values), 2)
-        light_Lx_ave = round(mean(light_Lx_values), 2)
+            for _ in range(sample_size):
+                # Read and assign the sensor values.
+                temp_C_values.append(get_temperature(tmp117))
+                pres_HPa_values.append((get_pressure(bme280))/100)
+                hum_RH_values.append(get_humidity(bme280))
+                light_Lx_values.append(get_light(veml6030))
+            # Find average of measurement values.
+            temp_C_ave = round(mean(temp_C_values), 2)
+            pres_HPa_ave = round(mean(pres_HPa_values), 2)
+            hum_RH_ave = round(mean(hum_RH_values), 2)
+            light_Lx_ave = round(mean(light_Lx_values), 2)
+        except:
+            print("Could not read data!")
 
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
 def write_data(data: tuple, mode='a'):
         with Display(mode='w'):
-            connection = sqlite3.connect(DATABASE_PATH)
-            with open(DATABASE_SCHEMA_PATH, mode='r') as schema:
-                connection.execute(schema.read())
-            connection.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4], mode))
-            connection.commit()
-            connection.close()
+            try:
+                connection = sqlite3.connect(DATABASE_PATH)
+                with open(DATABASE_SCHEMA_PATH, mode='r') as schema:
+                    connection.execute(schema.read())
+                connection.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4], mode))
+                connection.commit()
+                connection.close()
+            except:
+                print("Could not write data!") #how to handle errors?
 
 if __name__ == '__main__':
     # Initialize the input argument parser, add and parse input arguments.
