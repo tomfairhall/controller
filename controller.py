@@ -66,8 +66,6 @@ class Display():
             with open('/home/controller/display.json', 'r') as file:
                 raw_state = json.load(file)
                 for key, values in raw_state.items():
-                    print(key)
-                    print(values)
                     state[int(key)] = [int(value) for value in values]
         except:
             state = {
@@ -146,6 +144,7 @@ def write_data(data: tuple, mode='a'):
                 connection.commit()
                 connection.close()
             except Exception as e:
+                connection.close()
                 raise e
 
 if __name__ == '__main__':
