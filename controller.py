@@ -79,18 +79,18 @@ class Display():
 def get_time():
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
-def get_temperature(sensor: PiicoDev_TMP117):
+def get_temperature(sensor: PiicoDev_TMP117): #Does not fault to an error!
     return sensor.readTempC()
 
-def get_pressure(sensor: PiicoDev_BME280):
+def get_pressure(sensor: PiicoDev_BME280): #Does not fault to an error!
     _, measurement, _ = sensor.values()
     return measurement
 
-def get_humidity(sensor: PiicoDev_BME280):
+def get_humidity(sensor: PiicoDev_BME280): #Does not fault to an error!
     _, _, measurement = sensor.values()
     return measurement
 
-def get_light(sensor: PiicoDev_VEML6030):
+def get_light(sensor: PiicoDev_VEML6030): #Does not fault to an error!
     return sensor.read()
 
 # Measure data and average 3 times to limit any outliers in measurement.
@@ -124,8 +124,8 @@ def read_data(sample_size=3):
             pres_HPa_ave = round(mean(pres_HPa_values), 2)
             hum_RH_ave = round(mean(hum_RH_values), 2)
             light_Lx_ave = round(mean(light_Lx_values), 2)
-        except:
-            print("Could not read data!")
+        except Exception as e:
+            raise e
 
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
 
@@ -138,8 +138,8 @@ def write_data(data: tuple, mode='a'):
                 connection.execute('INSERT INTO measurements VALUES(?, ?, ?, ?, ?, ?)', (data[0], data[1], data[2], data[3], data[4], mode))
                 connection.commit()
                 connection.close()
-            except:
-                print("Could not write data!") #how to handle errors?
+            except Exception as e:
+                raise e
 
 if __name__ == '__main__':
     # Initialize the input argument parser, add and parse input arguments.
