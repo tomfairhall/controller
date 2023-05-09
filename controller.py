@@ -116,7 +116,8 @@ class BME280(Measurement):
         pass
 
     def read(self) -> int:
-        self._validate_reading(self.bme280.values()[self._index])
+        index = self._index
+        self._validate_reading(self.bme280.values()[index])
 
 class Pressure(BME280):
     def _index(self):
