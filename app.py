@@ -165,5 +165,3 @@ def close_connection(exception):
     database = getattr(g, '_database', None)
     if database is not None:
         database.close()
-    
-    
