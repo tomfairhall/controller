@@ -87,28 +87,28 @@ def get_time():
 
 def get_temperature(sensor: PiicoDev_TMP117): #Does not fault to an error!
     measurement = sensor.readTempC()
-    if measurement == 'nan':
+    if measurement == float('NaN'):
         raise ValueError('could not read value at', sensor.addr)
     else:
         return measurement
 
 def get_pressure(sensor: PiicoDev_BME280): #Does not fault to an error!
     _, measurement, _ = sensor.values()
-    if measurement == 'nan':
+    if measurement == float('NaN'):
         raise ValueError('could not read value at', sensor.addr)
     else:
         return measurement
 
 def get_humidity(sensor: PiicoDev_BME280): #Does not fault to an error!
     _, _, measurement = sensor.values()
-    if measurement == 'nan':
+    if measurement == float('NaN'):
         raise ValueError('could not read value at', sensor.addr)
     else:
         return measurement
 
 def get_light(sensor: PiicoDev_VEML6030): #Does not fault to an error!
     measurement = sensor.read()
-    if measurement == 'nan':
+    if measurement == float('NaN'):
         raise ValueError('could not read value at', sensor.addr)
     else:
         return measurement
