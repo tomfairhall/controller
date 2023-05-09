@@ -133,6 +133,12 @@ def get_time():
 def read_data(sample_size=3):
     with Display(mode='r'):
         try:
+
+            temperature_sensor = Temperature()
+            pressure_sensor = Pressure()
+            humidity_sensor = Humidity()
+            light_sensor = Light()
+
             # Initialise sensor value lists.
             temp_C_values = []
             pres_HPa_values = []
@@ -143,10 +149,10 @@ def read_data(sample_size=3):
 
             for _ in range(sample_size):
                 # Read and assign the sensor values.
-                temp_C_values.append(Temperature.read())
-                pres_HPa_values.append(Pressure.read()/100)
-                hum_RH_values.append(Humidity.read())
-                light_Lx_values.append(Light.read())
+                temp_C_values.append(temperature_sensor.read())
+                pres_HPa_values.append(pressure_sensor.read()/100)
+                hum_RH_values.append(humidity_sensor.read())
+                light_Lx_values.append(light_sensor.read())
             # Find average of measurement values.
             temp_C_ave = round(mean(temp_C_values), 2)
             pres_HPa_ave = round(mean(pres_HPa_values), 2)
