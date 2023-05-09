@@ -107,7 +107,11 @@ def get_humidity(sensor: PiicoDev_BME280): #Does not fault to an error!
         return measurement
 
 def get_light(sensor: PiicoDev_VEML6030): #Does not fault to an error!
-    return sensor.read()
+    measurement = sensor.read()
+    if measurement == 'nan':
+        raise ValueError('could not read value at', sensor.addr)
+    else:
+        return measurement
 
 # Measure data and average 3 times to limit any outliers in measurement.
 def read_data(sample_size=3):
