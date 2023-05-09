@@ -82,63 +82,44 @@ class Display():
         with open('display.json', 'w') as file:
             json.dump(self._state, file)
 
-class Measurement():
-    def __init__(self) -> None:
-        pass
-
-    @abstractmethod
-    def read(self) -> int:
-        pass
-
-    def _validate_reading(self, value):
-        if value == 'nan':
-            raise ValueError('could not read value')
-        else:
-            return value
-
-class Temperature(Measurement):
-    tmp117 = PiicoDev_TMP117()
-    def read(self) -> int:
-        return self._validate_reading(self.tmp117.readTempC())
-
-class Light(Measurement):
-    veml6030 = PiicoDev_VEML6030
-
-    def read(self) -> int:
-        return self._validate_reading(self.veml6030.read())
-
-class BME280(Measurement):
-    bme280 = PiicoDev_BME280()
-
-    @property
-    @abstractmethod
-    def _index(self) -> int:
-        pass
-
-    def read(self) -> int:
-        index = self._index
-        self._validate_reading(self.bme280.values()[index])
-
-class Pressure(BME280):
-    def _index(self):
-        return 1
-
-class Humidity(BME280):
-    def _index(self):
-        return 2
-
 def get_time():
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+
+def get_temperature(sensor: PiicoDev_TMP117): #Does not fault to an error!
+    measurement = sensor.readTempC()
+    if measurement == 'nan':
+        raise ValueError('could not read value at', sensor.addr)
+    else:
+        return measurement
+
+def get_pressure(sensor: PiicoDev_BME280): #Does not fault to an error!
+    _, measurement, _ = sensor.values()
+    if measurement == 'nan':
+        raise ValueError('could not read value at', sensor.addr)
+    else:
+        return measurement
+
+def get_humidity(sensor: PiicoDev_BME280): #Does not fault to an error!
+    _, _, measurement = sensor.values()
+    if measurement == 'nan':
+        raise ValueError('could not read value at', sensor.addr)
+    else:
+        return measurement
+
+def get_light(sensor: PiicoDev_VEML6030): #Does not fault to an error!
+    return sensor.read()
 
 # Measure data and average 3 times to limit any outliers in measurement.
 def read_data(sample_size=3):
     with Display(mode='r'):
         try:
+            # Initialise the sensors.
+            bme280 = PiicoDev_BME280()
+            veml6030 = PiicoDev_VEML6030()
+            tmp117 = PiicoDev_TMP117()
 
-            temperature_sensor = Temperature()
-            pressure_sensor = Pressure()
-            humidity_sensor = Humidity()
-            light_sensor = Light()
+            # Read and assign initial altitude reading.
+            zero_alt = bme280.altitude()
 
             # Initialise sensor value lists.
             temp_C_values = []
@@ -150,10 +131,10 @@ def read_data(sample_size=3):
 
             for _ in range(sample_size):
                 # Read and assign the sensor values.
-                temp_C_values.append(temperature_sensor.read())
-                pres_HPa_values.append(pressure_sensor.read()/100)
-                hum_RH_values.append(humidity_sensor.read())
-                light_Lx_values.append(light_sensor.read())
+                temp_C_values.append(get_temperature(tmp117))
+                pres_HPa_values.append((get_pressure(bme280))/100)
+                hum_RH_values.append(get_humidity(bme280))
+                light_Lx_values.append(get_light(veml6030))
             # Find average of measurement values.
             temp_C_ave = round(mean(temp_C_values), 2)
             pres_HPa_ave = round(mean(pres_HPa_values), 2)
