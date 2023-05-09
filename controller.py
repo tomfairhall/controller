@@ -88,28 +88,28 @@ def get_time():
 def get_temperature(sensor: PiicoDev_TMP117): #Does not fault to an error!
     measurement = sensor.readTempC()
     if isnan(measurement):
-        raise ValueError('could not read value at', sensor.addr)
+        raise ValueError
     else:
         return measurement
 
 def get_pressure(sensor: PiicoDev_BME280): #Does not fault to an error!
     _, measurement, _ = sensor.values()
     if isnan(measurement):
-        raise ValueError('could not read value at', sensor.addr)
+        raise ValueError
     else:
         return measurement
 
 def get_humidity(sensor: PiicoDev_BME280): #Does not fault to an error!
     _, _, measurement = sensor.values()
     if isnan(measurement):
-        raise ValueError('could not read value at', sensor.addr)
+        raise ValueError
     else:
         return measurement
 
 def get_light(sensor: PiicoDev_VEML6030): #Does not fault to an error!
     measurement = sensor.read()
     if isnan(measurement):
-        raise ValueError('could not read value at', sensor.addr)
+        raise ValueError
     else:
         return measurement
 
@@ -145,7 +145,6 @@ def read_data(sample_size=3):
             hum_RH_ave = round(mean(hum_RH_values), 2)
             light_Lx_ave = round(mean(light_Lx_values), 2)
         except ValueError as e:
-            print(e.args)
             raise e
 
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
