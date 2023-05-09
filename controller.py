@@ -144,7 +144,8 @@ def read_data(sample_size=3):
             pres_HPa_ave = round(mean(pres_HPa_values), 2)
             hum_RH_ave = round(mean(hum_RH_values), 2)
             light_Lx_ave = round(mean(light_Lx_values), 2)
-        except Exception as e:
+        except ValueError as e:
+            print(e.args)
             raise e
 
     return date_time, temp_C_ave, pres_HPa_ave, hum_RH_ave, light_Lx_ave
