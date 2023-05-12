@@ -8,7 +8,7 @@ import csv
 import controller
 
 CSV_PATH = '/home/controller/data.csv'
-IMAGE_PATH = '/home/controller/controller/static/image.jpg'
+# IMAGE_PATH = '/home/controller/controller/static/image.jpg'
 
 app = Flask(__name__)
 
@@ -140,8 +140,8 @@ def log_data():
     controller.write_data(controller.read_data(), mode='m')
     return redirect(url_for('index'))
 
-@app.route('/capture_image')
-def capture_image():
+# @app.route('/capture_image')
+# def capture_image():
     run(['raspistill', '-o', IMAGE_PATH])
     return redirect(url_for('index'))
 
