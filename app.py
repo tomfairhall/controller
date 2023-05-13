@@ -145,10 +145,10 @@ def log_data():
     run(['raspistill', '-o', IMAGE_PATH])
     return redirect(url_for('index'))
 
-@app.route('/delete_image')
-def delete_image():
-    run(['rm', IMAGE_PATH])
-    return redirect(url_for('index'))
+# @app.route('/delete_image')
+# def delete_image():
+#    run(['rm', IMAGE_PATH])
+#    return redirect(url_for('index'))
 
 @app.route('/reboot_controller')
 def reboot_controller():
