@@ -8,7 +8,7 @@ def init_app():
 
     with app.app_context():
         from . import routes
-        
+
         database.init_database()
 
         return app

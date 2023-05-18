@@ -2,7 +2,7 @@ import sqlite3
 from flask import current_app
 from flask import g
 
-DATABASE_PATH = '/home/data.db'
+DATABASE_PATH = '/home/controller/data.db'
 
 def init_database():
     database = get_database()
