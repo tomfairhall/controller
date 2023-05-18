@@ -8,5 +8,4 @@ Todo:
 - Dynamic tiles
 - Cron job integrity (adds job if doesn't exist - related to init script?)
 - LED server display
-- ~~Fix issue where on first start up the database hasn't been initialised yet (init script?)~~
-    - ~~Change to Flask Application Factory~~
+- How to control when there is no System View image?

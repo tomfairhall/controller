@@ -5,12 +5,6 @@ from flask import g
 DATABASE_PATH = '/home/controller/data.db'
 DATABASE_SCHEMA_PATH = '/home/controller/controller/schema.sql'
 
-def init_database():
-    database = get_database()
-    with current_app.open_resource(DATABASE_SCHEMA_PATH, mode='r') as file:
-        database.cursor().executescript(file.read())
-    database.commit()
-
 def get_database():
     database = getattr(g, '_database', None) 
     if database is None:
@@ -18,6 +12,13 @@ def get_database():
         database.row_factory = sqlite3.Row
     return database
 
+def init_database():
+    database = get_database()
+    with current_app.open_resource(DATABASE_SCHEMA_PATH, mode='r') as file:
+        database.cursor().executescript(file.read())
+    database.commit()
+
+# peform a function directly on the database
 def execute_database(query, args=()):
     cursor = get_database()
     cursor.execute(query, args)
@@ -37,5 +38,6 @@ def close_database(e=None):
     if database is not None:
         database.close()
 
+# close the database connection when the web app is closed
 def init_app(app):
     app.teardown_appcontext(close_database)
