@@ -7,7 +7,8 @@ def init_app():
 
     database.init_app(app)
 
-    with app.app_context(), Display(mode='s'):
+    with app.app_context():
         from . import routes
         database.init_database()
+        Display(mode="s").__enter__()
         return app
