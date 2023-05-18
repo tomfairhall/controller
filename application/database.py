@@ -3,10 +3,11 @@ from flask import current_app
 from flask import g
 
 DATABASE_PATH = '/home/controller/data.db'
+DATABASE_SCHEMA_PATH = '/home/controller/controller/schema.sql'
 
 def init_database():
     database = get_database()
-    with current_app.open_resource(DATABASE_PATH, mode='r') as file:
+    with current_app.open_resource(DATABASE_SCHEMA_PATH, mode='r') as file:
         database.cursor().executescript(file.read())
     database.commit()
 
