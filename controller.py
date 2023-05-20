@@ -1,6 +1,7 @@
 import argparse
 import sqlite3
 import json
+import sys
 from math import isnan
 from statistics import mean
 from datetime import datetime
@@ -36,6 +37,7 @@ class Display():
         self._set_display()
 
     def __enter__(self):
+        print("here", file=sys.stdout)
         self._set_light(self._mode, colour=GREEN)
 
     def __exit__(self, exc_type, exc_val, traceback):
