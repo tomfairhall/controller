@@ -8,7 +8,7 @@ def init_app():
     database.init_app(app)
     display = Display(mode='s')
 
-    app.teardown_appcontext(display.__exit__)
+    app.teardown_appcontext(display.__exit__(None, None, None))
 
     with app.app_context():
         from . import routes
