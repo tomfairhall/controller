@@ -33,7 +33,7 @@ def query_database(query, args=(), one=False, names=False):
     cursor.close()
     return (rows[0] if rows else None) if one else rows
 
-def close_database(e=None):
+def close_database():
     database = getattr(g, '_database', None)
     if database is not None:
         database.close()
