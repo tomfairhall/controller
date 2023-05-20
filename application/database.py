@@ -38,6 +38,6 @@ def close_database(e=None):
     if database is not None:
         database.close()
 
-# close the database connection when the web app is closed
+# function refrences to be access by the app's context manager
 def init_app(app):
     app.teardown_appcontext(close_database)

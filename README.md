@@ -9,3 +9,8 @@ Todo:
 - Cron job integrity (adds job if doesn't exist - related to init script?)
 - LED server display
 - How to control when there is no System View image?
+- Fix paths to not be hardcoded
+
+Ideas:
+- Set up RPI as access point so that wifi switches can connect to it
+- Add alarming system (e.g., if light is on longer than expected -> send alarm)
