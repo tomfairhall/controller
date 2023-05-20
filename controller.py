@@ -38,7 +38,7 @@ class Display():
     def __enter__(self):
         self._set_light(self._mode, colour=GREEN)
 
-    def __exit__(self, exc_type, exc_val, traceback):
+    def __exit__(self, exc_type=None, exc_val=None, traceback=None):
         if exc_type is not None:
             self._set_light(self._mode, colour=RED)
         else:
