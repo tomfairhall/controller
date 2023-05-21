@@ -16,7 +16,7 @@ def init_app():
 
     database.init_app(app)
 
-    app.teardown_appcontext(exit())
+    app.teardown_appcontext(exit)
 
     with app.app_context():
         from . import routes
