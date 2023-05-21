@@ -86,3 +86,4 @@ class Display():
     # function refrences to be access by the app's context manager
     def init_app(self, app):
         app.teardown_appcontext(self.close_display)
+        self.init_display()
