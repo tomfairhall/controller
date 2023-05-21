@@ -2,6 +2,10 @@ from flask import Flask
 from application import database
 from controller import Display
 
+# hacky
+def enter(display: Display):
+    display.__enter__()
+
 def exit(display: Display):
     display.__exit__(None, None, None)
 
@@ -11,10 +15,10 @@ def init_app():
     database.init_app(app)
     display = Display(mode='s')
 
-    app.teardown_appcontext(lambda x=None: display.__exit__(x, x, x))
+    app.teardown_appcontext(exit(display))
 
     with app.app_context():
         from . import routes
         database.init_database()
-        display.__enter__()
+        enter(display)
         return app
