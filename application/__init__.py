@@ -1,6 +1,5 @@
 from flask import Flask
 from application import database
-from controller import Display
 
 def init_app():
     app = Flask(__name__)
