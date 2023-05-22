@@ -80,6 +80,7 @@ class Display():
         self._set_light(self._mode, colour=GREEN)
 
     def close_display(self, e=None):
+        print("close_display() called", file=sys.stdout)
         if e is not None:
             self._set_light(self._mode, colour=RED)
         else:
