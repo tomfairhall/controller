@@ -27,7 +27,7 @@ class Display():
         self._set_display()
 
     def __enter__(self):
-        self.init_display()
+        self._set_light(self._mode, colour=GREEN)
 
     def __exit__(self, exc_type, exc_val, traceback):
         if exc_type is not None:
@@ -72,19 +72,3 @@ class Display():
     def _write_state(self):
         with open(JSON_PATH, 'w') as file:
             json.dump(self._state, file)
-
-    # Manual operation
-    def init_display(self):
-        self._set_light(self._mode, colour=GREEN)
-
-#     def change_display(self, e=None):
-#         if e is not None:
-#             self._set_light(self._mode, colour=RED)
-# #        else:
-# #            self._set_light(self._mode, colour=CLEAR)
-
-#         self._write_state()
-
-#     # function refrences to be access by the app's context manager
-#     def init_app(self, app):
-#         app.teardown_appcontext(self.change_display)
