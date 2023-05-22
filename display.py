@@ -26,11 +26,11 @@ class Display():
         self._set_display()
 
     def __enter__(self):
-        print("__enter__() called", file=sys.stdout)
+        print(self._mode + "__enter__() called", file=sys.stdout)
         self.init_display()
 
     def __exit__(self, exc_type, exc_val, traceback):
-        print("__exit__() called", file=sys.stdout)
+        print(self._mode + "__exit__() called", file=sys.stdout)
         if exc_type is not None:
             self._set_light(self._mode, colour=RED)
         else:
@@ -76,11 +76,11 @@ class Display():
 
     # Manual operation
     def init_display(self):
-        print("init_display() called", file=sys.stdout)
+        print(self._mode + "init_display() called", file=sys.stdout)
         self._set_light(self._mode, colour=GREEN)
 
     def close_display(self, e=None):
-        print("close_display() called", file=sys.stdout)
+        print(self._mode + "close_display() called", file=sys.stdout)
         if e is not None:
             self._set_light(self._mode, colour=RED)
         else:
@@ -91,4 +91,4 @@ class Display():
     # function refrences to be access by the app's context manager
     def init_app(self, app):
         app.teardown_appcontext(self.close_display)
-        print("init_app() called", file=sys.stdout)
+        print(self._mode + "init_app() called", file=sys.stdout)
