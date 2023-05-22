@@ -28,19 +28,17 @@ class Display():
 
     def __enter__(self):
         self._set_light(self._mode, colour=GREEN)
-        self._write_state()
 
     def __exit__(self, exc_type, exc_val, traceback):
         if exc_type is not None:
             self._set_light(self._mode, colour=RED)
         else:
             self._set_light(self._mode, colour=CLEAR)
-        self._write_state()
 
     # Sets all LEDs to the saved values.
     def _set_display(self):
-        for key, value in self._state.items():
-            self._light_output.setPixel(key, value)
+        for key_led_index, value_colour in self._state.items():
+            self._set_light(key_led_index, value_colour)
 
     # Set read/write/server LED to given colour.
     def _set_light(self, led_index, colour):
@@ -48,6 +46,7 @@ class Display():
             self._light_output.setPixel(led_index, colour)
             self._light_output.show()
             self._state[self._mode] = colour
+            self._write_state()
         except:
             pass
 
