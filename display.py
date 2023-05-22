@@ -80,8 +80,8 @@ class Display():
     def change_display(self, e=None):
         if e is not None:
             self._set_light(self._mode, colour=RED)
-        else:
-            self._set_light(self._mode, colour=CLEAR)
+#        else:
+#            self._set_light(self._mode, colour=CLEAR)
 
         self._write_state()
 
