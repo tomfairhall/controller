@@ -70,7 +70,7 @@ class Display():
 
     # Write display state to JSON file.
     def _write_state(self):
-        with open('display.json', 'w') as file:
+        with open(JSON_PATH, 'w') as file:
             json.dump(self._state, file)
 
     # Manual operation
