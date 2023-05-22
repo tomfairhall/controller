@@ -30,6 +30,7 @@ class Display():
         self.init_display()
 
     def __exit__(self, exc_type, exc_val, traceback):
+        print("__exit__() called", file=sys.stdout)
         if exc_type is not None:
             self._set_light(self._mode, colour=RED)
         else:
@@ -89,4 +90,4 @@ class Display():
     # function refrences to be access by the app's context manager
     def init_app(self, app):
         app.teardown_appcontext(self.close_display)
-        print("here", file=sys.stdout)
+        print("init_app() called", file=sys.stdout)
