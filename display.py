@@ -1,6 +1,7 @@
 from PiicoDev_RGB import PiicoDev_RGB
 import json
-import sys
+
+JSON_PATH = '/home/controller/display.json'
 
 # LED RBG colours.
 RED     = [255, 0, 0]
@@ -26,11 +27,9 @@ class Display():
         self._set_display()
 
     def __enter__(self):
-        print(str(self._mode) + "__enter__() called", file=sys.stdout)
         self.init_display()
 
     def __exit__(self, exc_type, exc_val, traceback):
-        print(str(self._mode) + "__exit__() called", file=sys.stdout)
         if exc_type is not None:
             self._set_light(self._mode, colour=RED)
         else:
@@ -40,13 +39,11 @@ class Display():
 
     # Sets all LEDs to the saved values.
     def _set_display(self):
-        print(str(self._mode) + "set_display() called", file=sys.stdout)
         for key, value in self._state.items():
             self._light_output.setPixel(key, value)
 
     # Set read/write/server LED to given colour.
     def _set_light(self, led_index, colour):
-        print(str(self._mode) + "set_light() called", file=sys.stdout)
         try:
             self._light_output.setPixel(led_index, colour)
             self._light_output.show()
@@ -56,10 +53,9 @@ class Display():
 
     # Read saved display state from JSON file.
     def _read_state(self):
-        print(str(self._mode) + "read_state() called", file=sys.stdout)
         state = {}
         try:
-            with open('/home/controller/display.json', 'r') as file:
+            with open(JSON_PATH, 'r') as file:
                 raw_state = json.load(file)
                 for key, values in raw_state.items():
                     state[int(key)] = [int(value) for value in values]
@@ -74,17 +70,14 @@ class Display():
 
     # Write display state to JSON file.
     def _write_state(self):
-        print(str(self._mode) + "write_state() called", file=sys.stdout)
         with open('display.json', 'w') as file:
             json.dump(self._state, file)
 
     # Manual operation
     def init_display(self):
-        print(str(self._mode) + "init_display() called", file=sys.stdout)
         self._set_light(self._mode, colour=GREEN)
 
     def close_display(self, e=None):
-        print(str(str(self._mode)) + "close_display() called", file=sys.stdout)
         if e is not None:
             self._set_light(self._mode, colour=RED)
         else:
@@ -95,4 +88,3 @@ class Display():
     # function refrences to be access by the app's context manager
     def init_app(self, app):
         app.teardown_appcontext(self.close_display)
-        print(str(self._mode) + "init_app() called", file=sys.stdout)
