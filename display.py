@@ -1,5 +1,6 @@
 from PiicoDev_RGB import PiicoDev_RGB
 import json
+import sys
 
 # LED RBG colours.
 RED     = [255, 0, 0]
@@ -86,3 +87,4 @@ class Display():
     # function refrences to be access by the app's context manager
     def init_app(self, app):
         app.teardown_appcontext(self.close_display)
+        print("here", file=sys.stdout)
