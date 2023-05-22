@@ -7,10 +7,11 @@ def init_app():
 
     database.init_app(app)
     display = Display(mode='s')
-    display.init_app(app)
+    # display.init_app(app)
 
-    with app.app_context():
-        from . import routes
-        database.init_database()
-        display.init_display()
-        return app
+    with Display(mode='s'):
+        with app.app_context():
+            from . import routes
+            database.init_database()
+            # display.init_display()
+            return app
