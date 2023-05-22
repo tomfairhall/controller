@@ -28,13 +28,13 @@ class Display():
 
     def __enter__(self):
         self._set_light(self._mode, colour=GREEN)
+        self._write_state()
 
     def __exit__(self, exc_type, exc_val, traceback):
         if exc_type is not None:
             self._set_light(self._mode, colour=RED)
         else:
             self._set_light(self._mode, colour=CLEAR)
-
         self._write_state()
 
     # Sets all LEDs to the saved values.
