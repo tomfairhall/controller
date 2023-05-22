@@ -77,7 +77,7 @@ class Display():
     def init_display(self):
         self._set_light(self._mode, colour=GREEN)
 
-    def close_display(self, e=None):
+    def change_display(self, e=None):
         if e is not None:
             self._set_light(self._mode, colour=RED)
         else:
@@ -87,4 +87,4 @@ class Display():
 
     # function refrences to be access by the app's context manager
     def init_app(self, app):
-        app.teardown_appcontext(self.close_display)
+        app.teardown_appcontext(self.change_display)
