@@ -26,6 +26,7 @@ class Display():
         self._set_display()
 
     def __enter__(self):
+        print("__enter__() called", file=sys.stdout)
         self.init_display()
 
     def __exit__(self, exc_type, exc_val, traceback):
@@ -74,6 +75,7 @@ class Display():
 
     # Manual operation
     def init_display(self):
+        print("init_display() called", file=sys.stdout)
         self._set_light(self._mode, colour=GREEN)
 
     def close_display(self, e=None):
