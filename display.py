@@ -40,11 +40,13 @@ class Display():
 
     # Sets all LEDs to the saved values.
     def _set_display(self):
+        print(str(self._mode) + "set_display() called", file=sys.stdout)
         for key, value in self._state.items():
             self._light_output.setPixel(key, value)
 
     # Set read/write/server LED to given colour.
     def _set_light(self, led_index, colour):
+        print(str(self._mode) + "set_light() called", file=sys.stdout)
         try:
             self._light_output.setPixel(led_index, colour)
             self._light_output.show()
@@ -54,6 +56,7 @@ class Display():
 
     # Read saved display state from JSON file.
     def _read_state(self):
+        print(str(self._mode) + "read_state() called", file=sys.stdout)
         state = {}
         try:
             with open('/home/controller/display.json', 'r') as file:
@@ -71,6 +74,7 @@ class Display():
 
     # Write display state to JSON file.
     def _write_state(self):
+        print(str(self._mode) + "write_state() called", file=sys.stdout)
         with open('display.json', 'w') as file:
             json.dump(self._state, file)
 
