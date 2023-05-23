@@ -3,6 +3,7 @@ from flask import render_template
 from flask import send_file
 from flask import redirect
 from flask import url_for
+
 from application import database
 
 from crontab import CronTab
@@ -11,6 +12,7 @@ from subprocess import run
 from socket import gethostname
 import csv
 import controller
+from display import Display
 
 CSV_PATH = '/home/controller/data.csv'
 IMAGE_PATH = '/home/controller/controller/static/image.jpg'
@@ -129,3 +131,9 @@ def reboot_controller():
 def update_controller():
     run(["git", "pull"], cwd="/home/controller/controller")
     return redirect(url_for('index'))
+
+@app.errorhandler(Exception)
+def display_error(e):
+    display = Display(mode='s')
+    display.__exit__(e, None, None)
+    raise e

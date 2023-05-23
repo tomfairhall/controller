@@ -1,7 +1,7 @@
 from flask import Flask
 from application import database
 from display import Display
-import atexit
+from atexit import register
 
 display = Display(mode='s')
 
@@ -10,7 +10,7 @@ def exit_app():
 
 def init_app():
     display.__enter__()
-    atexit.register(exit_app)
+    register(exit_app)
 
     app = Flask(__name__)
 
