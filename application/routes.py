@@ -136,4 +136,3 @@ def update_controller():
 def display_error(e):
     display = Display(mode='s')
     display.__exit__(e, None, None)
-    raise e

@@ -11,6 +11,7 @@ Todo:
 - How to control when there is no System View image?
 - Fix paths to not be hardcoded
 - Make sure graphs have gaps when nothing is being recorded
+- Unify display functions
 
 Ideas:
 - Set up RPI as access point so that wifi switches can connect to it
