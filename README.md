@@ -2,11 +2,17 @@
 
 Todo:
 - Add stable and dev software switching buttons
-- Add logging period chaning function
-- Add initilising script
+- Add logging period changing function
+- Add initialising script
 - Update camera controls to modern
 - Dynamic tiles
 - Cron job integrity (adds job if doesn't exist - related to init script?)
-- LED server display
-- Fix issue where on first start up the database hasn't been initilised yet (init script?)
-    - Change to Flask Application Factory
+- How to control when there is no System View image?
+- Fix paths to not be hardcoded
+- Make sure graphs have gaps when nothing is being recorded
+- Unify display functions
+- Display when the server errors
+
+Ideas:
+- Set up RPI as access point so that wifi switches can connect to it
+- Add alarming system (e.g., if light is on longer than expected -> send alarm)
