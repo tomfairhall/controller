@@ -131,8 +131,3 @@ def reboot_controller():
 def update_controller():
     run(["git", "pull"], cwd="/home/controller/controller")
     return redirect(url_for('index'))
-
-""" @app.errorhandler(Exception)
-def display_error(e):
-    display = Display(mode='s')
-    display.__exit__(e, None, None) """
