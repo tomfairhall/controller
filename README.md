@@ -1,7 +1,14 @@
-# System Controller v0.1.x
+# Controller
+## Aquairio's System Controller
 
-Todo:
-- Add stable and dev software switching buttons
+A Raspberry Pi Powered automated hydroponics controller.
+
+### Functions:
+- Measure and log temperature, humidity, lux, pressure.
+- View and download logged data over a webserver.
+- Remotley update and reboot.
+
+### Todo:
 - Add logging period changing function
 - Add initialising script
 - Update camera controls to modern
@@ -12,7 +19,8 @@ Todo:
 - Make sure graphs have gaps when nothing is being recorded
 - Unify display functions
 - Display when the server errors
+- Catch measurement error if occours
 
-Ideas:
+### Ideas:
 - Set up RPI as access point so that wifi switches can connect to it
 - Add alarming system (e.g., if light is on longer than expected -> send alarm)
