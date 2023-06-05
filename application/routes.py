@@ -45,7 +45,7 @@ def get_version_hash():
     return run(['git', 'rev-parse', '--short', 'main'], cwd='/home/controller/controller', text=True, capture_output=True).stdout
 
 @app.route('/')
-def index():
+def home():
     job, _ = get_logging_job()
     wifi_quality, wifi_strength = get_connection_strength()
     version = get_version_hash()
@@ -67,7 +67,7 @@ def index():
         light_data.insert(0, row[4])
 
     return render_template(
-        'index.html',
+        'home.html',
         date_time = date_time,
         temperature = temperature,
         pressure = pressure,
@@ -92,7 +92,7 @@ def change_logging_ability():
     else:
         job.enable()
     cron.write()
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 @app.route('/download_data') #TODO Stream file rather than create an intermediate file & add header to CSV
 def download_data():
@@ -105,29 +105,29 @@ def download_data():
 @app.route('/delete_data')
 def delete_data():
     database.execute_database('DELETE FROM measurements')
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 @app.route('/log_data')
 def log_data():
     controller.write_data(controller.read_data(), mode='m')
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 @app.route('/capture_image')
 def capture_image():
      run(['raspistill', '-o', IMAGE_PATH])
-     return redirect(url_for('index'))
+     return redirect(url_for('home'))
 
 @app.route('/delete_image')
 def delete_image():
     run(['rm', IMAGE_PATH])
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 @app.route('/reboot_controller')
 def reboot_controller():
     run(["sudo", "shutdown", "-r", "1"])
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 @app.route('/update_controller')
 def update_controller():
     run(["git", "pull"], cwd="/home/controller/controller")
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))

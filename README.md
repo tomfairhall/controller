@@ -1,12 +1,18 @@
 # Controller
 ## Aquairio's System Controller
 
-A Raspberry Pi Powered automated hydroponics controller.
+A Raspberry Pi Powered automated advanced agriculture controller.
 
 ### Functions:
 - Measure and log temperature, humidity, lux, pressure.
 - View and download logged data over a webserver.
 - Remotley update and reboot.
+
+## Technologies Used:
+- Python
+- Flask
+- SQLite
+- Piicodev Modules
 
 ### Todo:
 - Add logging period changing function
@@ -20,6 +26,7 @@ A Raspberry Pi Powered automated hydroponics controller.
 - Unify display functions
 - Display when the server errors
 - Catch measurement error if occours
+- Add 12 hour averages
 
 ### Ideas:
 - Set up RPI as access point so that wifi switches can connect to it
